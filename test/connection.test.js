@@ -37,6 +37,18 @@ describe('Connection', () => {
       expect(request).to.respondTo('then');
     });
 
+    it('takes in an optional query parameter', () => {
+      let expectedRequest = nock('https://habitica.com/api/v2')
+        .get('/group')
+        .query({type: 'party'})
+        .reply(200)
+
+      let connection = new Connection(defaultOptions);
+      let request = connection.get('group', {type: 'party'});
+
+      expectedRequest.done();
+    });
+
     context('succesful request', () => {
 
       it('returns requested data', () => {
