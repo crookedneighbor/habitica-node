@@ -4,7 +4,10 @@
   "description": "A node wrapper for the habitica api",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "prepublish": "npm test && npm run build",
+    "test": "npm run lint && mocha",
+    "build": "babel -d dist src",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
