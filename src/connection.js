@@ -11,6 +11,7 @@ export default class {
     return new Promise((resolve, reject) => {
       superagent
         .get(`${this._endpoint}/${route}`)
+        .query(query)
         .set('x-api-user', this._uuid)
         .set('x-api-key', this._token)
         .set('Accept', 'application/json')
