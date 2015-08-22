@@ -79,4 +79,66 @@ describe('Connection', () => {
       });
     });
   });
+
+  describe('#post', () => {
+    beforeEach(() => {
+      habiticaUrl = nock('https://habitica.com/api/v2')
+        .post('/user/tasks')
+    });
+
+    it('returns a promise', () => {
+      let connection = new Connection(defaultOptions);
+      let request = connection.post('user/tasks');
+
+      expect(request).to.respondTo('then');
+    });
+
+    it('takes in an optional query parameter', () => {
+      let expectedRequest = nock('https://habitica.com/api/v2')
+        .post('/user/tasks')
+        .query({
+          type: 'habit',
+          text: 'test habit'
+        })
+        .reply(201, {});
+
+      let connection = new Connection(defaultOptions);
+      let request = connection.post('user/tasks', {
+          type: 'habit',
+          text: 'test habit'
+        });
+
+      expectedRequest.done();
+    });
+
+    context('succesful request', () => {
+
+      it('returns requested data', () => {
+        let expectedRequest = habiticaUrl.reply(() => {
+          return [200, { some: 'data' }];
+        });
+
+        let connection = new Connection(defaultOptions);
+        let request = connection.post('user/tasks');
+
+        expectedRequest.done();
+        return expect(request).to.eventually.eql({ some: 'data' });
+      });
+    });
+
+    context('unsuccesful request', () => {
+
+      it('rejects if credentials are not valid', () => {
+        let expectedRequest = habiticaUrl.reply(function () {
+          return [401, 'Not allowed'];
+        });
+
+        let connection = new Connection(defaultOptions);
+        let request = connection.post('user/tasks');
+
+        expectedRequest.done();
+        return expect(request).to.be.rejectedWith('Error: Unauthorized');
+      });
+    });
+  });
 });
