@@ -8,25 +8,17 @@ export default class {
   }
 
   get (route, query={}) {
-    return new Promise((resolve, reject) => {
-      superagent
-        .get(`${this._endpoint}/${route}`)
-        .query(query)
-        .set('x-api-user', this._uuid)
-        .set('x-api-key', this._token)
-        .set('Accept', 'application/json')
-        .end((err, response) => {
-          if (err) { return reject(err); }
-
-          resolve(response.body);
-        });
-    });
+    return this._router('get', route, query);
   }
 
   post (route, query={}) {
+    return this._router('post', route, query);
+  }
+
+  _router (method, route, query) {
     return new Promise((resolve, reject) => {
       superagent
-        .post(`${this._endpoint}/${route}`)
+        [method](`${this._endpoint}/${route}`)
         .query(query)
         .set('x-api-user', this._uuid)
         .set('x-api-key', this._token)
@@ -39,3 +31,4 @@ export default class {
     });
   }
 }
+
