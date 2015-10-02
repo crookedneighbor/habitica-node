@@ -2,8 +2,6 @@ import Habitica from '../../src/index';
 
 describe('Content', () => {
   let api = new Habitica({
-    uuid: 'foo',
-    token: 'bar',
     endpoint: 'localhost:3000/api/v2',
   });
 

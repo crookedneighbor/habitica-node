@@ -17,11 +17,17 @@ export default class {
 
   _router (method, route, query) {
     return new Promise((resolve, reject) => {
-      superagent
+      let request = superagent
         [method](`${this._endpoint}/${route}`)
-        .query(query)
-        .set('x-api-user', this._uuid)
-        .set('x-api-key', this._token)
+        .query(query);
+
+      if (this._uuid && this._token) {
+        request
+          .set('x-api-user', this._uuid)
+          .set('x-api-key', this._token);
+      }
+
+      request
         .set('Accept', 'application/json')
         .end((err, response) => {
           if (err) { return reject(err); }
