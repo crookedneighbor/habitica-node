@@ -1,4 +1,4 @@
-import Habitica from '../src/index';
+import Habitica from '../../src/index';
 
 describe('Habitica Api', () => {
   beforeEach(() => {
