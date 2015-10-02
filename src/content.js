@@ -10,6 +10,34 @@ export default class {
       });
   }
 
+  getEggs () {
+    return this._connection.get('content')
+      .then((content) => {
+        return content.eggs;
+      });
+  }
+
+  getGearTree () {
+    return this._connection.get('content')
+      .then((content) => {
+        return content.gear.tree;
+      });
+  }
+
+  getGearFlat () {
+    return this._connection.get('content')
+      .then((content) => {
+        return content.gear.flat;
+      });
+  }
+
+  getQuests () {
+    return this._connection.get('content')
+      .then((content) => {
+        return content.quests;
+      });
+  }
+
   getPaths () {
     return this._connection.get('content/paths')
       .then((paths) => {
@@ -17,4 +45,3 @@ export default class {
       });
   }
 }
-
