@@ -104,9 +104,9 @@ describe('Connection', () => {
 
       let connection = new Connection(defaultOptions);
       let request = connection.post('user/tasks', {
-          type: 'habit',
-          text: 'test habit'
-        });
+        type: 'habit',
+        text: 'test habit'
+      });
 
       expectedRequest.done();
     });
