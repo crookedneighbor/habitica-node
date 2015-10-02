@@ -15,6 +15,7 @@ rules:
     -
       allowSingleLine: true
   comma-style: [2, "last"]
+  comma-dangle: [2, "always"]
   mocha/no-exclusive-tests: 2
   default-case: 2
   func-style: [2, "declaration"]
