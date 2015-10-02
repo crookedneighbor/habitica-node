@@ -1,5 +1,7 @@
 import Connection from './connection';
 
+import Content from './content';
+
 export default class {
   constructor (options = {}) {
     if (!(options.uuid && options.token)) {
@@ -10,6 +12,10 @@ export default class {
       uuid: options.uuid,
       token: options.token,
       endpoint: options.endpoint,
+    });
+
+    this.content = new Content({
+      connection: this._connection,
     });
   }
 }
