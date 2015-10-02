@@ -4,7 +4,7 @@ describe('Connection', () => {
   let habiticaUrl;
   const defaultOptions = {
     uuid: 'myUuid',
-    token: 'myToken'
+    token: 'myToken',
   };
 
   describe('initialization', () => {
@@ -17,7 +17,7 @@ describe('Connection', () => {
       let connection = new Connection({
         uuid: 'myUuid',
         token: 'myToken',
-        endpoint: 'https://someotherendpoint'
+        endpoint: 'https://someotherendpoint',
       });
 
       expect(connection._endpoint).to.eql('https://someotherendpoint');
@@ -98,14 +98,14 @@ describe('Connection', () => {
         .post('/user/tasks')
         .query({
           type: 'habit',
-          text: 'test habit'
+          text: 'test habit',
         })
         .reply(201, {});
 
       let connection = new Connection(defaultOptions);
       let request = connection.post('user/tasks', {
         type: 'habit',
-        text: 'test habit'
+        text: 'test habit',
       });
 
       expectedRequest.done();
