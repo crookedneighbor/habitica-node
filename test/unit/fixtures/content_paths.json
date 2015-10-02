@@ -1,0 +1,19 @@
+{
+   "_id":"String",
+   "apiToken":"String",
+   "achievements.originalUser":"Boolean",
+   "contributor.level":"Number",
+   "items.gear.owned.weapon_warrior_0":"Boolean",
+   "items.pets.Fox-Base":"Number",
+   "items.mounts.FlyingPig-Shade":"Boolean",
+   "items.currentMount":"String",
+   "items.quests.whale":"Number",
+   "items.lastDrop.date":"Boolean",
+   "items.lastDrop.count":"Number",
+   "lastCron":"Boolean",
+   "party.quest.key":"String",
+   "preferences.hair.color":"String",
+   "profile.name":"String",
+   "stats.class":"String",
+   "stats.str":"Number"
+}

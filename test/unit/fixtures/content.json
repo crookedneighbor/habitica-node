@@ -1,0 +1,24 @@
+{
+  "eggs": {
+    "Wolf":{ },
+    "TigerCub":{ }
+  },
+  "quests": {
+    "gryphon":{ },
+    "hedgehog":{ }
+  },
+  "gear": {
+    "tree":{
+      "weapon":{ },
+      "armor":{ },
+      "head":{ },
+      "shield":{ }
+    },
+    "flat":{
+      "weapon_warrior_0":{ },
+      "weapon_warrior_1":{ },
+      "weapon_warrior_2":{ },
+      "weapon_warrior_3":{ }
+    }
+  }
+}
