@@ -9,7 +9,7 @@ export default class {
     this._connection = new Connection({
       uuid: options.uuid,
       token: options.token,
-      endpoint: options.endpoint
+      endpoint: options.endpoint,
     });
   }
 }
