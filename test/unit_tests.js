@@ -1,3 +1,5 @@
 let helper = require('./support/unit_helper');
 
-helper.runTestsInDirectory('./test/unit');
+describe('Unit Tests', () => {
+  helper.runTestsInDirectory('./test/unit');
+});
