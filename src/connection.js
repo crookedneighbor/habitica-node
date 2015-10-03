@@ -7,6 +7,11 @@ export default class {
     this._endpoint = options.endpoint || 'https://habitica.com/api/v2';
   }
 
+  setCredentials (creds={}) {
+    this._uuid = creds.uuid || this._uuid;
+    this._token = creds.token || this._token;
+  }
+
   get (route, query={}) {
     return this._router('get', route, query);
   }

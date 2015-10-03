@@ -25,6 +25,40 @@ describe('Connection', () => {
     });
   });
 
+  describe('#setCredentials', () => {
+    it('sets uuid after iniitalization', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection._uuid).to.eql('myUuid');
+
+      connection.setCredentials({uuid: 'newUuid'});
+      expect(connection._uuid).to.eql('newUuid');
+    });
+
+    it('leaves old uuid if not passed in after initalization', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection._uuid).to.eql('myUuid');
+
+      connection.setCredentials();
+      expect(connection._uuid).to.eql('myUuid');
+    });
+
+    it('leaves old token if not passed in after initalization', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection._token).to.eql('myToken');
+
+      connection.setCredentials();
+      expect(connection._token).to.eql('myToken');
+    });
+
+    it('sets token after iniitalization', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection._token).to.eql('myToken');
+
+      connection.setCredentials({token: 'newToken'});
+      expect(connection._token).to.eql('newToken');
+    });
+  });
+
   describe('#get', () => {
     beforeEach(() => {
       habiticaUrl = nock('https://habitica.com/api/v2')
