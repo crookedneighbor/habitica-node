@@ -32,9 +32,9 @@ describe('Content', () => {
     });
 
     it('gets specific piece of content file with nested argument', (done) => {
-      api.content.get('quests.whale')
+      api.content.get('gear.tree.weapon.warrior')
         .then((res) => {
-          expect(res.key).to.eql('whale');
+          expect(res['0']).to.exist;
           done();
         })
         .catch((err) => {
