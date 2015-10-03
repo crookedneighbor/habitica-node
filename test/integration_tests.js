@@ -1,5 +1,5 @@
-let helper = require('./support/integration_helper');
+import {runTestsInDirectory} from './support/test_runner';
 
 describe('Integration Tests', () => {
-  helper.runTestsInDirectory('./test/integration');
+  runTestsInDirectory('./test/integration');
 });
