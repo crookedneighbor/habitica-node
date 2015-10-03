@@ -4,7 +4,11 @@ describe('Habitica Api', () => {
 
   describe('initialization', () => {
     beforeEach(() => {
-      sandbox.stub(console, 'warn');
+      sinon.stub(console, 'warn');
+    });
+
+    afterEach(() => {
+      console.warn.restore(); // eslint-disable-line no-console
     });
 
     it('warns if user id and api are not provided', () => {

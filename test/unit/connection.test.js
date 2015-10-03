@@ -1,3 +1,4 @@
+import nock from 'nock';
 import Connection from '../../src/connection';
 
 describe('Connection', () => {
