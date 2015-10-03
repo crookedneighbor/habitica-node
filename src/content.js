@@ -1,40 +1,24 @@
+import {get} from 'lodash';
+
 export default class {
   constructor (options) {
     this._connection = options.connection;
   }
 
-  get () {
+  get (path) {
     return this._connection.get('content')
       .then((content) => {
+        if (path) {
+          let nestedContent = get(content, path);
+
+          if (nestedContent) {
+            return nestedContent;
+          }
+
+          throw `${path} is not a valid content path`;
+        }
+
         return content;
-      });
-  }
-
-  getEggs () {
-    return this._connection.get('content')
-      .then((content) => {
-        return content.eggs;
-      });
-  }
-
-  getGearTree () {
-    return this._connection.get('content')
-      .then((content) => {
-        return content.gear.tree;
-      });
-  }
-
-  getGearFlat () {
-    return this._connection.get('content')
-      .then((content) => {
-        return content.gear.flat;
-      });
-  }
-
-  getQuests () {
-    return this._connection.get('content')
-      .then((content) => {
-        return content.quests;
       });
   }
 

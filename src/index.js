@@ -18,4 +18,8 @@ export default class {
       connection: this._connection,
     });
   }
+
+  setCredentials (creds) {
+    this._connection.setCredentials(creds);
+  }
 }
