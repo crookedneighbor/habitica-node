@@ -32,7 +32,7 @@ api.setCredentials({
 ### #content.get
 
 ```js
-\\ Get all content
+// Get all content
 api.content.get()
   .then((content) => {
     content.gear.tree; // all gear objects
@@ -40,13 +40,13 @@ api.content.get()
     content.quests.whale; // whale quest object
   });
 
-\\ Get specific piece of content
+// Get specific piece of content
 api.content.get('eggs')
   .then((eggs) => {
     eggs.Wolf; // wolf egg object
   });
 
-\\ Get specific piece of nested content
+// Get specific piece of nested content
 api.content.get('gear.tree.weapon.warrior')
   .then((warriorWeapons) => {
     warriorWeapons['0']; // initial warrior weapon
@@ -56,7 +56,7 @@ api.content.get('gear.tree.weapon.warrior')
 ### #content.getPaths
 
 ```js
-\\ Get all possible user paths
+// Get all possible user paths
 api.content.getPaths()
   .then((paths) => {
     paths['achievements.beastMaster']; // Boolean
