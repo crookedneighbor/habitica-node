@@ -1,4 +1,8 @@
-import {isString} from 'lodash';
+import {
+  reject,
+  isEmpty,
+  isString,
+} from 'lodash';
 
 export default class {
   constructor (options) {
@@ -29,10 +33,15 @@ export default class {
 }
 
 function _generateCreds(username, email, password) {
+  let set = [username, email, password];
 
-  if (!isString(username) || !isString(email) || !isString(password)) {
-    return false;
-  }
+  let hasBadCred = reject(set, (cred) => {
+    let validString = isString(cred);
+    let notEmpty = !isEmpty(cred);
+    return validString && notEmpty;
+  });
+
+  if (!isEmpty(hasBadCred)) return false;
 
   let creds = {
     username: username,

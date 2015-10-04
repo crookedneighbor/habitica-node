@@ -72,8 +72,9 @@ describe('Account', () => {
       });
     });
 
-    context('Failures', () => {
+    context('Invalid Input', () => {
       let invalidCredTypes = [
+        '',
         true,
         undefined, // eslint-disable-line no-undefined
         null,
