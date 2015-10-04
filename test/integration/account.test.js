@@ -31,6 +31,9 @@ describe('Account', () => {
           .then((user) => {
             expect(user._id).to.exist;
             expect(user.apiToken).to.exist;
+            expect(user.profile.name).to.eql(username);
+            expect(user.auth.local.username).to.eql(username);
+            expect(user.auth.local.email).to.eql(email);
             done();
           })
           .catch((err) => {
