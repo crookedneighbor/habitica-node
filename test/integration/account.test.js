@@ -56,6 +56,24 @@ describe('Account', () => {
             done(err);
           });
       });
+    });
+
+    context('Uuid or token already set', () => {
+      it('throws an error if uuid is already set', () => {
+        api.setCredentials({uuid: 'some-uuid'});
+
+        expect(() => {
+          api.account.register(username, email, password);
+        }).to.throw('User id or api token already set');
+      });
+
+      it('throws an error if token is already set', () => {
+        api.setCredentials({token: 'some-token'});
+
+        expect(() => {
+          api.account.register(username, email, password);
+        }).to.throw('User id or api token already set');
+      });
 
       it('allows the creation of a new user when uuid or token is already set if resetOldCreds option is passed in', () => {
         api.setCredentials({uuid: 'some-uuid', token: 'some-token'});
@@ -83,22 +101,6 @@ describe('Account', () => {
         {object: 'invalid'},
         () => { return true; },
       ];
-
-      it('throws an error if uuid is already set', () => {
-        api.setCredentials({uuid: 'some-uuid'});
-
-        expect(() => {
-          api.account.register(username, email, password);
-        }).to.throw('User id or api token already set');
-      });
-
-      it('throws an error if token is already set', () => {
-        api.setCredentials({token: 'some-token'});
-
-        expect(() => {
-          api.account.register(username, email, password);
-        }).to.throw('User id or api token already set');
-      });
 
       it('throws an error if username is not a string', () => {
         each(invalidCredTypes, (type) => {
