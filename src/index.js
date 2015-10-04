@@ -1,5 +1,6 @@
 import Connection from './connection';
 
+import Account from './account';
 import Content from './content';
 
 export default class {
@@ -12,6 +13,10 @@ export default class {
       uuid: options.uuid,
       token: options.token,
       endpoint: options.endpoint,
+    });
+
+    this.account = new Account({
+      connection: this._connection,
     });
 
     this.content = new Content({
