@@ -25,6 +25,20 @@ describe('Connection', () => {
     });
   });
 
+  describe('#getUuid', () => {
+    it('returns uuid', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection.getUuid()).to.eql('myUuid');
+    });
+  });
+
+  describe('#getToken', () => {
+    it('returns token', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection.getToken()).to.eql('myToken');
+    });
+  });
+
   describe('#setCredentials', () => {
     it('sets uuid after iniitalization', () => {
       let connection = new Connection(defaultOptions);

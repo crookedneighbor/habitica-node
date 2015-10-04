@@ -20,6 +20,14 @@ export default class {
     });
   }
 
+  getUuid () {
+    return this._connection.getUuid();
+  }
+
+  getToken () {
+    return this._connection.getToken();
+  }
+
   setCredentials (creds) {
     this._connection.setCredentials(creds);
   }

@@ -1,10 +1,30 @@
 import Habitica from '../../src/index';
-import Connection from '../../src/connection';
 
 describe('Habitica Api', () => {
+  let api = new Habitica({uuid: 'myUuid', token: 'myToken' });
+
+  describe('#getUuid', () => {
+    it('returns uuid', () => {
+      expect(api.getUuid()).to.eql('myUuid');
+    });
+  });
+
+  describe('#getToken', () => {
+    it('returns token', () => {
+      expect(api.getToken()).to.eql('myToken');
+    });
+  });
+
+  describe('#setCredentials', () => {
+    it('sets new credentials', () => {
+      api.setCredentials({uuid: 'newUuid', token: 'newToken'});
+
+      expect(api.getUuid()).to.eql('newUuid');
+      expect(api.getToken()).to.eql('newToken');
+    });
+  });
 
   describe('attributes', () => {
-    let api = new Habitica({uuid: 'foo', token: 'bar' });
     let attributes = [
       'account',
       'content',
