@@ -2,7 +2,7 @@ import Habitica from '../../src/index';
 
 describe('Content', () => {
   let api = new Habitica({
-    endpoint: 'localhost:3000/api/v2',
+    endpoint: `localhost:${process.env.PORT}/api/v2`,
   });
 
   describe('#get', () => {
