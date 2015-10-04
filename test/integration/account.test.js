@@ -45,10 +45,6 @@ describe('Account', () => {
         expect(api._uuid).to.not.exist;
         expect(api._token).to.not.exist;
 
-        let username = generateRandomUserName();
-        let password = 'password'
-        let email = username + '@example.com';
-
         api.account.register(username, email, password)
           .then((user) => {
             expect(api._connection._uuid).to.be.eql(user._id);
