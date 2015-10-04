@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "npm test && npm run build",
-    "test": "npm run lint && mocha test/support/travis_init.js",
+    "test": "npm run lint && mocha",
     "test:unit": "mocha test/unit_tests.js",
     "test:integration": "mocha test/integration_tests.js",
     "build": "babel -d dist src",
