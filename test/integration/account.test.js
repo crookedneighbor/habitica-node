@@ -1,3 +1,4 @@
+import {each} from 'lodash';
 import {v4 as generateRandomUserName} from 'uuid';
 import Habitica from '../../src/index';
 
@@ -72,6 +73,16 @@ describe('Account', () => {
     });
 
     context('Failures', () => {
+      let invalidCredTypes = [
+        true,
+        undefined, // eslint-disable-line no-undefined
+        null,
+        123,
+        ['array', 1],
+        {object: 'invalid'},
+        () => { return true; },
+      ];
+
       it('throws an error if uuid is already set', () => {
         api.setCredentials({uuid: 'some-uuid'});
 
@@ -86,6 +97,33 @@ describe('Account', () => {
         expect(() => {
           api.account.register(username, email, password);
         }).to.throw('User id or api token already set');
+      });
+
+      it('throws an error if username is not a string', () => {
+        each(invalidCredTypes, (type) => {
+          username = type;
+          expect(() => {
+            api.account.register(username, email, password);
+          }).to.throw('Username, email or password is not a string');
+        });
+      });
+
+      it('throws an error if email is not a string', () => {
+        each(invalidCredTypes, (type) => {
+          email = type;
+          expect(() => {
+            api.account.register(username, email, password);
+          }).to.throw('Username, email or password is not a string');
+        });
+      });
+
+      it('throws an error if password is not a string', () => {
+        each(invalidCredTypes, (type) => {
+          password = type;
+          expect(() => {
+            api.account.register(username, email, password);
+          }).to.throw('Username, email or password is not a string');
+        });
       });
     });
   });
