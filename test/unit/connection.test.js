@@ -84,6 +84,17 @@ describe('Connection', () => {
       expectedRequest.done();
     });
 
+    it('ignores send parameter if passed in', () => {
+      let expectedRequest = nock('https://habitica.com/api/v2')
+        .get('/group')
+        .reply(200)
+
+      let connection = new Connection(defaultOptions);
+      let request = connection.get('group', {send: {type: 'party'}});
+
+      expectedRequest.done();
+    });
+
     context('succesful request', () => {
 
       it('returns requested data', () => {
@@ -144,6 +155,19 @@ describe('Connection', () => {
           text: 'test habit',
         },
       });
+
+      expectedRequest.done();
+    });
+
+    it('takes in an optional send parameter', () => {
+      let expectedRequest = nock('https://habitica.com/api/v2')
+        .post('/group', {
+          type: 'party',
+        })
+        .reply(200)
+
+      let connection = new Connection(defaultOptions);
+      let request = connection.post('group', {send: {type: 'party'}});
 
       expectedRequest.done();
     });

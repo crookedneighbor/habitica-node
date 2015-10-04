@@ -23,6 +23,7 @@ export default class {
   _router (method, route, options) {
     return new Promise((resolve, reject) => {
       let request = superagent[method](`${this._endpoint}/${route}`)
+        .accept('application/json');
 
       if (this._uuid && this._token) {
         request
@@ -31,8 +32,8 @@ export default class {
       }
 
       request
-        .set('Accept', 'application/json')
         .query(options.query)
+        .send(options.send)
         .end((err, response) => {
           if (err) { return reject(err); }
 
