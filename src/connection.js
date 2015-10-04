@@ -12,19 +12,17 @@ export default class {
     this._token = creds.token || this._token;
   }
 
-  get (route, query={}) {
-    return this._router('get', route, query);
+  get (route, options={}) {
+    return this._router('get', route, options);
   }
 
-  post (route, query={}) {
-    return this._router('post', route, query);
+  post (route, options={}) {
+    return this._router('post', route, options);
   }
 
-  _router (method, route, query) {
+  _router (method, route, options) {
     return new Promise((resolve, reject) => {
-      let request = superagent
-        [method](`${this._endpoint}/${route}`)
-        .query(query);
+      let request = superagent[method](`${this._endpoint}/${route}`)
 
       if (this._uuid && this._token) {
         request
@@ -34,6 +32,7 @@ export default class {
 
       request
         .set('Accept', 'application/json')
+        .query(options.query)
         .end((err, response) => {
           if (err) { return reject(err); }
 

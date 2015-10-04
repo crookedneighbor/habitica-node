@@ -79,7 +79,7 @@ describe('Connection', () => {
         .reply(200)
 
       let connection = new Connection(defaultOptions);
-      let request = connection.get('group', {type: 'party'});
+      let request = connection.get('group', {query: {type: 'party'}});
 
       expectedRequest.done();
     });
@@ -139,8 +139,10 @@ describe('Connection', () => {
 
       let connection = new Connection(defaultOptions);
       let request = connection.post('user/tasks', {
-        type: 'habit',
-        text: 'test habit',
+        query: {
+          type: 'habit',
+          text: 'test habit',
+        },
       });
 
       expectedRequest.done();
