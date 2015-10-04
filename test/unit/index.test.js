@@ -15,6 +15,12 @@ describe('Habitica Api', () => {
     });
   });
 
+  describe('#getEndpoint', () => {
+    it('returns token', () => {
+      expect(api.getEndpoint()).to.eql('https://habitica.com/api/v2');
+    });
+  });
+
   describe('#setCredentials', () => {
     it('sets new credentials', () => {
       api.setCredentials({uuid: 'newUuid', token: 'newToken'});

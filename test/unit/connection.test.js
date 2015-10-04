@@ -39,6 +39,13 @@ describe('Connection', () => {
     });
   });
 
+  describe('#getEndpoint', () => {
+    it('returns endpoint', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection.getEndpoint()).to.eql('https://habitica.com/api/v2');
+    });
+  });
+
   describe('#setCredentials', () => {
     it('sets uuid after iniitalization', () => {
       let connection = new Connection(defaultOptions);

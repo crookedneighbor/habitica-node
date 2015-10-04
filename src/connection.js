@@ -15,6 +15,10 @@ export default class {
     return this._token;
   }
 
+  getEndpoint () {
+    return this._endpoint;
+  }
+
   setCredentials (creds={}) {
     this._uuid = creds.uuid || this._uuid;
     this._token = creds.token || this._token;

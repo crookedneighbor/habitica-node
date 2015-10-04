@@ -28,6 +28,10 @@ export default class {
     return this._connection.getToken();
   }
 
+  getEndpoint () {
+    return this._connection.getEndpoint();
+  }
+
   setCredentials (creds) {
     this._connection.setCredentials(creds);
   }
