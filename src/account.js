@@ -3,9 +3,13 @@ export default class {
     this._connection = options.connection;
   }
 
-  register (username, email, password) {
+  register (username, email, password, options={}) {
     if (this._connection._uuid || this._connection._token) {
-      throw 'User id or api token already set';
+      if (!options.resetOldCreds) {
+        throw 'User id or api token already set';
+      }
+
+      this._connection.setCredentials({uuid: null, token: null});
     }
 
     let send = {

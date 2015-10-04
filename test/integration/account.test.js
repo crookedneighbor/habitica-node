@@ -55,6 +55,20 @@ describe('Account', () => {
             done(err);
           });
       });
+
+      it('allows the creation of a new user when uuid or token is already set if resetOldCreds option is passed in', () => {
+        api.setCredentials({uuid: 'some-uuid', token: 'some-token'});
+
+        api.account.register(username, email, password, {resetOldCreds: true })
+          .then((user) => {
+            expect(api._connection._uuid).to.be.eql(user._id);
+            expect(api._connection._token).to.be.eql(user.apiToken);
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
     });
 
     context('Failures', () => {
