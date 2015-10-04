@@ -47,8 +47,13 @@ describe('Connection', () => {
   });
 
   describe('#setCredentials', () => {
+    let connection;
+
+    beforeEach(() => {
+      connection = new Connection(defaultOptions);
+    });
+
     it('sets uuid after iniitalization', () => {
-      let connection = new Connection(defaultOptions);
       expect(connection._uuid).to.eql('myUuid');
 
       connection.setCredentials({uuid: 'newUuid'});
@@ -56,7 +61,6 @@ describe('Connection', () => {
     });
 
     it('leaves old uuid if not passed in after initalization', () => {
-      let connection = new Connection(defaultOptions);
       expect(connection._uuid).to.eql('myUuid');
 
       connection.setCredentials();
@@ -64,7 +68,6 @@ describe('Connection', () => {
     });
 
     it('leaves old token if not passed in after initalization', () => {
-      let connection = new Connection(defaultOptions);
       expect(connection._token).to.eql('myToken');
 
       connection.setCredentials();
@@ -72,7 +75,6 @@ describe('Connection', () => {
     });
 
     it('sets token after iniitalization', () => {
-      let connection = new Connection(defaultOptions);
       expect(connection._token).to.eql('myToken');
 
       connection.setCredentials({token: 'newToken'});
@@ -81,13 +83,15 @@ describe('Connection', () => {
   });
 
   describe('#get', () => {
+    let connection;
+
     beforeEach(() => {
+      connection = new Connection(defaultOptions);
       habiticaUrl = nock('https://habitica.com/api/v2')
         .get('/user')
     });
 
     it('returns a promise', () => {
-      let connection = new Connection(defaultOptions);
       let request = connection.get('user');
 
       expect(request).to.respondTo('then');
@@ -99,7 +103,6 @@ describe('Connection', () => {
         .query({type: 'party'})
         .reply(200)
 
-      let connection = new Connection(defaultOptions);
       let request = connection.get('group', {query: {type: 'party'}});
 
       expectedRequest.done();
@@ -110,7 +113,6 @@ describe('Connection', () => {
         .get('/group')
         .reply(200)
 
-      let connection = new Connection(defaultOptions);
       let request = connection.get('group', {send: {type: 'party'}});
 
       expectedRequest.done();
