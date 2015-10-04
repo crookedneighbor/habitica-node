@@ -47,8 +47,8 @@ describe('Account', () => {
 
         api.account.register(username, email, password)
           .then((user) => {
-            expect(api._connection._uuid).to.be.eql(user._id);
-            expect(api._connection._token).to.be.eql(user.apiToken);
+            expect(api.getUuid()).to.be.eql(user._id);
+            expect(api.getToken()).to.be.eql(user.apiToken);
             done();
           })
           .catch((err) => {
@@ -79,8 +79,8 @@ describe('Account', () => {
 
         api.account.register(username, email, password, {resetOldCreds: true })
           .then((user) => {
-            expect(api._connection._uuid).to.be.eql(user._id);
-            expect(api._connection._token).to.be.eql(user.apiToken);
+            expect(api.getUuid()).to.be.eql(user._id);
+            expect(api.getToken()).to.be.eql(user.apiToken);
             done();
           })
           .catch((err) => {
