@@ -22,6 +22,7 @@ export default class {
   setCredentials (creds={}) {
     this._uuid = creds.uuid || this._uuid;
     this._token = creds.token || this._token;
+    this._endpoint = creds.endpoint || this._endpoint;
   }
 
   get (route, options={}) {

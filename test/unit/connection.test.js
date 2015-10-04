@@ -63,14 +63,14 @@ describe('Connection', () => {
     it('leaves old uuid if not passed in after initalization', () => {
       expect(connection._uuid).to.eql('myUuid');
 
-      connection.setCredentials();
+      connection.setCredentials({token: 'foo'});
       expect(connection._uuid).to.eql('myUuid');
     });
 
     it('leaves old token if not passed in after initalization', () => {
       expect(connection._token).to.eql('myToken');
 
-      connection.setCredentials();
+      connection.setCredentials({uuid: 'foo'});
       expect(connection._token).to.eql('myToken');
     });
 
@@ -79,6 +79,20 @@ describe('Connection', () => {
 
       connection.setCredentials({token: 'newToken'});
       expect(connection._token).to.eql('newToken');
+    });
+
+    it('leaves old endpoint if not passed in after initalization', () => {
+      expect(connection._endpoint).to.eql('https://habitica.com/api/v2');
+
+      connection.setCredentials({uuid: 'foo'});
+      expect(connection._endpoint).to.eql('https://habitica.com/api/v2');
+    });
+
+    it('sets endpoint after iniitalization', () => {
+      expect(connection._endpoint).to.eql('https://habitica.com/api/v2');
+
+      connection.setCredentials({endpoint: 'http://localhost:3321/api/v2'});
+      expect(connection._endpoint).to.eql('http://localhost:3321/api/v2');
     });
   });
 
