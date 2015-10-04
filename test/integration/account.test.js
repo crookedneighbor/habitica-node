@@ -14,7 +14,18 @@ describe('Account', () => {
       email = username + '@example.com';
     });
 
-    it('registers for a new account', (done) => {
+    xit('registers for a new account', (done) => {
+      api.account.register(username, email, password)
+        .then((user) => {
+          // @TODO: look up member
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('returns a new user', (done) => {
       api.account.register(username, email, password)
         .then((user) => {
           expect(user._id).to.exist;
