@@ -14,46 +14,66 @@ describe('Account', () => {
       email = username + '@example.com';
     });
 
-    xit('registers for a new account', (done) => {
-      api.account.register(username, email, password)
-        .then((user) => {
-          // @TODO: look up member
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    context('Successful', () => {
+      xit('registers for a new account', (done) => {
+        api.account.register(username, email, password)
+          .then((user) => {
+            // @TODO: look up member
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+
+      it('returns a new user', (done) => {
+        api.account.register(username, email, password)
+          .then((user) => {
+            expect(user._id).to.exist;
+            expect(user.apiToken).to.exist;
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+
+      it('sets uuid and api token to new user', (done) => {
+        expect(api._uuid).to.not.exist;
+        expect(api._token).to.not.exist;
+
+        let username = generateRandomUserName();
+        let password = 'password'
+        let email = username + '@example.com';
+
+        api.account.register(username, email, password)
+          .then((user) => {
+            expect(api._connection._uuid).to.be.eql(user._id);
+            expect(api._connection._token).to.be.eql(user.apiToken);
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
     });
 
-    it('returns a new user', (done) => {
-      api.account.register(username, email, password)
-        .then((user) => {
-          expect(user._id).to.exist;
-          expect(user.apiToken).to.exist;
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
-    });
+    context('Failures', () => {
+      it('throws an error if uuid is already set', () => {
+        api.setCredentials({uuid: 'some-uuid'});
 
-    it('sets uuid and api token to new user', (done) => {
-      expect(api._uuid).to.not.exist;
-      expect(api._token).to.not.exist;
+        expect(() => {
+          api.account.register(username, email, password);
+        }).to.throw('User id or api token already set');
+      });
 
-      let username = generateRandomUserName();
-      let password = 'password'
-      let email = username + '@example.com';
+      it('throws an error if token is already set', () => {
+        api.setCredentials({token: 'some-token'});
 
-      api.account.register(username, email, password)
-        .then((user) => {
-          expect(api._connection._uuid).to.be.eql(user._id);
-          expect(api._connection._token).to.be.eql(user.apiToken);
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+        expect(() => {
+          api.account.register(username, email, password);
+        }).to.throw('User id or api token already set');
+      });
     });
   });
 });

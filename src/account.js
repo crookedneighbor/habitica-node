@@ -4,6 +4,10 @@ export default class {
   }
 
   register (username, email, password) {
+    if (this._connection._uuid || this._connection._token) {
+      throw 'User id or api token already set';
+    }
+
     let send = {
       username: username,
       email: email,
