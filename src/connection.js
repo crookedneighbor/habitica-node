@@ -48,7 +48,13 @@ export default class {
         .query(options.query)
         .send(options.send)
         .end((err, response) => {
-          if (err) { return reject(err); }
+          if (err) {
+            let errorString = JSON.parse(err.response.text).err;
+            return reject({
+              code: err.response.status,
+              text: errorString,
+            });
+          }
 
           resolve(response.body);
         });

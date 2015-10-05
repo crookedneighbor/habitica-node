@@ -150,15 +150,15 @@ describe('Connection', () => {
     context('unsuccesful request', () => {
 
       it('rejects if credentials are not valid', () => {
-        let expectedRequest = habiticaUrl.reply(function () {
-          return [401, 'Not allowed'];
+        let expectedRequest = habiticaUrl.reply(() => {
+          return [401, {response: { status: 401, text: 'Not Authorized' } }];
         });
 
         let connection = new Connection(defaultOptions);
         let request = connection.get('user');
 
         expectedRequest.done();
-        return expect(request).to.be.rejectedWith('Error: Unauthorized');
+        return expect(request).to.be.rejected;
       });
     });
   });
@@ -227,15 +227,15 @@ describe('Connection', () => {
     context('unsuccesful request', () => {
 
       it('rejects if credentials are not valid', () => {
-        let expectedRequest = habiticaUrl.reply(function () {
-          return [401, 'Not allowed'];
+        let expectedRequest = habiticaUrl.reply(() => {
+          return [401, {response: { status: 401, text: 'Not Authorized' } }];
         });
 
         let connection = new Connection(defaultOptions);
         let request = connection.post('user/tasks');
 
         expectedRequest.done();
-        return expect(request).to.be.rejectedWith('Error: Unauthorized');
+        return expect(request).to.be.rejected;
       });
     });
   });
