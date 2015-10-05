@@ -16,20 +16,56 @@ let api = new Habitica({
 
 ## Utilities
 
-### #setCredentials
+### setCredentials()
 
-Set credentials after initialization.
+Set credentials after initialization. If you do not provide a value, it will default to the previous value stored on initialization.
 
 ```js
 api.setCredentials({
   uuid: 'new-user-id',
   token: 'new-api-token',
+  endpoint: 'http://localhost:3000/api/v2',
 });
+```
+
+### getUuid()
+
+```js
+api.getUuid(); // returns uuid
+```
+
+### getToken()
+
+```js
+api.getToken(); // returns token
+```
+
+### getEndpoint()
+
+```js
+api.getEndpoint(); // returns api endpoint
 ```
 
 ## API Wrapper Methods
 
-### #content.get
+### account.register()
+
+The uuid and api token will be set automatically after a sucessful registration call. 
+```js
+api.account.register('username', 'email', 'password');
+
+// If the uuid or api token are already set, the register call will throw an error. You can override this behavior by passing in an object with a resetOldCreds parameter set to true
+api.account.register('username', 'email', 'password', {resetOldCreds: true});
+```
+
+### account.login()
+
+The uuid and api token will be set automatically after a sucessful login call. 
+```js
+api.account.login('username or email', 'password');
+```
+
+### content.get()
 
 ```js
 // Get all content
@@ -53,7 +89,7 @@ api.content.get('gear.tree.weapon.warrior')
   });
 ```
 
-### #content.getPaths
+### content.getPaths()
 
 ```js
 // Get all possible user paths
