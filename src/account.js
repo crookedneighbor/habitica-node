@@ -18,10 +18,14 @@ export default class {
       this._connection.setCredentials({uuid: null, token: null});
     }
 
-    let validCreds = _generateCreds(username, email, password);
-    if (!validCreds) throw 'Username, email or password is not a string';
+    let creds = {
+      username: username,
+      email: email,
+      password: password,
+      confirmPassword: password,
+    };
 
-    return this._connection.post('register', {send: validCreds})
+    return this._connection.post('register', {send: creds})
       .then((user) => {
         this._connection.setCredentials({
           uuid: user._id,
@@ -60,13 +64,6 @@ function _generateCreds(username, email, password) {
   });
 
   if (!isEmpty(hasBadCred)) return false;
-
-  let creds = {
-    username: username,
-    email: email,
-    password: password,
-    confirmPassword: password,
-  };
 
   return creds;
 }

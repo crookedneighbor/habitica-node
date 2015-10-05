@@ -90,42 +90,78 @@ describe('Account', () => {
     });
 
     context('Invalid Input', () => {
-      let invalidCredTypes = [
-        '',
-        true,
-        undefined, // eslint-disable-line no-undefined
-        null,
-        123,
-        ['array', 1],
-        {object: 'invalid'},
-        () => { return true; },
-      ];
-
-      it('throws an error if username is not a string', () => {
-        each(invalidCredTypes, (type) => {
-          username = type;
-          expect(() => {
-            api.account.register(username, email, password);
-          }).to.throw('Username, email or password is not a string');
-        });
+      it('resolves with error when username is not provided', (done) => {
+        api.account.register('', email, password)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
       });
 
-      it('throws an error if email is not a string', () => {
-        each(invalidCredTypes, (type) => {
-          email = type;
-          expect(() => {
-            api.account.register(username, email, password);
-          }).to.throw('Username, email or password is not a string');
-        });
+      it('resolves with error when email is not provided', (done) => {
+        api.account.register(username, '', password)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
       });
 
-      it('throws an error if password is not a string', () => {
-        each(invalidCredTypes, (type) => {
-          password = type;
-          expect(() => {
-            api.account.register(username, email, password);
-          }).to.throw('Username, email or password is not a string');
-        });
+      it('resolves with error when password is not provided', (done) => {
+        api.account.register(username, email, '')
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+
+      it('resolves with error when email is not valid', (done) => {
+        api.account.register(username, 'not.a.valid.email@example', password)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+
+      xit('resolves with error when email is already taken', (done) => {
+        // @TODO Seed database with user with a specific email
+        api.account.register(username, 'email.already.taken@example.com', password)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+
+      xit('resolves with error when username is already taken', (done) => {
+        // @TODO Seed database with user with a specific username
+        api.account.register('username_already_taken', email, password)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
       });
     });
   });
