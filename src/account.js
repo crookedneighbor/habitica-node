@@ -30,6 +30,24 @@ export default class {
         return user;
       });
   }
+
+  login (username_email, password, options={}) {
+    let creds = {
+      username: username_email,
+      password: password,
+    };
+    return this._connection.post('user/auth/local', {send: creds})
+      .then((creds) => {
+        this._connection.setCredentials({
+          uuid: creds.id,
+          token: creds.token,
+        });
+        return creds;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
 }
 
 function _generateCreds(username, email, password) {

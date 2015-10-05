@@ -129,4 +129,144 @@ describe('Account', () => {
       });
     });
   });
+
+  describe('#login', () => {
+    let api, username, password, email;
+
+    beforeEach((done) => {
+      let registerApi = new Habitica({
+        endpoint: `localhost:${process.env.PORT}/api/v2`,
+      });
+      api = new Habitica({
+        endpoint: `localhost:${process.env.PORT}/api/v2`,
+      });
+
+      username = generateRandomUserName();
+      password = 'password'
+      email = username + '@example.com';
+
+      registerApi.account.register(username, email, password)
+        .then((user) => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    context('Success', () => {
+      it('logs in with username and password', (done) => {
+        api.account.login(username, password)
+          .then((creds) => {
+            expect(creds.id).to.exist;
+            expect(creds.token).to.exist;
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+
+      it('sets uuid and token after logging in with username', (done) => {
+        api.account.login(username, password)
+          .then((creds) => {
+            expect(api.getUuid()).to.be.eql(creds.id);
+            expect(api.getToken()).to.be.eql(creds.token);
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+
+      it('logs in with email and password', (done) => {
+        api.account.login(email, password)
+          .then((creds) => {
+            expect(creds.id).to.exist;
+            expect(creds.token).to.exist;
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+
+      it('sets uuid and token after logging in with email', (done) => {
+        api.account.login(email, password)
+          .then((creds) => {
+            expect(api.getUuid()).to.be.eql(creds.id);
+            expect(api.getToken()).to.be.eql(creds.token);
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+    });
+
+    context('Failures', () => {
+      it('resolves with error when account is not provided', (done) => {
+        api.account.login(null, password)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+
+      it('resolves with error when account is not provided', (done) => {
+        api.account.login(username, null)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+
+      it('resolves with error when account does not exist', (done) => {
+        api.account.login('not-existant', password)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+
+      it('resolves with error when password does not match', (done) => {
+        api.account.login(username, 'password-not-correct')
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+
+      xit('resolves with error when account is blocked', (done) => {
+        // @TODO: seed database with blocked user
+        let blockedUsername = 'blocked-user';
+        let blockedPassword = 'password';
+        api.account.login(blockedUsername, blockedPassword)
+          .then((creds) => {
+            done(creds);
+          })
+          .catch((err) => {
+            expect(err.code).to.eql(401);
+            expect(err.text).to.exist;
+            done();
+          });
+      });
+    });
+  });
 });
