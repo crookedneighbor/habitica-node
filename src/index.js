@@ -2,6 +2,7 @@ import Connection from './connection';
 
 import Account from './account';
 import Content from './content';
+import User from './user';
 
 export default class {
   constructor (options = {}) {
@@ -16,6 +17,10 @@ export default class {
     });
 
     this.content = new Content({
+      connection: this._connection,
+    });
+
+    this.user = new User({
       connection: this._connection,
     });
   }
