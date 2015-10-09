@@ -170,10 +170,14 @@ describe('Connection', () => {
     });
 
     it('returns a promise', () => {
+      let expectedRequest = habiticaUrl.reply(() => {
+        return [200, { some: 'data' }];
+      });
       let connection = new Connection(defaultOptions);
       let request = connection.post('user/tasks');
 
       expect(request).to.respondTo('then');
+      expectedRequest.done();
     });
 
     it('takes in an optional query parameter', () => {

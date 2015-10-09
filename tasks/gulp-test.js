@@ -19,13 +19,13 @@ gulp.task('test', ['test:prepare'], () => {
   return runTests(tests);
 });
 
-gulp.task('test:integration', ['test:prepare'], (done) => {
+gulp.task('test:integration', ['test:prepare'], () => {
   let tests = glob('./test/integration/**/*.js');
 
   return runTests(tests);
 });
 
-gulp.task('test:unit', (done) => {
+gulp.task('test:unit', () => {
   let tests = glob('./test/unit/**/*.js');
 
   return runTests(tests);
@@ -48,13 +48,7 @@ gulp.task('test:startHabitica', ['test:dropDB'], (done) => {
   server.listen(process.env.PORT, done);
 });
 
-function runTests(source, cb) {
+function runTests(source) {
   return gulp.src(source)
-    .pipe(mocha(MOCHA_CONFIG))
-    .once('error', () => {
-      process.exit(1);
-    })
-    .once('end', () => {
-      cb();
-    });
+    .pipe(mocha(MOCHA_CONFIG));
 }
