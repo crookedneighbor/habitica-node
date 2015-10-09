@@ -29,17 +29,4 @@ describe('Habitica Api', () => {
       expect(api.getToken()).to.eql('newToken');
     });
   });
-
-  describe('attributes', () => {
-    let attributes = [
-      'account',
-      'content',
-    ];
-
-    attributes.forEach((param) => {
-      it(`has a ${param} attribute`, () => {
-        expect(api[param]).to.exist;
-      });
-    });
-  });
 });
