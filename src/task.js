@@ -37,6 +37,18 @@ export default class {
     return this._filterTasksByType('todo');
   }
 
+  score (id, direction='up', body={}) {
+    if (!id) throw 'Task id is required';
+
+    return this._connection.post(`user/tasks/${id}/${direction}`, {send: body})
+      .then((stats) => {
+        return stats;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   _filterTasksByType (type) {
     return this._connection.get('user/tasks')
       .then((tasks) => {

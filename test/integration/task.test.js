@@ -114,4 +114,143 @@ describe('Task', () => {
         });
     });
   });
+
+  describe('#score', () => {
+    it('scores up a task', (done) => {
+      let originalValue, newValue;
+
+      api.task.get('habit-1')
+        .then((habit) => {
+          originalValue = habit.value;
+          return api.task.score('habit-1', 'up');
+        })
+        .then((stats) => {
+          expect(stats.delta).to.be.greaterThan(0);
+          return api.task.get('habit-1');
+        })
+        .then((habit) => {
+          newValue = habit.value;
+          expect(newValue).to.be.greaterThan(originalValue);
+          done();
+        });
+    });
+
+    it('scores down a task', (done) => {
+      let originalValue, newValue;
+
+      api.task.get('habit-1')
+        .then((habit) => {
+          originalValue = habit.value;
+          return api.task.score('habit-1', 'down');
+        })
+        .then((stats) => {
+          expect(stats.delta).to.be.lessThan(0);
+          return api.task.get('habit-1');
+        })
+        .then((habit) => {
+          newValue = habit.value;
+          expect(newValue).to.be.lessThan(originalValue);
+          done();
+        });
+    });
+
+    it('defaults to scoring up', (done) => {
+      let originalValue, newValue;
+
+      api.task.get('habit-1')
+        .then((habit) => {
+          originalValue = habit.value;
+          return api.task.score('habit-1');
+        })
+        .then((stats) => {
+          expect(stats.delta).to.be.greaterThan(0);
+          return api.task.get('habit-1');
+        })
+        .then((habit) => {
+          newValue = habit.value;
+          expect(newValue).to.be.greaterThan(originalValue);
+          done();
+        });
+    });
+
+    it('creates new habit if it does not already exist', (done) => {
+      api.task.score('new-habit')
+        .then((stats) => {
+          return api.task.get('new-habit');
+        })
+        .then((habit) => {
+          expect(habit.type).to.eql('habit');
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('allows extra data to be passed in when creating the task', (done) => {
+      let todoBody = {
+        type: 'todo',
+        text: 'Custom Name',
+        notes: 'Custom Note',
+      };
+      api.task.score('new-todo', 'up', todoBody)
+        .then((stats) => {
+          return api.task.get('new-todo');
+        })
+        .then((todo) => {
+          expect(todo.type).to.eql('todo');
+          expect(todo.text).to.eql('Custom Name');
+          expect(todo.notes).to.eql('Custom Note');
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('completes task if scored task is a todo', (done) => {
+      api.task.score('todo-1')
+        .then((stats) => {
+          return api.task.get('todo-1');
+        })
+        .then((todo) => {
+          expect(todo.completed).to.eql(true);
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('completes task if scored task is a daily', (done) => {
+      api.task.score('daily-1')
+        .then((stats) => {
+          return api.task.get('daily-1');
+        })
+        .then((daily) => {
+          expect(daily.completed).to.eql(true);
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('throws an error if id is not provided', () => {
+      expect(() => {
+        api.task.score();
+      }).to.throw('Task id is required');
+    });
+
+    it('thows an error if a non-valid direction is used', (done) => {
+      api.task.score('habit-1', 'foo')
+        .then((stats) => {
+          done(stats);
+        })
+        .catch((err) => {
+          expect(err).to.exist;
+          done();
+        });
+    });
+  });
 });
