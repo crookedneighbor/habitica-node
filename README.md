@@ -1,4 +1,5 @@
-Habitica-Node
+# Habitica-Node
+[![Build Status](https://travis-ci.org/crookedneighbor/habitica-node.svg?branch=master)](https://travis-ci.org/crookedneighbor/habitica-node)
 ---
 
 A wrapper for the Habitica API
