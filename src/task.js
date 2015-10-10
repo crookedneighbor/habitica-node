@@ -22,51 +22,28 @@ export default class {
   }
 
   getTodos () {
-    return this._connection.get('user/tasks')
-      .then((tasks) => {
-        let todos = filter(tasks, (task) => {
-          return task.type === 'todo';
-        });
-        return todos;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    return this._filterTasksByType('todo');
   }
 
   getHabits () {
-    return this._connection.get('user/tasks')
-      .then((tasks) => {
-        let habits = filter(tasks, (task) => {
-          return task.type === 'habit';
-        });
-        return habits;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    return this._filterTasksByType('habit');
   }
 
   getDailys () {
-    return this._connection.get('user/tasks')
-      .then((tasks) => {
-        let dailys = filter(tasks, (task) => {
-          return task.type === 'daily';
-        });
-        return dailys;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    return this._filterTasksByType('daily');
   }
 
   getRewards () {
+    return this._filterTasksByType('reward');
+  }
+
+  _filterTasksByType (type) {
     return this._connection.get('user/tasks')
       .then((tasks) => {
-        let rewards = filter(tasks, (task) => {
-          return task.type === 'reward';
+        let taskByType = filter(tasks, (task) => {
+          return task.type === type;
         });
-        return rewards;
+        return taskByType;
       })
       .catch((err) => {
         throw err;
