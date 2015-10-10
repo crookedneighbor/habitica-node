@@ -55,13 +55,13 @@ describe('Task', () => {
     });
   });
 
-  describe('#getTodos', () => {
-    it('gets only todos', (done) => {
-      api.task.getTodos()
-        .then((todos) => {
-          expect(todos).to.have.a.lengthOf(2);
-          expect(todos[0].type).to.eql('todo');
-          expect(todos[1].type).to.eql('todo');
+  describe('#getDailys', () => {
+    it('gets only dailys', (done) => {
+      api.task.getDailys()
+        .then((dailys) => {
+          expect(dailys).to.have.a.lengthOf(2);
+          expect(dailys[0].type).to.eql('daily');
+          expect(dailys[1].type).to.eql('daily');
           done();
         })
         .catch((err) => {
@@ -85,13 +85,13 @@ describe('Task', () => {
     });
   });
 
-  describe('#getDailys', () => {
-    it('gets only dailys', (done) => {
-      api.task.getDailys()
-        .then((dailys) => {
-          expect(dailys).to.have.a.lengthOf(2);
-          expect(dailys[0].type).to.eql('daily');
-          expect(dailys[1].type).to.eql('daily');
+  describe('#getRewards', () => {
+    it('gets only rewards', (done) => {
+      api.task.getRewards()
+        .then((rewards) => {
+          expect(rewards).to.have.a.lengthOf(2);
+          expect(rewards[0].type).to.eql('reward');
+          expect(rewards[1].type).to.eql('reward');
           done();
         })
         .catch((err) => {
@@ -100,13 +100,13 @@ describe('Task', () => {
     });
   });
 
-  describe('#getRewards', () => {
-    it('gets only rewards', (done) => {
-      api.task.getRewards()
-        .then((rewards) => {
-          expect(rewards).to.have.a.lengthOf(2);
-          expect(rewards[0].type).to.eql('reward');
-          expect(rewards[1].type).to.eql('reward');
+  describe('#getTodos', () => {
+    it('gets only todos', (done) => {
+      api.task.getTodos()
+        .then((todos) => {
+          expect(todos).to.have.a.lengthOf(2);
+          expect(todos[0].type).to.eql('todo');
+          expect(todos[1].type).to.eql('todo');
           done();
         })
         .catch((err) => {
