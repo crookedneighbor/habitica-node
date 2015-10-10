@@ -2,6 +2,7 @@ import Connection from './connection';
 
 import Account from './account';
 import Content from './content';
+import Task from './task';
 import User from './user';
 
 export default class {
@@ -17,6 +18,10 @@ export default class {
     });
 
     this.content = new Content({
+      connection: this._connection,
+    });
+
+    this.task = new Task({
       connection: this._connection,
     });
 
