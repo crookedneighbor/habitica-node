@@ -16,11 +16,15 @@ describe('Account', () => {
     });
 
     context('Successful', () => {
-      xit('registers for a new account', (done) => {
+      it('registers for a new account', (done) => {
         api.account.register(username, email, password)
           .then((user) => {
-            // @TODO: look up member
-            done();
+            api.user.get()
+              .then((user) => {
+                expect(user.auth.local.username).to.eql(username);
+                expect(user.auth.local.email).to.eql(email);
+                done();
+              });
           })
           .catch((err) => {
             done(err);
