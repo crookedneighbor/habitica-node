@@ -1,3 +1,4 @@
+import {generateUser} from '../support/integration_helper';
 import {each} from 'lodash';
 import {v4 as generateRandomUserName} from 'uuid';
 import Habitica from '../../src/index';
@@ -141,32 +142,6 @@ describe('Account', () => {
             done();
           });
       });
-
-      xit('resolves with error when email is already taken', (done) => {
-        // @TODO Seed database with user with a specific email
-        api.account.register(username, 'email.already.taken@example.com', password)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
-      });
-
-      xit('resolves with error when username is already taken', (done) => {
-        // @TODO Seed database with user with a specific username
-        api.account.register('username_already_taken', email, password)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
-      });
     });
   });
 
@@ -283,21 +258,6 @@ describe('Account', () => {
 
       it('resolves with error when password does not match', (done) => {
         api.account.login(username, 'password-not-correct')
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
-      });
-
-      xit('resolves with error when account is blocked', (done) => {
-        // @TODO: seed database with blocked user
-        let blockedUsername = 'blocked-user';
-        let blockedPassword = 'password';
-        api.account.login(blockedUsername, blockedPassword)
           .then((creds) => {
             done(creds);
           })
