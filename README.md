@@ -102,6 +102,64 @@ api.content.getPaths()
   });
 ```
 
+### task.get()
+
+```js
+// Get all tasks
+api.task.get()
+  .then((tasks) => {
+    tasks[0]; // one of your tasks
+  });
+
+// Get a specific task
+api.task.get('id-of-your-task')
+  .then((task) => {
+    task.type; // the task type
+  });
+```
+
+### task.getDailys()
+
+```js
+// Get all dailys
+api.task.getDailys()
+  .then((dailys) => {
+    dailys[0]; // one of your dailys
+  });
+```
+
+### task.getHabits()
+
+```js
+// Get all habits
+api.task.getHabits()
+  .then((habits) => {
+    habits[0]; // one of your habits
+  });
+```
+
+
+### task.getRewards()
+
+```js
+// Get all rewards
+api.task.getRewards()
+  .then((rewards) => {
+    rewards[0]; // one of your rewards
+  });
+```
+
+
+### task.getTodos()
+
+```js
+// Get all todos
+api.task.getTodos()
+  .then((todos) => {
+    todos[0]; // one of your todos
+  });
+```
+
 ### user.get()
 
 ```js
