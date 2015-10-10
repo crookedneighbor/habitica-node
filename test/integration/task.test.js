@@ -2,24 +2,24 @@ import {generateUser} from '../support/integration_helper';
 import Habitica from '../../src/index';
 
 describe('Task', () => {
+  let api = new Habitica({
+    endpoint: `localhost:${process.env.PORT}/api/v2`,
+  });
+
+  beforeEach((done) => {
+    let update = {
+      'todos': [{type: 'todo', id: 'todo-1'}],
+      'habits': [{type: 'habit', id: 'habit-1'}],
+      'dailys': [{type: 'daily', id: 'daily-1'}],
+      'rewards': [{type: 'reward', id: 'reward-1'}],
+    }
+    generateUser(update, api)
+      .then((creds) => {
+        done();
+      });
+  });
+
   describe('#get', () => {
-    let api = new Habitica({
-      endpoint: `localhost:${process.env.PORT}/api/v2`,
-    });
-
-    beforeEach((done) => {
-      let update = {
-        'todos': [{type: 'todo', id: 'todo-1'}],
-        'habits': [{type: 'habit', id: 'habit-1'}],
-        'dailys': [{type: 'daily', id: 'daily-1'}],
-        'rewards': [{type: 'reward', id: 'reward-1'}],
-      }
-      generateUser(update, api)
-        .then((creds) => {
-          done();
-        });
-    });
-
     it('gets all tasks', (done) => {
       api.task.get()
         .then((tasks) => {
