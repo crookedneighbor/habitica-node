@@ -324,4 +324,85 @@ describe('Connection', () => {
       });
     });
   });
+
+  describe('#del', () => {
+    beforeEach(() => {
+      habiticaUrl = nock('https://habitica.com/api/v2')
+        .delete('/user/tasks')
+    });
+
+    it('returns a promise', () => {
+      let expectedRequest = habiticaUrl.reply(() => {
+        return [200, { some: 'data' }];
+      });
+      let connection = new Connection(defaultOptions);
+      let request = connection.delete('user/tasks');
+
+      expect(request).to.respondTo('then');
+      expectedRequest.done();
+    });
+
+    it('takes in an optional query parameter', () => {
+      let expectedRequest = nock('https://habitica.com/api/v2')
+        .delete('/user/tasks')
+        .query({
+          type: 'habit',
+          text: 'test habit',
+        })
+        .reply(201, {});
+
+      let connection = new Connection(defaultOptions);
+      let request = connection.delete('user/tasks', {
+        query: {
+          type: 'habit',
+          text: 'test habit',
+        },
+      });
+
+      expectedRequest.done();
+    });
+
+    it('takes in an optional send parameter', () => {
+      let expectedRequest = nock('https://habitica.com/api/v2')
+        .delete('/group', {
+          type: 'party',
+        })
+        .reply(200)
+
+      let connection = new Connection(defaultOptions);
+      let request = connection.delete('group', {send: {type: 'party'}});
+
+      expectedRequest.done();
+    });
+
+    context('succesful request', () => {
+
+      it('returns requested data', () => {
+        let expectedRequest = habiticaUrl.reply(() => {
+          return [200, { some: 'data' }];
+        });
+
+        let connection = new Connection(defaultOptions);
+        let request = connection.delete('user/tasks');
+
+        expectedRequest.done();
+        return expect(request).to.eventually.eql({ some: 'data' });
+      });
+    });
+
+    context('unsuccesful request', () => {
+
+      it('rejects if credentials are not valid', () => {
+        let expectedRequest = habiticaUrl.reply(() => {
+          return [401, {response: { status: 401, text: 'Not Authorized' } }];
+        });
+
+        let connection = new Connection(defaultOptions);
+        let request = connection.delete('user/tasks');
+
+        expectedRequest.done();
+        return expect(request).to.be.rejected;
+      });
+    });
+  });
 });
