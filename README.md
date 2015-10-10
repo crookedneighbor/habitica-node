@@ -101,3 +101,15 @@ api.content.getPaths()
     paths['items.gear.owned.weapon_warrior_0']; // Boolean
   });
 ```
+
+### user.get()
+
+```js
+// Get own user object
+api.user.get()
+  .then((user) => {
+    user._id; // your user id
+    user.todso; // an array of your todos
+    user.itmes; // your item object
+  });
+```
