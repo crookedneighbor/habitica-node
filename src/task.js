@@ -21,20 +21,20 @@ export default class {
       });
   }
 
-  getTodos () {
-    return this._filterTasksByType('todo');
-  }
-
-  getHabits () {
-    return this._filterTasksByType('habit');
-  }
-
   getDailys () {
     return this._filterTasksByType('daily');
   }
 
   getRewards () {
     return this._filterTasksByType('reward');
+  }
+
+  getHabits () {
+    return this._filterTasksByType('habit');
+  }
+
+  getTodos () {
+    return this._filterTasksByType('todo');
   }
 
   _filterTasksByType (type) {
