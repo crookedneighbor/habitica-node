@@ -325,7 +325,7 @@ describe('Connection', () => {
     });
   });
 
-  describe('#del', () => {
+  describe('#delete', () => {
     beforeEach(() => {
       habiticaUrl = nock('https://habitica.com/api/v2')
         .delete('/user/tasks')
@@ -403,6 +403,14 @@ describe('Connection', () => {
         expectedRequest.done();
         return expect(request).to.be.rejected;
       });
+    });
+  });
+
+  describe('#del', () => {
+
+    it('is an alias for #delete', () => {
+      let connection = new Connection(defaultOptions);
+      expect(connection.del).to.eql(connection.delete);
     });
   });
 });

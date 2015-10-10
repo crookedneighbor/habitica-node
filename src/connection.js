@@ -5,6 +5,8 @@ export default class {
     this._uuid = options.uuid;
     this._token = options.token;
     this._endpoint = options.endpoint || 'https://habitica.com/api/v2';
+
+    this.del = this.delete;
   }
 
   getUuid () {
