@@ -33,6 +33,10 @@ export default class {
     return this._router('post', route, options);
   }
 
+  put (route, options={}) {
+    return this._router('put', route, options);
+  }
+
   _router (method, route, options) {
     return new Promise((resolve, reject) => {
       let request = superagent[method](`${this._endpoint}/${route}`)
