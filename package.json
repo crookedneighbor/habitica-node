@@ -2,7 +2,7 @@
   "name": "habitica",
   "version": "0.5.2",
   "description": "A node wrapper for the habitica api",
-  "main": "dist/index.js",
+  "main": "dist/habitica.js",
   "scripts": {
     "build": "gulp babel",
     "docs": "docco src/*",
