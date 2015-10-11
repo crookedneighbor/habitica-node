@@ -6,7 +6,9 @@ const DIST = 'dist/';
 
 gulp.task('babel', () => {
   return gulp.src(SOURCE)
-    .pipe(babel())
+    .pipe(babel({
+      comments: false,
+    }))
     .pipe(gulp.dest(DIST));
 });
 
