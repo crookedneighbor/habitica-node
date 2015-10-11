@@ -4,7 +4,6 @@
   "description": "A node wrapper for the habitica api",
   "main": "dist/index.js",
   "scripts": {
-    "prepublish": "npm test && npm run build",
     "test": "npm run lint && gulp test",
     "test:unit": "gulp test:unit",
     "test:integration": "gulp test:integration",

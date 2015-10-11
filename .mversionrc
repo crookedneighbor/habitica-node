@@ -1,0 +1,9 @@
+{
+  "commitMessage": "%s",
+  "tagName": "%s",
+  "scripts": {
+    "preupdate": "echo 'Bumping version and running tests'",
+    "precommit": "npm test",
+    "postupdate": "echo 'Updated to version %s in manifest files'"
+  }
+}
