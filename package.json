@@ -5,7 +5,7 @@
   "main": "dist/habitica.js",
   "scripts": {
     "build": "gulp babel",
-    "docs": "docco --template docs/assets/template.jst --css docs/css/style.css src/*",
+    "docs": "gulp docs",
     "lint": "gulp lint",
     "test": "npm run lint && gulp test",
     "test:integration": "gulp test:integration",
