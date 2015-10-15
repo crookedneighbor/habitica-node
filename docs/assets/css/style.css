@@ -1,0 +1,24 @@
+#background {
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 50%;
+}
+
+.section-link {
+  left: -10px;
+  position: absolute;
+  top: 47px;
+}
+
+#menu-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index:10000;
+}
+
+#container {
+  margin-top: 20px;
+}
