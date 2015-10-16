@@ -335,4 +335,41 @@ describe('Task', () => {
       });
     });
   });
+
+  describe('#delete', () => {
+    it('deletes an existing task', (done) => {
+      api.task.delete(
+        'todo-1'
+      ).then((task) => {
+        expect(task).to.eql({});
+        return api.task.get('todo-1');
+      })
+      .then((task) => {
+        done(task);
+      })
+      .catch((err) => {
+        expect(err).to.exist;
+        expect(err.text).to.eql('No task found.');
+        done();
+      });
+    });
+
+    it('throws an error if no task id is provided', () => {
+      expect(() => {
+        api.task.delete();
+      }).to.throw('Task id is required');
+    });
+
+    it('returns error if task does not exist', (done) => {
+      api.task.delete(
+        'task-does-not-exist'
+      ).then((task) => {
+        done(task);
+      }).catch((err) => {
+        expect(err).to.exist;
+        expect(err.text).to.eql('Task not found.');
+        done();
+      });
+    });
+  });
 });

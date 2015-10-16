@@ -223,6 +223,30 @@ export default class {
       });
   }
 
+  // # task.delete()
+  // Delete existing task.
+  //
+  // Task id is a required argument.
+  //
+  // ```js
+  // api.task.delete(
+  //   'task-id',
+  // ).then((task) => {
+  //   task; // {}
+  // });
+  // ```
+  delete (id) {
+    if (!id) throw 'Task id is required';
+
+    return this._connection.delete(`user/tasks/${id}`)
+      .then((task) => {
+        return task;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   // NOOP
   _filterTasksByType (type) {
     return this._connection.get('user/tasks')
