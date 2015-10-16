@@ -151,16 +151,67 @@ api.content.get(<span class="hljs-string">'gear.tree.weapon.warrior'</span>)
           
             
             
-            <div id="content.getPaths" class="section-2 ui middle aligned two column grid">
+            <div id="content.getKeys" class="section-2 ui middle aligned two column grid">
               <div class="annotation column">
                 
-                <a class='section-link' href="#content.getPaths">
+                <a class='section-link' href="#content.getKeys">
                   <i class="linkify icon"></i>
                 </a>
-                <h1 id="content-getpaths-">content.getPaths()</h1>
+                <h1 id="content-getkeys-">content.getKeys()</h1>
+<p>Gets the keys of the content object</p>
+<pre><code class="lang-js">api.content.getKeys()
+  .then((keys) =&gt; {
+    keys; <span class="hljs-comment">// an array, ['eggs', 'quests', ...]</span>
+  });
+</code></pre>
+<p>If a path is specified, only the keys for that portion of the content object are passed back.</p>
+<pre><code>api.content.getKeys(<span class="hljs-string">'eggs'</span>)
+  .then((eggs) =&gt; {
+    eggs; <span class="hljs-comment">// an array, ['Wolf', 'Whale', ...]</span>
+  });
+
+api.content.getKeys(<span class="hljs-string">'gear.tree.weapon.warrior'</span>)
+  .then((warriorWeapons) =&gt; {
+    warriorWeapons; <span class="hljs-comment">// an array, ['0', '1', ...]</span>
+  });
+</code></pre>
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  getKeys (path) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'content'</span>)
+      .then((content) =&gt; {
+        <span class="hljs-keyword">if</span> (path) {
+          <span class="hljs-keyword">let</span> nestedContent = get(content, path);
+
+          <span class="hljs-keyword">if</span> (nestedContent) {
+            <span class="hljs-keyword">return</span> keys(nestedContent);
+          }
+
+          <span class="hljs-keyword">throw</span> <span class="hljs-string">`<span class="hljs-subst">${path}</span> is not a valid content path`</span>;
+        }
+
+        <span class="hljs-keyword">return</span> keys(content);
+      });
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+            
+            
+            <div id="content.getUserPaths" class="section-3 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#content.getUserPaths">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="content-getuserpaths-">content.getUserPaths()</h1>
 <p>Gets the content paths for a user object</p>
 <pre><code class="lang-js"><span class="hljs-comment">// Get all possible user paths</span>
-api.content.getPaths()
+api.content.getUserPaths()
   .then((paths) =&gt; {
     paths[<span class="hljs-string">'achievements.beastMaster'</span>]; <span class="hljs-comment">// Boolean</span>
     paths[<span class="hljs-string">'contributor.level'</span>]; <span class="hljs-comment">// Number</span>
@@ -171,7 +222,7 @@ api.content.getPaths()
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getPaths () {
+                <div class="content column hljs javascript"><div class='highlight'><pre>  getUserPaths () {
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'content/paths'</span>)
       .then((paths) =&gt; {
         <span class="hljs-keyword">return</span> paths;

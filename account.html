@@ -136,8 +136,10 @@
       confirmPassword: password,
     };
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(<span class="hljs-string">'register'</span>, {send: creds})
-      .then((user) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
+        <span class="hljs-string">'register'</span>,
+        {send: creds}
+      ).then((user) =&gt; {
         <span class="hljs-keyword">this</span>._connection.setCredentials({
           uuid: user._id,
           token: user.apiToken,
@@ -177,8 +179,10 @@
       username: username_email,
       password: password,
     };
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(<span class="hljs-string">'user/auth/local'</span>, {send: creds})
-      .then((creds) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
+        <span class="hljs-string">'user/auth/local'</span>,
+        {send: creds}
+      ).then((creds) =&gt; {
         <span class="hljs-keyword">this</span>._connection.setCredentials({
           uuid: creds.id,
           token: creds.token,

@@ -313,8 +313,10 @@
                 <div class="content column hljs javascript"><div class='highlight'><pre>  score (id, direction=<span class="hljs-string">'up'</span>, body={}) {
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>/<span class="hljs-subst">${direction}</span>`</span>, {send: body})
-      .then((stats) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
+        <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>/<span class="hljs-subst">${direction}</span>`</span>,
+        { send: body }
+      ).then((stats) =&gt; {
         <span class="hljs-keyword">return</span> stats;
       })
       .catch((err) =&gt; {
@@ -351,8 +353,10 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  post (taskBody) {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(<span class="hljs-string">'user/tasks'</span>, { send: taskBody })
-      .then((task) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
+        <span class="hljs-string">'user/tasks'</span>,
+        { send: taskBody }
+      ).then((task) =&gt; {
         <span class="hljs-keyword">return</span> task;
       })
       .catch((err) =&gt; {
@@ -391,8 +395,10 @@
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
     <span class="hljs-keyword">if</span> (!taskBody) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task body is required'</span>;
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.put(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>, { send: taskBody })
-      .then((task) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.put(
+        <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>,
+        { send: taskBody }
+      ).then((task) =&gt; {
         <span class="hljs-keyword">return</span> task;
       })
       .catch((err) =&gt; {
