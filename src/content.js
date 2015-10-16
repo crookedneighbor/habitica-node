@@ -53,11 +53,11 @@ export default class {
       });
   }
 
-  // # content.getPaths()
+  // # content.getUserPaths()
   // Gets the content paths for a user object
   // ```js
   // // Get all possible user paths
-  // api.content.getPaths()
+  // api.content.getUserPaths()
   //   .then((paths) => {
   //     paths['achievements.beastMaster']; // Boolean
   //     paths['contributor.level']; // Number
@@ -65,7 +65,7 @@ export default class {
   //     paths['items.gear.owned.weapon_warrior_0']; // Boolean
   //   });
   // ```
-  getPaths () {
+  getUserPaths () {
     return this._connection.get('content/paths')
       .then((paths) => {
         return paths;

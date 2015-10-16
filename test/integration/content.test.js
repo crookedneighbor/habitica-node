@@ -54,9 +54,9 @@ describe('Content', () => {
     });
   });
 
-  describe('#getPaths', () => {
-    it('gets content paths', (done) => {
-      api.content.getPaths()
+  describe('#getUserPaths', () => {
+    it('gets user paths', (done) => {
+      api.content.getUserPaths()
         .then((res) => {
           expect(res._id).to.exist;
           expect(res.apiToken).to.exist;
