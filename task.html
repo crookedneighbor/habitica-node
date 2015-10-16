@@ -328,6 +328,122 @@
           
           
           
+            
+            
+            <div id="task.post" class="section-7 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#task.post">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="task-post-">task.post()</h1>
+<p>Create a new task</p>
+<p>Takes the task object as an argument</p>
+<pre><code class="lang-js">api.task.post({
+ text: <span class="hljs-string">'task name'</span>,
+ type: <span class="hljs-string">'daily'</span>,
+ notes: <span class="hljs-string">'notes'</span>,
+}).then((task) =&gt; {
+  task.text; <span class="hljs-comment">// 'task name'</span>
+});
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  post (taskBody) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(<span class="hljs-string">'user/tasks'</span>, { send: taskBody })
+      .then((task) =&gt; {
+        <span class="hljs-keyword">return</span> task;
+      })
+      .catch((err) =&gt; {
+        <span class="hljs-keyword">throw</span> err;
+      });
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+            
+            
+            <div id="task.put" class="section-8 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#task.put">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="task-put-">task.put()</h1>
+<p>Update an existing task</p>
+<p>Task id and task body are required arguments.</p>
+<pre><code class="lang-js">api.task.put(
+  <span class="hljs-string">'task-id'</span>,
+  { text: <span class="hljs-string">'new task name'</span>, notes: <span class="hljs-string">'new task notes'</span> }
+).then((task) =&gt; {
+  task.text; <span class="hljs-comment">// 'new task name'</span>
+});
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  put (id, taskBody) {
+    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
+    <span class="hljs-keyword">if</span> (!taskBody) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task body is required'</span>;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.put(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>, { send: taskBody })
+      .then((task) =&gt; {
+        <span class="hljs-keyword">return</span> task;
+      })
+      .catch((err) =&gt; {
+        <span class="hljs-keyword">throw</span> err;
+      });
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+            
+            
+            <div id="task.delete" class="section-9 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#task.delete">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="task-delete-">task.delete()</h1>
+<p>Delete existing task.</p>
+<p>Task id is a required argument.</p>
+<pre><code class="lang-js">api.task.delete(
+  <span class="hljs-string">'task-id'</span>,
+).then((task) =&gt; {
+  task; <span class="hljs-comment">// {}</span>
+});
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">delete</span> (id) {
+    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.delete(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>)
+      .then((task) =&gt; {
+        <span class="hljs-keyword">return</span> task;
+      })
+      .catch((err) =&gt; {
+        <span class="hljs-keyword">throw</span> err;
+      });
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
         
       </div>
     </div>
