@@ -214,7 +214,7 @@ export default class {
     if (!id) throw 'Task id is required';
     if (!taskBody) throw 'Task body is required';
 
-    return this._connection.post('user/tasks', { send: taskBody })
+    return this._connection.put(`user/tasks/${id}`, { send: taskBody })
       .then((task) => {
         return task;
       })
