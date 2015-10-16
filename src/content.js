@@ -1,7 +1,7 @@
 // Content
 // archive
 // For all your content needs!
-import {get} from 'lodash';
+import {get, keys} from 'lodash';
 
 export default class {
   constructor (options) {
@@ -53,8 +53,48 @@ export default class {
       });
   }
 
+  // # content.getKeys()
+  // Gets the keys of the content object
+  //
+  // ```js
+  // api.content.getKeys()
+  //   .then((keys) => {
+  //     keys; // an array, ['eggs', 'quests', ...]
+  //   });
+  // ```
+  //
+  // If a path is specified, only the keys for that portion of the content object are passed back.
+  // ```
+  // api.content.getKeys('eggs')
+  //   .then((eggs) => {
+  //     eggs; // an array, ['Wolf', 'Whale', ...]
+  //   });
+  //
+  // api.content.getKeys('gear.tree.weapon.warrior')
+  //   .then((warriorWeapons) => {
+  //     warriorWeapons; // an array, ['0', '1', ...]
+  //   });
+  // ```
+  getKeys (path) {
+    return this._connection.get('content')
+      .then((content) => {
+        if (path) {
+          let nestedContent = get(content, path);
+
+          if (nestedContent) {
+            return keys(nestedContent);
+          }
+
+          throw `${path} is not a valid content path`;
+        }
+
+        return keys(content);
+      });
+  }
+
   // # content.getUserPaths()
   // Gets the content paths for a user object
+  //
   // ```js
   // // Get all possible user paths
   // api.content.getUserPaths()

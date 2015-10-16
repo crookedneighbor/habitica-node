@@ -54,6 +54,56 @@ describe('Content', () => {
     });
   });
 
+  describe('#getKeys', () => {
+    it('gets top level keys of content object', (done) => {
+      api.content.getKeys()
+        .then((res) => {
+          expect(res).to.contain('eggs');
+          expect(res).to.contain('quests');
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('gets keys of a specific piece of content', (done) => {
+      api.content.getKeys('eggs')
+        .then((res) => {
+          expect(res).to.contain('Wolf');
+          expect(res).to.contain('Whale');
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('gets keys of specific piece of content file with nested argument', (done) => {
+      api.content.getKeys('gear.tree.weapon.warrior')
+        .then((res) => {
+          expect(res).to.contain('0');
+          expect(res).to.contain('1');
+          expect(res).to.contain('2');
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('throws error if an invalid argument is provided', (done) => {
+      api.content.getKeys('invalid-content-path')
+        .then((res) => {
+          done('Fail: Did not throw an error');
+        })
+        .catch((err) => {
+          expect(err).to.eql('invalid-content-path is not a valid content path');
+          done();
+        });
+    });
+  });
+
   describe('#getUserPaths', () => {
     it('gets user paths', (done) => {
       api.content.getUserPaths()
