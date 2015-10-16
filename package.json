@@ -1,6 +1,6 @@
 {
   "name": "habitica",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "A node wrapper for the habitica api",
   "main": "dist/index.js",
   "scripts": {
