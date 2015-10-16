@@ -1,5 +1,5 @@
 import {generateUser} from '../support/integration_helper';
-import Habitica from '../../src/habitica';
+import Habitica from '../../src/index';
 
 describe('User', () => {
   describe('#get', () => {

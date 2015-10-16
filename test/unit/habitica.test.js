@@ -1,4 +1,4 @@
-import Habitica from '../../src/habitica';
+import Habitica from '../../src/index';
 
 describe('Habitica Api', () => {
   let api = new Habitica({uuid: 'myUuid', token: 'myToken' });
