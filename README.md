@@ -47,3 +47,33 @@ api.task.score(
   stats._tmp.drop; // a drop, if awarded for scoring the task
 });
 ```
+
+## Testing
+
+To run all the tests:
+
+```
+$ npm t
+```
+
+* The bulk of the tests are integration tets that expect a Habitica dev instance to be running. 
+
+* A mongodb instance must be running already in order to run the tests locally.
+
+* By default, the test infrastructure assumes that the repo for Habitica is '../../habitrpg', relative to the test directory. You may pass in your own path by exporting the environmental variable `PATH_TO_HABITICA`.
+
+  ```
+  $ export PATH_TO_HABITICA='../../some/other/path';
+  ```
+
+* By default, the app will be served on port 3321. This can be configured with the environmental variable `HABITICA_PORT`:
+
+  ```
+  $ export HABITICA_PORT=3001;
+  ```
+
+* By default, the mongodb uri is 'mongodb://localhost/habitica-node-test'. You can configure this variable with the environmental variable `HABITICA_DB_URI`:
+
+  ```
+  $ export HABITICA_DB_URI='mongodb://localhost/some-other-db';
+  ```
