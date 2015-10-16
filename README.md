@@ -17,7 +17,7 @@ let api = new Habitica({
 
 ## Usage
 
-You can register, login, get your user object, manipulate your tasks, and parse the content object, among other things.
+You can register, login, get your user object, manipulate your tasks, and parse the content object, among other things. For more comprehensive information, [read the documentation](http://crookedneighbor.github.io/habitica-node/docs/).
 
 ```js
 api.account.register(
