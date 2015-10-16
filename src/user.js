@@ -10,7 +10,7 @@ export default class {
   //
   // Gets the entire user object.
   // ```js
-  // user.get()
+  // api.user.get()
   //   .then((user) => {
   //     user._id; // your user id
   //     user.todso; // an array of your todos

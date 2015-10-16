@@ -18,7 +18,7 @@ export default class {
   //
   // The uuid and api token will be set automatically after a sucessful registration call.
   // ```js
-  // account.register(
+  // api.account.register(
   //   'username',
   //   'email',
   //   'password',
@@ -28,7 +28,7 @@ export default class {
   // If the uuid or api token are already set, the register call will throw an error. You can override this behavior by passing in an object with a `resetOldCreds` parameter set to true
   //
   // ```js
-  // account.register(
+  // api.account.register(
   //   'username',
   //   'email',
   //   'password',
@@ -70,7 +70,7 @@ export default class {
   // The uuid and api token will be set automatically after a sucessful login call.
   //
   // ```js
-  // account.login(
+  // api.account.login(
   //   'username or email',
   //   'password',
   // );

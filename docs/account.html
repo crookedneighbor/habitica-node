@@ -103,14 +103,14 @@
                 <h1 id="account-register-">account.register()</h1>
 <p>Registers a new account.</p>
 <p>The uuid and api token will be set automatically after a sucessful registration call.</p>
-<pre><code class="lang-js">account.register(
+<pre><code class="lang-js">api.account.register(
   <span class="hljs-string">'username'</span>,
   <span class="hljs-string">'email'</span>,
   <span class="hljs-string">'password'</span>,
 );
 </code></pre>
 <p>If the uuid or api token are already set, the register call will throw an error. You can override this behavior by passing in an object with a <code>resetOldCreds</code> parameter set to true</p>
-<pre><code class="lang-js">account.register(
+<pre><code class="lang-js">api.account.register(
   <span class="hljs-string">'username'</span>,
   <span class="hljs-string">'email'</span>,
   <span class="hljs-string">'password'</span>,
@@ -164,7 +164,7 @@
 <p>Logs into an existing account.</p>
 <p>You can log in with your username and password or your email and password.</p>
 <p>The uuid and api token will be set automatically after a sucessful login call.</p>
-<pre><code class="lang-js">account.login(
+<pre><code class="lang-js">api.account.login(
   <span class="hljs-string">'username or email'</span>,
   <span class="hljs-string">'password'</span>,
 );
