@@ -8,6 +8,6 @@
     "postupdate": "echo 'Updated to version %s in manifest files'",
     "postupdate": "echo 'Deploying documentation...'",
     "postupdate": "npm run docs:deploy",
-    "postupdate": "echo 'Docs Deployed'",
+    "postupdate": "echo 'Docs Deployed'"
   }
 }
