@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import {sync as glob} from 'glob';
 import docco from 'docco';
+import ghPages from 'gulp-gh-pages';
 
 gulp.task('docs', (done) => {
   let options = {
@@ -10,6 +11,11 @@ gulp.task('docs', (done) => {
   };
 
   docco.document(options, done);
+});
+
+gulp.task('docs:deploy', ['docs'], () => {
+  return gulp.src('./docs/**/*')
+  .pipe(ghPages());
 });
 
 gulp.task('docs:watch', () => {
