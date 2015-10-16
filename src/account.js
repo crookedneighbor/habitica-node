@@ -52,18 +52,5 @@ export default class {
         throw err;
       });
   }
-}
 
-function _generateCreds(username, email, password) {
-  let set = [username, email, password];
-
-  let hasBadCred = reject(set, (cred) => {
-    let validString = isString(cred);
-    let notEmpty = !isEmpty(cred);
-    return validString && notEmpty;
-  });
-
-  if (!isEmpty(hasBadCred)) return false;
-
-  return creds;
 }
