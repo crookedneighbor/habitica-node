@@ -253,4 +253,33 @@ describe('Task', () => {
         });
     });
   });
+
+  describe('#post', () => {
+    it('creates a new task', (done) => {
+      api.task.post()
+        .then((task) => {
+          expect(task.id).to.exist;
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('creates a new task with specified task attributes', (done) => {
+      api.task.post({
+        type: 'todo',
+        text: 'new todo',
+        notes: 'new notes',
+      }).then((task) => {
+        expect(task.type).to.eql('todo');
+        expect(task.text).to.eql('new todo');
+        expect(task.notes).to.eql('new notes');
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+    });
+  });
 });

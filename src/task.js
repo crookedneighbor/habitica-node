@@ -173,6 +173,30 @@ export default class {
       });
   }
 
+  // # task.post()
+  // Create a new task
+  //
+  // Takes the task object as an argument
+  //
+  // ```js
+  // api.task.post({
+  //  text: 'task name',
+  //  type: 'daily',
+  //  notes: 'notes',
+  // }).then((task) => {
+  //   task.text; // 'task name'
+  // });
+  // ```
+  post (taskBody) {
+    return this._connection.post('user/tasks', { send: taskBody })
+      .then((task) => {
+        return task;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   // NOOP
   _filterTasksByType (type) {
     return this._connection.get('user/tasks')
