@@ -48,6 +48,41 @@ api.task.score(
 });
 ```
 
+## Documentation
+
+The documentation is generated automatically using [Docco](https://jashkenas.github.io/docco/). 
+
+Every file should begin with this format:
+
+```js
+// Module Name
+// icon class name (http://semantic-ui.com/elements/icon.html)
+// A pithy subheading
+```
+
+Before each method there should be something like:
+
+```js
+// # module.method()
+// 
+// A short description about the method.
+//
+// Any important information about the module followed by a code example for how this method would be used.
+//
+// ```js
+// api.module.method()
+//   .then((result) => {
+//      result; // some assertion about result
+//   });
+// ```
+```
+
+Anything that is private, or otherwise shouldn't be shown in the documentation for the public methods should be prefixed with:
+
+```js
+// NOOP
+```
+
 ## Testing
 
 To run all the tests:
