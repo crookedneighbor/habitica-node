@@ -1,4 +1,4 @@
-import Habitica from '../../src/index';
+import Habitica from '../../dist/index';
 
 describe('Content', () => {
   let api = new Habitica({

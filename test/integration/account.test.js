@@ -1,7 +1,7 @@
 import {generateUser} from '../support/integration_helper';
 import {each} from 'lodash';
 import {v4 as generateRandomUserName} from 'uuid';
-import Habitica from '../../src/index';
+import Habitica from '../../dist/index';
 
 describe('Account', () => {
   describe('#register', () => {
