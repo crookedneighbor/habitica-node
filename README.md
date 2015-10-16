@@ -50,7 +50,7 @@ api.task.score(
 
 ## Documentation
 
-The documentation is generated automatically using [Docco](https://jashkenas.github.io/docco/). 
+The documentation is generated automatically using [Docco](https://jashkenas.github.io/docco/).
 
 Every file should begin with this format:
 
@@ -64,7 +64,7 @@ Before each method there should be something like:
 
 ```js
 // # module.method()
-// 
+//
 // A short description about the method.
 //
 // Any important information about the module followed by a code example for how this method would be used.
@@ -91,7 +91,7 @@ To run all the tests:
 $ npm t
 ```
 
-* The bulk of the tests are integration tets that expect a Habitica dev instance to be running. 
+* The bulk of the tests are integration tets that expect a Habitica dev instance to be running.
 
 * A mongodb instance must be running already in order to run the tests locally.
 
