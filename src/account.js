@@ -92,6 +92,5 @@ export default class {
         throw err;
       });
   }
-
 // NOOP
 }
