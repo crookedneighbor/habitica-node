@@ -2,13 +2,14 @@
   "name": "habitica",
   "version": "0.5.2",
   "description": "A node wrapper for the habitica api",
-  "main": "dist/index.js",
+  "main": "dist/habitica.js",
   "scripts": {
-    "test": "npm run lint && gulp test",
-    "test:unit": "gulp test:unit",
-    "test:integration": "gulp test:integration",
     "build": "gulp babel",
-    "lint": "gulp lint"
+    "docs": "gulp docs",
+    "lint": "gulp lint",
+    "test": "npm run lint && gulp test",
+    "test:integration": "gulp test:integration",
+    "test:unit": "gulp test:unit"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "babel": "^5.8.21",
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
+    "docco": "^0.7.0",
     "eslint-plugin-mocha": "^1.0.0",
     "glob": "^5.0.15",
     "gulp": "^3.9.0",

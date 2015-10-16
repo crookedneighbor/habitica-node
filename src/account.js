@@ -1,3 +1,6 @@
+// Account
+// settings
+// Manage your account
 import {
   reject,
   isEmpty,
@@ -9,6 +12,29 @@ export default class {
     this._connection = options.connection;
   }
 
+  // # account.register()
+  //
+  // Registers a new account.
+  //
+  // The uuid and api token will be set automatically after a sucessful registration call.
+  // ```js
+  // account.register(
+  //   'username',
+  //   'email',
+  //   'password',
+  // );
+  // ```
+  //
+  // If the uuid or api token are already set, the register call will throw an error. You can override this behavior by passing in an object with a `resetOldCreds` parameter set to true
+  //
+  // ```js
+  // account.register(
+  //   'username',
+  //   'email',
+  //   'password',
+  //   { resetOldCreds: true },
+  // );
+  // ```
   register (username, email, password, options={}) {
     if (this._connection._uuid || this._connection._token) {
       if (!options.resetOldCreds) {
@@ -35,6 +61,20 @@ export default class {
       });
   }
 
+  // # account.login()
+  //
+  // Logs into an existing account.
+  //
+  // You can log in with your username and password or your email and password.
+  //
+  // The uuid and api token will be set automatically after a sucessful login call.
+  //
+  // ```js
+  // account.login(
+  //   'username or email',
+  //   'password',
+  // );
+  // ```
   login (username_email, password, options={}) {
     let creds = {
       username: username_email,
@@ -52,18 +92,6 @@ export default class {
         throw err;
       });
   }
-}
 
-function _generateCreds(username, email, password) {
-  let set = [username, email, password];
-
-  let hasBadCred = reject(set, (cred) => {
-    let validString = isString(cred);
-    let notEmpty = !isEmpty(cred);
-    return validString && notEmpty;
-  });
-
-  if (!isEmpty(hasBadCred)) return false;
-
-  return creds;
+// NOOP
 }

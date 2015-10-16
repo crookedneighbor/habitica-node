@@ -15,160 +15,65 @@ let api = new Habitica({
 });
 ```
 
-## Utilities
+## Usage
 
-### setCredentials()
-
-Set credentials after initialization. If you do not provide a value, it will default to the previous value stored on initialization.
+You can register, login, get your user object, manipulate your tasks, and parse the content object, among other things.
 
 ```js
-api.setCredentials({
-  uuid: 'new-user-id',
-  token: 'new-api-token',
-  endpoint: 'http://localhost:3000/api/v2',
+api.account.register(
+  'username',
+  'email',
+  'password',
+).then((user) => {
+  // The uuid and token are automatically applied the Habitica instance
+});
+
+api.account.login(
+  'username or email',
+  'password',
+).then((user) => {
+  // The uuid and token are automatically applied the Habitica instance
+});
+
+api.user.get()
+  .then((user) => {
+    user; // the user object
+  });
+
+api.task.score(
+  'task-id',
+  'up',
+).then((stats) => {
+  stats._tmp.drop; // a drop, if awarded for scoring the task
 });
 ```
 
-### getUuid()
+## Testing
 
-```js
-api.getUuid(); // returns uuid
+To run all the tests:
+
+```
+$ npm t
 ```
 
-### getToken()
+* The bulk of the tests are integration tets that expect a Habitica dev instance to be running. 
 
-```js
-api.getToken(); // returns token
-```
+* A mongodb instance must be running already in order to run the tests locally.
 
-### getEndpoint()
+* By default, the test infrastructure assumes that the repo for Habitica is '../../habitrpg', relative to the test directory. You may pass in your own path by exporting the environmental variable `PATH_TO_HABITICA`.
 
-```js
-api.getEndpoint(); // returns api endpoint
-```
+  ```
+  $ export PATH_TO_HABITICA='../../some/other/path';
+  ```
 
-## API Wrapper Methods
+* By default, the app will be served on port 3321. This can be configured with the environmental variable `HABITICA_PORT`:
 
-### account.register()
+  ```
+  $ export HABITICA_PORT=3001;
+  ```
 
-The uuid and api token will be set automatically after a sucessful registration call. 
-```js
-api.account.register('username', 'email', 'password');
+* By default, the mongodb uri is 'mongodb://localhost/habitica-node-test'. You can configure this variable with the environmental variable `HABITICA_DB_URI`:
 
-// If the uuid or api token are already set, the register call will throw an error. You can override this behavior by passing in an object with a resetOldCreds parameter set to true
-api.account.register('username', 'email', 'password', {resetOldCreds: true});
-```
-
-### account.login()
-
-The uuid and api token will be set automatically after a sucessful login call. 
-```js
-api.account.login('username or email', 'password');
-```
-
-### content.get()
-
-```js
-// Get all content
-api.content.get()
-  .then((content) => {
-    content.gear.tree; // all gear objects
-    content.egg.Wolf; // wolf egg object
-    content.quests.whale; // whale quest object
-  });
-
-// Get specific piece of content
-api.content.get('eggs')
-  .then((eggs) => {
-    eggs.Wolf; // wolf egg object
-  });
-
-// Get specific piece of nested content
-api.content.get('gear.tree.weapon.warrior')
-  .then((warriorWeapons) => {
-    warriorWeapons['0']; // initial warrior weapon
-  });
-```
-
-### content.getPaths()
-
-```js
-// Get all possible user paths
-api.content.getPaths()
-  .then((paths) => {
-    paths['achievements.beastMaster']; // Boolean
-    paths['contributor.level']; // Number
-    paths['items.currentPet']; // String
-    paths['items.gear.owned.weapon_warrior_0']; // Boolean
-  });
-```
-
-### task.get()
-
-```js
-// Get all tasks
-api.task.get()
-  .then((tasks) => {
-    tasks[0]; // one of your tasks
-  });
-
-// Get a specific task
-api.task.get('id-of-your-task')
-  .then((task) => {
-    task.type; // the task type
-  });
-```
-
-### task.getDailys()
-
-```js
-// Get all dailys
-api.task.getDailys()
-  .then((dailys) => {
-    dailys[0]; // one of your dailys
-  });
-```
-
-### task.getHabits()
-
-```js
-// Get all habits
-api.task.getHabits()
-  .then((habits) => {
-    habits[0]; // one of your habits
-  });
-```
-
-
-### task.getRewards()
-
-```js
-// Get all rewards
-api.task.getRewards()
-  .then((rewards) => {
-    rewards[0]; // one of your rewards
-  });
-```
-
-
-### task.getTodos()
-
-```js
-// Get all todos
-api.task.getTodos()
-  .then((todos) => {
-    todos[0]; // one of your todos
-  });
-```
-
-### user.get()
-
-```js
-// Get own user object
-api.user.get()
-  .then((user) => {
-    user._id; // your user id
-    user.todso; // an array of your todos
-    user.itmes; // your item object
-  });
-```
+  ```
+  $ export HABITICA_DB_URI='mongodb://localhost/some-other-db';
+  ```
