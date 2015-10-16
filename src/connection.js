@@ -1,3 +1,6 @@
+// Connection
+// phone
+// This is a private lib used by the other classes. It has no public interface.
 import superagent from 'superagent';
 
 export default class {
