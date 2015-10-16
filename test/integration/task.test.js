@@ -53,6 +53,17 @@ describe('Task', () => {
           done(err);
         });
     });
+
+    it('throws error if task does not exist', (done) => {
+      api.task.get('todo-that-does-not-exist')
+        .then((task) => {
+          done(task);
+        })
+        .catch((err) => {
+          expect(err).to.exist;
+          done();
+        });
+    });
   });
 
   describe('#getDailys', () => {
@@ -289,6 +300,7 @@ describe('Task', () => {
         'todo-1',
         { text: 'updated todo name', notes: 'updated todo notes' }
       ).then((task) => {
+        expect(task.id).to.eql('todo-1');
         expect(task.text).to.eql('updated todo name');
         expect(task.notes).to.eql('updated todo notes');
         done();
@@ -308,6 +320,19 @@ describe('Task', () => {
       expect(() => {
         api.task.put('habit-1');
       }).to.throw('Task body is required');
+    });
+
+    it('returns error if task does not exist', (done) => {
+      api.task.put(
+        'task-does-not-exist',
+        { text: 'updated todo name', notes: 'updated todo notes' }
+      ).then((task) => {
+        done(task);
+      }).catch((err) => {
+        expect(err).to.exist;
+        expect(err.text).to.eql('Task not found.');
+        done();
+      });
     });
   });
 });
