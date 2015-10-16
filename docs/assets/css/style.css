@@ -13,10 +13,7 @@
 }
 
 #menu-buttons {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index:10000;
+  margin-left: 10px;
 }
 
 #container {

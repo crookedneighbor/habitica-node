@@ -7,5 +7,10 @@ $( document ).ready(function() {
     $('.ui.sidebar').sidebar('toggle');
   });
 
+  $('.ui.sticky').sticky({
+    context: '#container',
+    offset: 10,
+  });
+
   $('#menu-buttons .button').popup();
 });
