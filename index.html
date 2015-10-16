@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 
 <html>
@@ -5,27 +10,236 @@
   <title>Initialize</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" media="all" href="docs/assets/css/style.css" />
+  <link rel="stylesheet" media="all" href="assets/css/style.css" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/tomorrow-night.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.js"></script>
-  <script src="docs/assets/js/javascript.js"></script>
+  <script src="assets/js/javascript.js"></script>
 </head>
 <body>
-  <h1 class="ui center aligned icon header">
-    <div><img src="docs/assets/images/logo.png"></div>
-    Habitica Node
-  </h1>
-  <h2 class="ui center aligned icon header">A wrapper for the Habitica API</h2>
-  <div class="ui grid container">
-    <div class="ui column center aligned">
-      <a href="docs">
-        <button class="massive ui button basic">
-          Read the Docs
-        </button>
+  <div class="ui left push vertical inverted sidebar menu">
+    
+      
+      <a class="item menu-link" href="account.html">
+        
+        
+        Account
       </a>
+    
+      
+      <a class="item menu-link" href="connection.html">
+        
+        
+        Connection
+      </a>
+    
+      
+      <a class="item menu-link" href="content.html">
+        
+        
+        Content
+      </a>
+    
+      
+      <a class="item menu-link" href="index.html">
+        
+        
+        Index
+      </a>
+    
+      
+      <a class="item menu-link" href="task.html">
+        
+        
+        Task
+      </a>
+    
+      
+      <a class="item menu-link" href="user.html">
+        
+        
+        User
+      </a>
+    
+  </div>
+
+  <div class='pusher'>
+    <div id='menu-buttons' class='ui fixed top sticky'>
+      <div class='ui basic button icon' id='menu-button'>
+        <i class='icon sidebar'></i>
+      </div>
+      <a href='https://github.com/crookedneighbor/habitica-node/blob/master/src/index.js' class='ui basic button icon' data-content="View Source Code">
+        <i class='icon code'></i>
+      </a>
+    </div>
+
+    <div id="background" class="hljs"></div>
+
+    <div id="container" class="ui container">
+      <div class="ui middle aligned two column grid">
+        <h2 class="ui icon header center aligned column">
+          <i class="heartbeat icon"></i>
+          Initialize
+          <div class="sub header">Set up your client!</div>
+        </h2>
+        <div class='column'></div>
+      </div>
+
+      <div class="sections">
+          
+          
+          
+          
+            
+            
+            <div id="Habitica" class="section-1 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#Habitica">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="habitica-">Habitica()</h1>
+<p>Set up your instance of Habitica.</p>
+<p>The endpoint will default to <a href="https://habitica.com/api/v2">https://habitica.com/api/v2</a> if not provided.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>);
+<span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica({
+  uuid: <span class="hljs-string">'your-habitica.com-user-id'</span>,
+  token: <span class="hljs-string">'your-habitica.com-api-token'</span>,
+  endpoint: <span class="hljs-string">'custom-url'</span>,
+});
+</code></pre>
+<p>The uuid and token parameters are not required and can be <a href="#setCredentials">set later</a> or be set at time of <a href="account.html#account.register">registration</a> or <a href="account.html#account.login">login</a>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>);
+<span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica();
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._connection = <span class="hljs-keyword">new</span> Connection({
+      uuid: options.uuid,
+      token: options.token,
+      endpoint: options.endpoint,
+    });</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+        
+          
+          
+          
+            
+            
+            <div id="getUuid" class="section-3 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#getUuid">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="getuuid-">getUuid()</h1>
+<p>Gets the uuid of habitica instance.</p>
+<pre><code class="lang-js">api.getUuid();
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  getUuid () {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getUuid();
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+            
+            
+            <div id="getToken" class="section-4 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#getToken">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="gettoken-">getToken()</h1>
+<p>Gets the token of habitica instance.</p>
+<pre><code class="lang-js">api.getToken();
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  getToken () {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getToken();
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+            
+            
+            <div id="getEndpoint" class="section-5 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#getEndpoint">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="getendpoint-">getEndpoint()</h1>
+<p>Gets the configured endpoint of habitica instance.</p>
+<pre><code class="lang-js">api.getEndpoint();
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  getEndpoint () {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getEndpoint();
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+            
+            
+            <div id="setCredentials" class="section-6 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#setCredentials">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="setcredentials-">setCredentials()</h1>
+<p>Set credentials after initialization.</p>
+<p>If you do not provide a value, it will default to the previous value stored on initialization.</p>
+<pre><code class="lang-js">api.setCredentials({
+  uuid: <span class="hljs-string">'new-user-id'</span>,
+  token: <span class="hljs-string">'new-api-token'</span>,
+  endpoint: <span class="hljs-string">'http://localhost:3000/api/v2'</span>,
+});
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  setCredentials (creds) {
+    <span class="hljs-keyword">this</span>._connection.setCredentials(creds);
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
+        
+      </div>
     </div>
   </div>
 </body>
