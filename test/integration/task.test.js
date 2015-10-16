@@ -372,4 +372,23 @@ describe('Task', () => {
       });
     });
   });
+
+  describe('#del', () => {
+    it('is an alias for delete and deletes an existing task', (done) => {
+      api.task.del(
+        'todo-1'
+      ).then((task) => {
+        expect(task).to.eql({});
+        return api.task.get('todo-1');
+      })
+      .then((task) => {
+        done(task);
+      })
+      .catch((err) => {
+        expect(err).to.exist;
+        expect(err.text).to.eql('No task found.');
+        done();
+      });
+    });
+  });
 });

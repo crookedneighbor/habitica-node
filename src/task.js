@@ -6,6 +6,8 @@ import {filter} from 'lodash';
 export default class {
   constructor (options) {
     this._connection = options.connection;
+
+    this.del = this.delete;
   }
 
   // # task.get()
