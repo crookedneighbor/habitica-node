@@ -282,4 +282,32 @@ describe('Task', () => {
       });
     });
   });
+
+  describe('#put', () => {
+    it('updates an existing task', (done) => {
+      api.task.put(
+        'todo-1',
+        { text: 'updated todo name', notes: 'updated todo notes' }
+      ).then((task) => {
+        expect(task.text).to.eql('updated todo name');
+        expect(task.notes).to.eql('updated todo notes');
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+    });
+
+    it('throws an error if no task id is provided', () => {
+      expect(() => {
+        api.task.put();
+      }).to.throw('Task id is required');
+    });
+
+    it('throws an error if no task body is provided', () => {
+      expect(() => {
+        api.task.put('habit-1');
+      }).to.throw('Task body is required');
+    });
+  });
 });

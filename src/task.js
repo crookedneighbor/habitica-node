@@ -197,6 +197,32 @@ export default class {
       });
   }
 
+  // # task.put()
+  // Update an existing task
+  //
+  // Task id and task body are required arguments.
+  //
+  // ```js
+  // api.task.put(
+  //   'task-id',
+  //   { text: 'new task name', notes: 'new task notes' }
+  // ).then((task) => {
+  //   task.text; // 'new task name'
+  // });
+  // ```
+  put (id, taskBody) {
+    if (!id) throw 'Task id is required';
+    if (!taskBody) throw 'Task body is required';
+
+    return this._connection.post('user/tasks', { send: taskBody })
+      .then((task) => {
+        return task;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   // NOOP
   _filterTasksByType (type) {
     return this._connection.get('user/tasks')
