@@ -51,8 +51,10 @@ export default class {
       confirmPassword: password,
     };
 
-    return this._connection.post('register', {send: creds})
-      .then((user) => {
+    return this._connection.post(
+        'register',
+        {send: creds}
+      ).then((user) => {
         this._connection.setCredentials({
           uuid: user._id,
           token: user.apiToken,
@@ -80,8 +82,10 @@ export default class {
       username: username_email,
       password: password,
     };
-    return this._connection.post('user/auth/local', {send: creds})
-      .then((creds) => {
+    return this._connection.post(
+        'user/auth/local',
+        {send: creds}
+      ).then((creds) => {
         this._connection.setCredentials({
           uuid: creds.id,
           token: creds.token,

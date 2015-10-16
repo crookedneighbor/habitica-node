@@ -166,8 +166,10 @@ export default class {
   score (id, direction='up', body={}) {
     if (!id) throw 'Task id is required';
 
-    return this._connection.post(`user/tasks/${id}/${direction}`, {send: body})
-      .then((stats) => {
+    return this._connection.post(
+        `user/tasks/${id}/${direction}`,
+        { send: body }
+      ).then((stats) => {
         return stats;
       })
       .catch((err) => {
@@ -190,8 +192,10 @@ export default class {
   // });
   // ```
   post (taskBody) {
-    return this._connection.post('user/tasks', { send: taskBody })
-      .then((task) => {
+    return this._connection.post(
+        'user/tasks',
+        { send: taskBody }
+      ).then((task) => {
         return task;
       })
       .catch((err) => {
@@ -216,8 +220,10 @@ export default class {
     if (!id) throw 'Task id is required';
     if (!taskBody) throw 'Task body is required';
 
-    return this._connection.put(`user/tasks/${id}`, { send: taskBody })
-      .then((task) => {
+    return this._connection.put(
+        `user/tasks/${id}`,
+        { send: taskBody }
+      ).then((task) => {
         return task;
       })
       .catch((err) => {
