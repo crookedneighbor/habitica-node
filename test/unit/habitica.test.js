@@ -1,7 +1,10 @@
 import Habitica from '../../src/index';
 
 describe('Habitica Api', () => {
-  let api = new Habitica({uuid: 'myUuid', token: 'myToken' });
+  let api;
+  beforeEach(() => {
+    api  = new Habitica({uuid: 'myUuid', token: 'myToken' });
+  });
 
   describe('#getUuid', () => {
     it('returns uuid', () => {
