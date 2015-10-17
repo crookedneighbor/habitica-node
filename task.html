@@ -414,16 +414,16 @@
           
             
             
-            <div id="task.delete" class="section-9 ui middle aligned two column grid">
+            <div id="task.del" class="section-9 ui middle aligned two column grid">
               <div class="annotation column">
                 
-                <a class='section-link' href="#task.delete">
+                <a class='section-link' href="#task.del">
                   <i class="linkify icon"></i>
                 </a>
-                <h1 id="task-delete-">task.delete()</h1>
+                <h1 id="task-del-">task.del()</h1>
 <p>Delete existing task.</p>
 <p>Task id is a required argument.</p>
-<pre><code class="lang-js">api.task.delete(
+<pre><code class="lang-js">api.task.del(
   <span class="hljs-string">'task-id'</span>,
 ).then((task) =&gt; {
   task; <span class="hljs-comment">// {}</span>
@@ -432,10 +432,10 @@
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">delete</span> (id) {
+                <div class="content column hljs javascript"><div class='highlight'><pre>  del (id) {
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.delete(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>)
       .then((task) =&gt; {
         <span class="hljs-keyword">return</span> task;
       })
