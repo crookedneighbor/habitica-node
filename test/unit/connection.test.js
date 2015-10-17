@@ -325,7 +325,7 @@ describe('Connection', () => {
     });
   });
 
-  describe('#delete', () => {
+  describe('#del', () => {
     beforeEach(() => {
       habiticaUrl = nock('https://habitica.com/api/v2')
         .delete('/user/tasks')
@@ -336,7 +336,7 @@ describe('Connection', () => {
         return [200, { some: 'data' }];
       });
       let connection = new Connection(defaultOptions);
-      let request = connection.delete('user/tasks');
+      let request = connection.del('user/tasks');
 
       expect(request).to.respondTo('then');
       expectedRequest.done();
@@ -352,7 +352,7 @@ describe('Connection', () => {
         .reply(201, {});
 
       let connection = new Connection(defaultOptions);
-      let request = connection.delete('user/tasks', {
+      let request = connection.del('user/tasks', {
         query: {
           type: 'habit',
           text: 'test habit',
@@ -370,7 +370,7 @@ describe('Connection', () => {
         .reply(200)
 
       let connection = new Connection(defaultOptions);
-      let request = connection.delete('group', {send: {type: 'party'}});
+      let request = connection.del('group', {send: {type: 'party'}});
 
       expectedRequest.done();
     });
@@ -383,7 +383,7 @@ describe('Connection', () => {
         });
 
         let connection = new Connection(defaultOptions);
-        let request = connection.delete('user/tasks');
+        let request = connection.del('user/tasks');
 
         expectedRequest.done();
         return expect(request).to.eventually.eql({ some: 'data' });
@@ -398,19 +398,11 @@ describe('Connection', () => {
         });
 
         let connection = new Connection(defaultOptions);
-        let request = connection.delete('user/tasks');
+        let request = connection.del('user/tasks');
 
         expectedRequest.done();
         return expect(request).to.be.rejected;
       });
-    });
-  });
-
-  describe('#del', () => {
-
-    it('is an alias for #delete', () => {
-      let connection = new Connection(defaultOptions);
-      expect(connection.del).to.eql(connection.delete);
     });
   });
 });

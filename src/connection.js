@@ -9,7 +9,7 @@ export default class {
     this._token = options.token;
     this._endpoint = options.endpoint || 'https://habitica.com/api/v2';
 
-    this.del = this.delete;
+    this.delete = this.del;
   }
 
   getUuid () {
@@ -42,7 +42,7 @@ export default class {
     return this._router('put', route, options);
   }
 
-  delete (route, options={}) {
+  del (route, options={}) {
     return this._router('del', route, options);
   }
 

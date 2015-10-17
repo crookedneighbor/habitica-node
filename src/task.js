@@ -7,7 +7,7 @@ export default class {
   constructor (options) {
     this._connection = options.connection;
 
-    this.del = this.delete;
+    this.delete = this.del;
   }
 
   // # task.get()
@@ -231,22 +231,22 @@ export default class {
       });
   }
 
-  // # task.delete()
+  // # task.del()
   // Delete existing task.
   //
   // Task id is a required argument.
   //
   // ```js
-  // api.task.delete(
+  // api.task.del(
   //   'task-id',
   // ).then((task) => {
   //   task; // {}
   // });
   // ```
-  delete (id) {
+  del (id) {
     if (!id) throw 'Task id is required';
 
-    return this._connection.delete(`user/tasks/${id}`)
+    return this._connection.del(`user/tasks/${id}`)
       .then((task) => {
         return task;
       })
