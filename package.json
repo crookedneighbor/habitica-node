@@ -40,8 +40,6 @@
     "mocha": "^2.3.3",
     "mongodb": "^2.0.45",
     "nock": "^2.10.0",
-    "sinon": "^1.16.0",
-    "sinon-chai": "^2.8.0",
     "uuid": "^2.0.1"
   },
   "dependencies": {
