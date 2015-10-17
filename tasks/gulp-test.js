@@ -73,7 +73,7 @@ function runTests(tests, cb) {
   });
   mocha.files = tests;
 
-  mocha.run((errorReport) => {
-    cb(null, errorReport);
+  mocha.run((numberOfFailures) => {
+    cb(null, numberOfFailures);
   });
 }
