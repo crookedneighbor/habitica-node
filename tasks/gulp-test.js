@@ -71,7 +71,6 @@ function runTests(tests, cb) {
     delete require.cache[resolve(test)];
     mocha.addFile(test);
   });
-  mocha.files = tests;
 
   mocha.run((numberOfFailures) => {
     cb(null, numberOfFailures);
