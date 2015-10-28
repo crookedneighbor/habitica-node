@@ -25,6 +25,22 @@ describe('Connection', () => {
     });
   });
 
+  context('connection error handling', () => {
+    let connection;
+
+    before(() => nock.disableNetConnect());
+    after(() => nock.enableNetConnect());
+    beforeEach(() => {
+      connection = new Connection(defaultOptions);
+    });
+
+    it('rejects with connection error if habit is unreachable', () => {
+      let request = connection.get('user');
+
+      return expect(request).to.be.rejectedWith(/Nock: Not allow net connect/);
+    });
+  });
+
   describe('#getUuid', () => {
     it('returns uuid', () => {
       let connection = new Connection(defaultOptions);

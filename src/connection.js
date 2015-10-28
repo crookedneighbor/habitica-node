@@ -62,11 +62,14 @@ export default class {
         .send(options.send)
         .end((err, response) => {
           if (err) {
-            let errorString = JSON.parse(err.response.text).err;
-            return reject({
-              code: err.response.status,
-              text: errorString,
-            });
+            if (err.response) {
+              let errorString = JSON.parse(err.response.text).err;
+              err = {
+                code: err.response.status,
+                text: errorString,
+              }
+            }
+            return reject(err);
           }
 
           resolve(response.body);
