@@ -11,5 +11,8 @@ before_install:
 - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 1; done
 - cd ../habitrpg && cp config.json.example config.json && npm install && cd -
 notifications:
+  email:
+    on_success: change
+    on_failure: always
   slack:
     secure: cJf/QtAXyM14n0yESdEWh3OxU5JZfD5vLjxzbOn3uQIV2aXYtB5H66qUl1Vr3vMRwGEctP8+GU84zPLNrxXvQdSzYVU+Kco0TBzfOnYr7fngm5lFhcoK4PQF30O4P4NKSiq/6t8K9vAQA+41kzzLQnibcgbW6ttwSrY+Uss/Ys8F2OCv5eVfoz0Zr+5IWqU8XoHbhB3exKyT9r3QKl9+907WH56ququ848ZTDVJXBy2z0ML09R8rL5F+YCWuXebS4XqIiTD1Wy38zIF+efnLI81Kb8tQWLrZD/oniwLUTwZrtnK1jMvKqcB+wyek10vxww8yXamtwT9LTjHmZRIRwKaSRkQkeKUWtB5yR0cfD0mCeSEeM846sZC7E/qHOv5zKPqnm3UQNOdjgyzWvJFIDNQZVa/UllpjTrBIHG7d1vT5VSGor6VdExUijAdmU810idfMEa4Ed7NefOCgVV9L9aJ0XJFI2BZRAo9gE52WfYfC4bJdd0EP86F1N2XnCYT2ZqkkCbtHQ8Cljpe+I8zpIWyvsATWwLFMsN7AThVO7EjhZ/Uk8bW4G2qdalBwC8cTi73swzdrqoWyc+Uj9Dm4hl47cfMLbCXHpzcHbCzgLm8Bl87nNwd+sub7Hrp8oYwdtUOCMsIeDx0or6fhOOba91UGVTn91t6gDiPV6aSwEZg=
