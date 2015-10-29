@@ -29,7 +29,9 @@ describe('Connection', () => {
     let connection;
 
     before(() => nock.disableNetConnect());
+
     after(() => nock.enableNetConnect());
+
     beforeEach(() => {
       connection = new Connection(defaultOptions);
     });
