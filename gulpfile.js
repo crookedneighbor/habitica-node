@@ -6,7 +6,7 @@
  * directory, and it will automatically be included.
  */
 
-require('babel/register');
+require('babel-core/register');
 
 require('glob').sync('./tasks/gulp-*').forEach(require);
 require('gulp').task('default', ['test']);

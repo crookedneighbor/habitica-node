@@ -1,6 +1,7 @@
 // Initialize
 // heartbeat
 // Set up your client!
+require('babel-core/polyfill');
 import Connection from './connection';
 
 import Account from './account';
