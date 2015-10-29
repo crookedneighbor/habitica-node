@@ -1,6 +1,6 @@
 {
   "name": "habitica",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A node wrapper for the habitica api",
   "main": "dist/index.js",
   "scripts": {
@@ -21,10 +21,12 @@
     "habitrpg"
   ],
   "author": "Blade Barringer <blade@crookedneighbor.com>",
-  "contributors": [{
-    "name": "Nick Tomlin",
-    "email": "nick.tomlin@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Nick Tomlin",
+      "email": "nick.tomlin@gmail.com"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/crookedneighbor/habitica-node/issues"
