@@ -63,10 +63,9 @@ export default class {
         .end((err, response) => {
           if (err) {
             if (err.response) {
-              let errorString = JSON.parse(err.response.text).err;
               err = {
                 code: err.response.status,
-                text: errorString,
+                text: err.response.body.err,
               }
             }
             return reject(err);
