@@ -21,6 +21,10 @@
     "habitrpg"
   ],
   "author": "Blade Barringer <blade@crookedneighbor.com>",
+  "contributors": [{
+    "name": "Nick Tomlin",
+    "email": "nick.tomlin@gmail.com"
+  }],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/crookedneighbor/habitica-node/issues"
