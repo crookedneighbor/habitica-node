@@ -349,7 +349,6 @@ describe('Task', () => {
       })
       .catch((err) => {
         expect(err).to.exist;
-        expect(err.text).to.eql('No task found.');
         done();
       });
     });
