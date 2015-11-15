@@ -2,6 +2,7 @@
 // phone
 // This is a private lib used by the other classes. It has no public interface.
 import superagent from 'superagent';
+import Q from 'q';
 
 export default class {
   constructor (options) {
@@ -47,7 +48,7 @@ export default class {
   }
 
   _router (method, route, options) {
-    return new Promise((resolve, reject) => {
+    return Q.Promise((resolve, reject) => { // eslint-disable-line new-cap
       let request = superagent[method](`${this._endpoint}/${route}`)
         .accept('application/json');
 
