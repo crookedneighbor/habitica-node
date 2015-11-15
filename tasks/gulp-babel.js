@@ -1,5 +1,5 @@
-import gulp from 'gulp';
-import babel from 'gulp-babel';
+var gulp = require('gulp');
+var babel = require('gulp-babel');
 
 const SOURCE = 'src/**/*.js';
 const DIST = 'dist/';

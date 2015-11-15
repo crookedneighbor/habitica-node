@@ -1,8 +1,8 @@
-import gulp from 'gulp';
-import {resolve} from 'path';
-import {MongoClient as mongo} from 'mongodb';
-import {sync as glob} from 'glob';
-import Mocha from 'mocha';
+var gulp = require('gulp');
+var resolve = require('path').resolve;
+var mongo = require('mongodb').MongoClient;
+var glob = require('glob').sync;
+var Mocha = require('mocha');
 
 require('../test/support/globals');
 
@@ -13,7 +13,7 @@ process.env.NODE_DB_URI = process.env.HABITICA_DB_URI || 'mongodb://localhost/ha
 process.env.DISABLE_REQUEST_LOGGING = true;
 
 gulp.task('test', ['test:prepare'], (done) => {
-  let tests = glob('./test/**/*.js');
+  var tests = glob('./test/**/*.js');
 
   runTests(tests, (err, report) => {
     process.exit(report);
@@ -22,7 +22,7 @@ gulp.task('test', ['test:prepare'], (done) => {
 });
 
 gulp.task('test:integration', ['test:prepare'], (done) => {
-  let tests = glob('./test/integration/**/*.js');
+  var tests = glob('./test/integration/**/*.js');
 
   runTests(tests, (err, report) => {
     if (!process.env.RUN_INTEGRATION_TEST_FOREVER) {
@@ -39,7 +39,7 @@ gulp.task('test:integration:watch', ['test:prepare'], () => {
 });
 
 gulp.task('test:unit', (done) => {
-  let tests = glob('./test/unit/**/*.js');
+  var tests = glob('./test/unit/**/*.js');
   runTests(tests, done);
 });
 
@@ -60,12 +60,12 @@ gulp.task('test:dropDB', (done) => {
 gulp.task('test:startHabitica', ['test:dropDB'], (done) => {
   const PATH_TO_HABITICA = process.env.PATH_TO_HABITICA || '../../habitrpg';
 
-  let server = require(`${PATH_TO_HABITICA}/website/src/server.js`);
+  var server = require(`${PATH_TO_HABITICA}/website/src/server.js`);
   server.listen(process.env.PORT, done);
 });
 
 function runTests(tests, cb) {
-  let mocha = new Mocha();
+  var mocha = new Mocha();
 
   tests.forEach((test) => {
     delete require.cache[resolve(test)];

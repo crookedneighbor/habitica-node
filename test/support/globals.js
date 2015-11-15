@@ -1,4 +1,4 @@
-import chai from 'chai';
+var chai = require('chai');
 
 chai.use(require('chai-as-promised'));
 
