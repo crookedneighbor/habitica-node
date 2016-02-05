@@ -7,6 +7,7 @@ import Account from './account';
 import Content from './content';
 import Task from './task';
 import User from './user';
+import Tag from './tag';
 
 export default class {
   constructor (options = {}) {
@@ -53,6 +54,10 @@ export default class {
     this.user = new User({
       connection: this._connection,
     });
+    
+    this.tag = new Tag({
+      connection: this._connection,
+    })
   }
 
 
