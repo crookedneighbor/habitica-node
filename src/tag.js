@@ -3,7 +3,7 @@
 // Sort thy stuff!
 export default class {
   constructor (option) {
-    this._connection = options.connection;
+    this._connection = option.connection;
     
     this.delete = this.del;
   }
@@ -33,7 +33,7 @@ export default class {
     let url = 'user/tags';
     
     if (id) {
-      url += '/${id}';
+      url += `/${id}`;
     }
     
     return this._connection.get(url)
@@ -53,8 +53,8 @@ export default class {
   // ```js
   // api.tag.post({
   //  name: 'tag name',
-  // }).then((tag) => {
-  //   tag.id; // 'tag id'
+  // }).then((tags) => {
+  //   tags; // it returns all of the existing tags
   // });
   // ```
   post (tagBody) {
@@ -105,16 +105,16 @@ export default class {
   // ```js
   // api.tag.del(
   //   'tag-id',
-  // ).then((tag) => {
-  //   tag; // {}
+  // ).then((tags) => {
+  //   tags; // remaining existing tags
   // });
   // ```
   del (id) {
     if (!id) throw 'Tag id is required';
 
     return this._connection.del(`user/tags/${id}`)
-      .then((tag) => {
-        return tag;
+      .then((tags) => {
+        return tags;
       })
       .catch((err) => {
         throw err;
