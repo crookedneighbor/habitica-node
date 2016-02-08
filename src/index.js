@@ -9,7 +9,7 @@ import Task from './task';
 import User from './user';
 import Tag from './tag';
 
-export default class {
+module.exports = class {
   constructor (options = {}) {
     // # Habitica()
     //
@@ -54,7 +54,7 @@ export default class {
     this.user = new User({
       connection: this._connection,
     });
-    
+
     this.tag = new Tag({
       connection: this._connection,
     })
