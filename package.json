@@ -8,9 +8,12 @@
     "docs": "gulp docs",
     "docs:deploy": "gulp docs:deploy",
     "lint": "gulp lint",
-    "test": "npm run build && npm run lint && gulp test",
-    "test:integration": "gulp test:integration",
-    "test:unit": "gulp test:unit"
+    "test:support:drop-db": "node tasks/drop-db.js",
+    "test:support:server": "node tasks/start-server",
+    "test": "npm run build && npm run lint && npm run test:unit && npm run test:integration-with-server",
+    "test:integration": "mocha test/integration",
+    "test:integration-with-server": "npm run test:support:drop-db && node tasks/start-server npm run test:integration",
+    "test:unit": "mocha test/unit"
   },
   "repository": {
     "type": "git",
