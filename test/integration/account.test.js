@@ -63,20 +63,18 @@ describe('Account', () => {
     });
 
     context('Uuid or token already set', () => {
-      it('throws an error if uuid is already set', () => {
+      it('throws an error if uuid is already set', async () => {
         api.setCredentials({uuid: 'some-uuid'});
 
-        expect(() => {
-          api.account.register(username, email, password);
-        }).to.throw('User id or api token already set');
+        await expect(api.account.register(username, email, password))
+          .to.eventually.be.rejected.and.eql('User id or api token already set');
       });
 
-      it('throws an error if token is already set', () => {
+      it('throws an error if token is already set', async () => {
         api.setCredentials({token: 'some-token'});
 
-        expect(() => {
-          api.account.register(username, email, password);
-        }).to.throw('User id or api token already set');
+        await expect(api.account.register(username, email, password))
+          .to.eventually.be.rejected.and.eql('User id or api token already set');
       });
 
       it('allows the creation of a new user when uuid or token is already set if resetOldCreds option is passed in', () => {

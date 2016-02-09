@@ -17,14 +17,10 @@ export default class {
   //     user.items; // your items object
   //   });
   // ```
-  get () {
-    return this._connection.get('user')
-      .then((user) => {
-        return user;
-      })
-      .catch((err) => {
-        throw err;
-      });
+  async get () {
+    let user = await this._connection.get('user');
+
+    return user;
   }
   // NOOP
 }

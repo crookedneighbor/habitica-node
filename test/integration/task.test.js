@@ -247,10 +247,8 @@ describe('Task', () => {
         });
     });
 
-    it('throws an error if id is not provided', () => {
-      expect(() => {
-        api.task.score();
-      }).to.throw('Task id is required');
+    it('throws an error if id is not provided', async () => {
+      await expect(api.task.score()).to.eventually.be.rejected.and.eql('Task id is required');
     });
 
     it('thows an error if a non-valid direction is used', (done) => {
@@ -310,16 +308,12 @@ describe('Task', () => {
       });
     });
 
-    it('throws an error if no task id is provided', () => {
-      expect(() => {
-        api.task.put();
-      }).to.throw('Task id is required');
+    it('throws an error if no task id is provided', async () => {
+      await expect(api.task.put()).to.eventually.be.rejected.and.eql('Task id is required');
     });
 
-    it('throws an error if no task body is provided', () => {
-      expect(() => {
-        api.task.put('habit-1');
-      }).to.throw('Task body is required');
+    it('throws an error if no task body is provided', async () => {
+      await expect(api.task.put('habit-1')).to.eventually.be.rejected.and.eql('Task body is required');
     });
 
     it('returns error if task does not exist', (done) => {
@@ -353,10 +347,8 @@ describe('Task', () => {
       });
     });
 
-    it('throws an error if no task id is provided', () => {
-      expect(() => {
-        api.task.del();
-      }).to.throw('Task id is required');
+    it('throws an error if no task id is provided', async () => {
+      await expect(api.task.del()).to.eventually.be.rejected.and.eql('Task id is required');
     });
 
     it('returns error if task does not exist', (done) => {

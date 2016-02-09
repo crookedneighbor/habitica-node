@@ -31,20 +31,16 @@ export default class {
   //     task.type; // the task type
   //   });
   // ```
-  get (id) {
+  async get (id) {
     let url = 'user/tasks';
 
     if (id) {
       url += `/${id}`;
     }
 
-    return this._connection.get(url)
-      .then((tasks) => {
-        return tasks;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let tasks = await this._connection.get(url);
+
+    return tasks;
   }
 
   // # task.getDailys()
@@ -57,7 +53,7 @@ export default class {
   //     dailys[0]; // one of your dailys
   //   });
   // ```
-  getDailys () {
+  async getDailys () {
     return this._filterTasksByType('daily');
   }
 
@@ -71,7 +67,7 @@ export default class {
   //     rewards[0]; // one of your rewards
   //   });
   // ```
-  getRewards () {
+  async getRewards () {
     return this._filterTasksByType('reward');
   }
 
@@ -85,7 +81,7 @@ export default class {
   //     habits[0]; // one of your habits
   //   });
   // ```
-  getHabits () {
+  async getHabits () {
     return this._filterTasksByType('habit');
   }
 
@@ -99,7 +95,7 @@ export default class {
   //     todos[0]; // one of your todos
   //   });
   // ```
-  getTodos () {
+  async getTodos () {
     return this._filterTasksByType('todo');
   }
 
@@ -163,18 +159,15 @@ export default class {
   //   task.notes; // 'Custom Note'
   // });
   // ```
-  score (id, direction='up', body={}) {
+  async score (id, direction='up', body={}) {
     if (!id) throw 'Task id is required';
 
-    return this._connection.post(
-        `user/tasks/${id}/${direction}`,
-        { send: body }
-      ).then((stats) => {
-        return stats;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let stats = await this._connection.post(
+      `user/tasks/${id}/${direction}`,
+      { send: body }
+    );
+
+    return stats;
   }
 
   // # task.post()
@@ -191,16 +184,12 @@ export default class {
   //   task.text; // 'task name'
   // });
   // ```
-  post (taskBody) {
-    return this._connection.post(
-        'user/tasks',
-        { send: taskBody }
-      ).then((task) => {
-        return task;
-      })
-      .catch((err) => {
-        throw err;
-      });
+  async post (taskBody) {
+    let task = await this._connection.post(
+      'user/tasks',
+      { send: taskBody }
+    );
+    return task;
   }
 
   // # task.put()
@@ -216,19 +205,16 @@ export default class {
   //   task.text; // 'new task name'
   // });
   // ```
-  put (id, taskBody) {
+  async put (id, taskBody) {
     if (!id) throw 'Task id is required';
     if (!taskBody) throw 'Task body is required';
 
-    return this._connection.put(
-        `user/tasks/${id}`,
-        { send: taskBody }
-      ).then((task) => {
-        return task;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let task = await this._connection.put(
+      `user/tasks/${id}`,
+      { send: taskBody }
+    );
+
+    return task;
   }
 
   // # task.del()
@@ -243,29 +229,20 @@ export default class {
   //   task; // {}
   // });
   // ```
-  del (id) {
+  async del (id) {
     if (!id) throw 'Task id is required';
 
-    return this._connection.del(`user/tasks/${id}`)
-      .then((task) => {
-        return task;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let task = await this._connection.del(`user/tasks/${id}`)
+
+    return task;
   }
 
   // NOOP
-  _filterTasksByType (type) {
-    return this._connection.get('user/tasks')
-      .then((tasks) => {
-        let taskByType = filter(tasks, (task) => {
-          return task.type === type;
-        });
-        return taskByType;
-      })
-      .catch((err) => {
-        throw err;
-      });
+  async _filterTasksByType (type) {
+    let tasks = await this._connection.get('user/tasks');
+    let taskByType = filter(tasks, (task) => {
+      return task.type === type;
+    });
+    return taskByType;
   }
 }

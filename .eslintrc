@@ -5,8 +5,10 @@ ecmaFeatures:
   modules: true
   objectLiteralShorthandMethods: true
   objectLiteralShorthandProperties: true
+parser: babel-eslint
 plugins:
   - mocha
+  - babel
 rules:
   indent: [2, 2]
   brace-style:
@@ -16,6 +18,8 @@ rules:
       allowSingleLine: true
   comma-style: [2, "last"]
   comma-dangle: [2, "always-multiline"]
+  babel/object-shorthand: 2
+  babel/no-await-in-loop: 2
   mocha/no-exclusive-tests: 2
   default-case: 2
   func-style: [2, "declaration"]

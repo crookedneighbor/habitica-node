@@ -35,7 +35,7 @@ export default class {
   //   { resetOldCreds: true },
   // );
   // ```
-  register (username, email, password, options={}) {
+  async register (username, email, password, options={}) {
     if (this._connection._uuid || this._connection._token) {
       if (!options.resetOldCreds) {
         throw 'User id or api token already set';
@@ -45,22 +45,23 @@ export default class {
     }
 
     let creds = {
-      username: username,
-      email: email,
-      password: password,
+      username,
+      email,
+      password,
       confirmPassword: password,
     };
 
-    return this._connection.post(
+    let user = await this._connection.post(
         'register',
         {send: creds}
-      ).then((user) => {
-        this._connection.setCredentials({
-          uuid: user._id,
-          token: user.apiToken,
-        });
-        return user;
-      });
+      );
+
+    this._connection.setCredentials({
+      uuid: user._id,
+      token: user.apiToken,
+    });
+
+    return user;
   }
 
   // # account.login()
@@ -77,24 +78,22 @@ export default class {
   //   'password',
   // );
   // ```
-  login (username_email, password, options={}) {
-    let creds = {
+  async login (username_email, password, options={}) {
+    let loginCreds = {
       username: username_email,
-      password: password,
+      password,
     };
-    return this._connection.post(
-        'user/auth/local',
-        {send: creds}
-      ).then((creds) => {
-        this._connection.setCredentials({
-          uuid: creds.id,
-          token: creds.token,
-        });
-        return creds;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let creds = await this._connection.post(
+      'user/auth/local',
+      {send: loginCreds}
+    );
+
+    this._connection.setCredentials({
+      uuid: creds.id,
+      token: creds.token,
+    });
+
+    return creds;
   }
 // NOOP
 }

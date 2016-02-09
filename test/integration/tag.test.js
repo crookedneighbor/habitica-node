@@ -117,16 +117,12 @@ describe('Tag', () => {
       });
     });
 
-    it('throws an error if no tag id is provided', () => {
-      expect(() => {
-        api.tag.put();
-      }).to.throw('Tag id is required');
+    it('throws an error if no tag id is provided', async () => {
+      await expect(api.tag.put()).to.eventually.be.rejected.and.eql('Tag id is required');
     });
 
-    it('throws an error if no tag body is provided', () => {
-      expect(() => {
-        api.tag.put('tag-1');
-      }).to.throw('Tag body is required');
+    it('throws an error if no tag body is provided', async () => {
+      await expect(api.tag.put('tag-1')).to.eventually.be.rejected.and.eql('Tag body is required');
     });
 
     it('returns error if tag does not exist', (done) => {
@@ -169,10 +165,8 @@ describe('Tag', () => {
       });
     });
 
-    it('throws an error if no tag id is provided', () => {
-      expect(() => {
-        api.tag.del();
-      }).to.throw('Tag id is required');
+    it('throws an error if no tag id is provided', async () => {
+      await expect(api.tag.del()).to.eventually.be.rejected.and.eql('Tag id is required');
     });
 
     it('returns error if tag does not exist', (done) => {

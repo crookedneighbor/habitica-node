@@ -36,21 +36,20 @@ export default class {
   //     warriorWeapons['0']; // initial warrior weapon
   //   });
   // ```
-  get (path) {
-    return this._connection.get('content')
-      .then((content) => {
-        if (path) {
-          let nestedContent = get(content, path);
+  async get (path) {
+    let content = await this._connection.get('content');
 
-          if (nestedContent) {
-            return nestedContent;
-          }
+    if (path) {
+      let nestedContent = get(content, path);
 
-          throw `${path} is not a valid content path`;
-        }
+      if (nestedContent) {
+        return nestedContent;
+      }
 
-        return content;
-      });
+      throw `${path} is not a valid content path`;
+    }
+
+    return content;
   }
 
   // # content.getKeys()
@@ -75,21 +74,19 @@ export default class {
   //     warriorWeapons; // an array, ['0', '1', ...]
   //   });
   // ```
-  getKeys (path) {
-    return this._connection.get('content')
-      .then((content) => {
-        if (path) {
-          let nestedContent = get(content, path);
+  async getKeys (path) {
+    let content = await this._connection.get('content');
+    if (path) {
+      let nestedContent = get(content, path);
 
-          if (nestedContent) {
-            return keys(nestedContent);
-          }
+      if (nestedContent) {
+        return keys(nestedContent);
+      }
 
-          throw `${path} is not a valid content path`;
-        }
+      throw `${path} is not a valid content path`;
+    }
 
-        return keys(content);
-      });
+    return keys(content);
   }
 
   // # content.getUserPaths()
@@ -105,11 +102,10 @@ export default class {
   //     paths['items.gear.owned.weapon_warrior_0']; // Boolean
   //   });
   // ```
-  getUserPaths () {
-    return this._connection.get('content/paths')
-      .then((paths) => {
-        return paths;
-      });
+  async getUserPaths () {
+    let paths = await this._connection.get('content/paths');
+
+    return paths;
   }
   // NOOP
 }

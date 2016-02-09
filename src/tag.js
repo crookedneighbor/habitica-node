@@ -29,20 +29,16 @@ export default class {
   //     tag.id; // the tag id
   //   });
   // ```
-  get (id) {
+  async get (id) {
     let url = 'user/tags';
 
     if (id) {
       url += `/${id}`;
     }
 
-    return this._connection.get(url)
-      .then((tags) => {
-        return tags;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let tags = await this._connection.get(url);
+
+    return tags;
   }
 
   // # tag.post()
@@ -57,16 +53,13 @@ export default class {
   //   tags; // it returns all of the existing tags
   // });
   // ```
-  post (tagBody) {
-    return this._connection.post(
-        'user/tags',
-        { send: tagBody}
-      ).then((tag) => {
-        return tag;
-      })
-      .catch((err) => {
-        throw err;
-      });
+  async post (tagBody) {
+    let tags = await this._connection.post(
+      'user/tags',
+      { send: tagBody}
+    );
+
+    return tags;
   }
 
   // # tag.put()
@@ -82,19 +75,16 @@ export default class {
   //   tag.name; // 'new tag name'
   // });
   // ```
-  put (id, tagBody) {
+  async put (id, tagBody) {
     if (!id) throw 'Tag id is required';
     if (!tagBody) throw 'Tag body is required';
 
-    return this._connection.put(
-        `user/tags/${id}`,
-        { send: tagBody }
-      ).then((tag) => {
-        return tag;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let tag = await this._connection.put(
+      `user/tags/${id}`,
+      { send: tagBody }
+    );
+
+    return tag;
   }
 
   // # tag.del()
@@ -109,15 +99,11 @@ export default class {
   //   tags; // remaining existing tags
   // });
   // ```
-  del (id) {
+  async del (id) {
     if (!id) throw 'Tag id is required';
 
-    return this._connection.del(`user/tags/${id}`)
-      .then((tags) => {
-        return tags;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    let remainingTags = await this._connection.del(`user/tags/${id}`);
+
+    return remainingTags;
   }
 }

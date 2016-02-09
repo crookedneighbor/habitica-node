@@ -13,9 +13,9 @@ export function generateUser(update={}, connection) {
     superagent.post(`localhost:${process.env.PORT}/api/v2/register`)
       .accept('application/json')
       .send({
-        username: username,
-        email: email,
-        password: password,
+        username,
+        email,
+        password,
         confirmPassword: password,
       })
       .end((err, res) => {
