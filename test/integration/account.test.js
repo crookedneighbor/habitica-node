@@ -17,48 +17,30 @@ describe('Account', () => {
     });
 
     context('Successful', () => {
-      it('registers for a new account', (done) => {
-        api.account.register(username, email, password)
-          .then((user) => {
-            api.user.get()
-              .then((user) => {
-                expect(user.auth.local.username).to.eql(username);
-                expect(user.auth.local.email).to.eql(email);
-                done();
-              });
-          })
-          .catch((err) => {
-            done(err);
-          });
+      it('registers for a new account', async () => {
+        await api.account.register(username, email, password);
+        let user = await api.user.get();
+
+        expect(user.auth.local.username).to.eql(username);
+        expect(user.auth.local.email).to.eql(email);
       });
 
-      it('returns a new user', (done) => {
-        api.account.register(username, email, password)
-          .then((user) => {
-            expect(user._id).to.exist;
-            expect(user.apiToken).to.exist;
-            expect(user.auth.local.username).to.eql(username);
-            expect(user.auth.local.email).to.eql(email);
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+      it('returns a new user', async () => {
+        let user = await api.account.register(username, email, password);
+
+        expect(user._id).to.exist;
+        expect(user.apiToken).to.exist;
+        expect(user.auth.local.username).to.eql(username);
+        expect(user.auth.local.email).to.eql(email);
       });
 
-      it('sets uuid and api token to new user', (done) => {
+      it('sets uuid and api token to new user', async () => {
         expect(api._uuid).to.not.exist;
         expect(api._token).to.not.exist;
 
-        api.account.register(username, email, password)
-          .then((user) => {
-            expect(api.getUuid()).to.be.eql(user._id);
-            expect(api.getToken()).to.be.eql(user.apiToken);
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+        let user = await api.account.register(username, email, password);
+        expect(api.getUuid()).to.be.eql(user._id);
+        expect(api.getToken()).to.be.eql(user.apiToken);
       });
     });
 
@@ -77,68 +59,31 @@ describe('Account', () => {
           .to.eventually.be.rejected.and.eql('User id or api token already set');
       });
 
-      it('allows the creation of a new user when uuid or token is already set if resetOldCreds option is passed in', () => {
+      it('allows the creation of a new user when uuid or token is already set if resetOldCreds option is passed in', async () => {
         api.setCredentials({uuid: 'some-uuid', token: 'some-token'});
 
-        api.account.register(username, email, password, {resetOldCreds: true })
-          .then((user) => {
-            expect(api.getUuid()).to.be.eql(user._id);
-            expect(api.getToken()).to.be.eql(user.apiToken);
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+        let user = await api.account.register(username, email, password, {resetOldCreds: true });
+
+        expect(api.getUuid()).to.be.eql(user._id);
+        expect(api.getToken()).to.be.eql(user.apiToken);
       });
     });
 
     context('Invalid Input', () => {
-      it('resolves with error when username is not provided', (done) => {
-        api.account.register('', email, password)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when username is not provided', async () => {
+        await expect(api.account.register('', email, password)).to.eventually.be.rejected;
       });
 
-      it('resolves with error when email is not provided', (done) => {
-        api.account.register(username, '', password)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when email is not provided', async () => {
+        await expect(api.account.register(username, '', password)).to.eventually.be.rejected;
       });
 
-      it('resolves with error when password is not provided', (done) => {
-        api.account.register(username, email, '')
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when password is not provided', async () => {
+        await expect(api.account.register(username, email, '')).to.eventually.be.rejected
       });
 
-      it('resolves with error when email is not valid', (done) => {
-        api.account.register(username, 'not.a.valid.email@example', password)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when email is not valid', async () => {
+        await expect(api.account.register(username, 'not.a.valid.email@example', password)).to.eventually.be.rejected;
       });
     });
   });
@@ -146,7 +91,7 @@ describe('Account', () => {
   describe('#login', () => {
     let api, username, password, email;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
       let registerApi = new Habitica({
         endpoint: `localhost:${process.env.PORT}/api/v2`,
       });
@@ -158,112 +103,54 @@ describe('Account', () => {
       password = 'password'
       email = username + '@example.com';
 
-      registerApi.account.register(username, email, password)
-        .then((user) => {
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+      await registerApi.account.register(username, email, password)
     });
 
     context('Success', () => {
-      it('logs in with username and password', (done) => {
-        api.account.login(username, password)
-          .then((creds) => {
-            expect(creds.id).to.exist;
-            expect(creds.token).to.exist;
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+      it('logs in with username and password', async () => {
+        let creds = await api.account.login(username, password);
+
+        expect(creds.id).to.exist;
+        expect(creds.token).to.exist;
       });
 
-      it('sets uuid and token after logging in with username', (done) => {
-        api.account.login(username, password)
-          .then((creds) => {
-            expect(api.getUuid()).to.be.eql(creds.id);
-            expect(api.getToken()).to.be.eql(creds.token);
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+      it('sets uuid and token after logging in with username', async () => {
+        let creds = await api.account.login(username, password);
+
+        expect(api.getUuid()).to.be.eql(creds.id);
+        expect(api.getToken()).to.be.eql(creds.token);
       });
 
-      it('logs in with email and password', (done) => {
-        api.account.login(email, password)
-          .then((creds) => {
-            expect(creds.id).to.exist;
-            expect(creds.token).to.exist;
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+      it('logs in with email and password', async () => {
+        let creds = await api.account.login(email, password)
+
+        expect(creds.id).to.exist;
+        expect(creds.token).to.exist;
       });
 
-      it('sets uuid and token after logging in with email', (done) => {
-        api.account.login(email, password)
-          .then((creds) => {
-            expect(api.getUuid()).to.be.eql(creds.id);
-            expect(api.getToken()).to.be.eql(creds.token);
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+      it('sets uuid and token after logging in with email', async () => {
+        let creds = await api.account.login(email, password)
+
+        expect(api.getUuid()).to.be.eql(creds.id);
+        expect(api.getToken()).to.be.eql(creds.token);
       });
     });
 
     context('Failures', () => {
-      it('resolves with error when account is not provided', (done) => {
-        api.account.login(null, password)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when account is not provided', async () => {
+        await expect(api.account.login(null, password)).to.eventually.be.rejected;
       });
 
-      it('resolves with error when account is not provided', (done) => {
-        api.account.login(username, null)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when account is not provided', async () => {
+        await expect(api.account.login(username, null)).to.eventually.be.rejected;
       });
 
-      it('resolves with error when account does not exist', (done) => {
-        api.account.login('not-existant', password)
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when account does not exist', async () => {
+        await expect(api.account.login('not-existant', password)).to.eventually.be.rejected;
       });
 
-      it('resolves with error when password does not match', (done) => {
-        api.account.login(username, 'password-not-correct')
-          .then((creds) => {
-            done(creds);
-          })
-          .catch((err) => {
-            expect(err.code).to.eql(401);
-            expect(err.text).to.exist;
-            done();
-          });
+      it('resolves with error when password does not match', async () => {
+        await expect(api.account.login(username, 'password-not-correct')).to.eventually.be.rejected;
       });
     });
   });

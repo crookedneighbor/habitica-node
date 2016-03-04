@@ -6,7 +6,7 @@ describe('Tag', () => {
     endpoint: `localhost:${process.env.PORT}/api/v2`,
   });
 
-  beforeEach((done) => {
+  beforeEach(async () => {
     let update = {
       'tags': [
         {
@@ -19,166 +19,114 @@ describe('Tag', () => {
         },
       ],
     }
-    generateUser(update, api)
-      .then((creds) => {
-        done();
-      });
+    await generateUser(update, api);
   });
 
   describe('#get', () => {
-    it('gets all tags', (done) => {
-      api.tag.get()
-        .then((tags) => {
-          expect(tags).to.have.a.lengthOf(2);
-          expect(tags).to.include({
-            id: 'tag-1',
-            name: 'tag 1',
-          });
-          expect(tags).to.include({
-            id: 'tag-2',
-            name: 'tag 2',
-          });
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets all tags', async () => {
+      let tags = await api.tag.get();
+
+      expect(tags).to.have.a.lengthOf(2);
+      expect(tags).to.include({
+        id: 'tag-1',
+        name: 'tag 1',
+      });
+      expect(tags).to.include({
+        id: 'tag-2',
+        name: 'tag 2',
+      });
     });
 
-    it('gets a specific tag by id', (done) => {
-      api.tag.get('tag-1')
-        .then((tag) => {
-          expect(tag.id).to.eql('tag-1');
-          expect(tag.name).to.eql('tag 1');
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets a specific tag by id', async () => {
+      let tag = await api.tag.get('tag-1');
+
+      expect(tag.id).to.eql('tag-1');
+      expect(tag.name).to.eql('tag 1');
     });
 
-    it('throws error if tag does not exist', (done) => {
-      api.tag.get('tag-that-does-not-exist')
-        .then((tag) => {
-          done(tag);
-        })
-        .catch((err) => {
-          expect(err).to.exist;
-          done();
-        });
+    it('throws error if tag does not exist', async () => {
+      await expect(api.tag.get('tag-that-does-not-exist'))
+        .to.eventually.be.rejected;
     });
   });
 
   describe('#post', () => {
-    it('creates a new tag', (done) => {
-      api.tag.post({
+    it('creates a new tag', async () => {
+      let tags = await api.tag.post({
         name: 'new tag',
-      }).then((tags) => {
-        let tag = _.find(tags, {name: 'new tag'});
-        return api.tag.get(tag.id);
-      }).then((tag) => {
-        expect(tag.id).to.exist;
-        expect(tag.name).to.eql('new tag');
-        done();
-      }).catch((err) => {
-        done(err);
       });
+
+      let tag = _.find(tags, {name: 'new tag'});
+      let fetchedTag = await api.tag.get(tag.id);
+
+      expect(fetchedTag.id).to.exist;
+      expect(fetchedTag.name).to.eql('new tag');
     });
 
-    it('creates a new tag with specified tag attributes', (done) => {
-      api.tag.post({
+    it('creates a new tag with specified tag attributes', async () => {
+      let tags = await api.tag.post({
         name: 'new tag',
         id: 'new-tag-id',
-      }).then((tags) => {
-        expect(tags).to.include({
-          name: 'new tag',
-          id: 'new-tag-id',
-        });
-        done();
       })
-      .catch((err) => {
-        done(err);
+
+      expect(tags).to.include({
+        name: 'new tag',
+        id: 'new-tag-id',
       });
     });
   });
 
   describe('#put', () => {
-    it('updates an existing tag', (done) => {
-      api.tag.put(
+    it('updates an existing tag', async () => {
+      let tag = await api.tag.put(
         'tag-1',
         { name: 'updated tag name' }
-      ).then((tag) => {
-        expect(tag.id).to.eql('tag-1');
-        expect(tag.name).to.eql('updated tag name');
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
+      );
+
+      expect(tag.id).to.eql('tag-1');
+      expect(tag.name).to.eql('updated tag name');
     });
 
     it('throws an error if no tag id is provided', async () => {
-      await expect(api.tag.put()).to.eventually.be.rejected.and.eql('Tag id is required');
+      await expect(api.tag.put())
+        .to.eventually.be.rejected.and.eql('Tag id is required');
     });
 
     it('throws an error if no tag body is provided', async () => {
-      await expect(api.tag.put('tag-1')).to.eventually.be.rejected.and.eql('Tag body is required');
+      await expect(api.tag.put('tag-1'))
+        .to.eventually.be.rejected.and.eql('Tag body is required');
     });
 
-    it('returns error if tag does not exist', (done) => {
-      api.tag.put(
+    it('returns error if tag does not exist', async () => {
+      await expect(api.tag.put(
         'tag-does-not-exist',
         { name: 'updated tag name' }
-      ).then((tag) => {
-        done(tag);
-      }).catch((err) => {
-        expect(err).to.exist;
-        expect(err.text).to.eql('Tag not found.');
-        done();
-      });
+      )).to.eventually.be.rejected;
     });
   });
 
   describe('#del', () => {
-    it('deletes an existing tag', (done) => {
-      api.tag.del(
-        'tag-1'
-      ).then((tags) => {
-        return api.tag.get('tag-1');
-      })
-      .then((tag) => {
-        done(tag);
-      })
-      .catch((err) => {
-        expect(err).to.exist;
-        done();
-      });
+    it('deletes an existing tag', async () => {
+      await api.tag.del('tag-1');
+
+      await expect(api.tag.get('tag-1'))
+        .to.eventually.be.rejected;
     });
 
-    it('returns the remaining tags', (done) => {
-      api.tag.del('tag-1').then((tags) => {
-        expect(tags).to.eql([{id: 'tag-2', name: 'tag 2'}]);
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
+    it('returns the remaining tags', async () => {
+      let tags = await api.tag.del('tag-1')
+
+      expect(tags).to.eql([{id: 'tag-2', name: 'tag 2'}]);
     });
 
     it('throws an error if no tag id is provided', async () => {
-      await expect(api.tag.del()).to.eventually.be.rejected.and.eql('Tag id is required');
+      await expect(api.tag.del())
+        .to.eventually.be.rejected.and.eql('Tag id is required');
     });
 
-    it('returns error if tag does not exist', (done) => {
-      api.tag.del(
-        'tag-does-not-exist'
-      ).then((tag) => {
-        done(tag);
-      }).catch((err) => {
-        expect(err).to.exist;
-        expect(err.text).to.eql('Tag not found.');
-        done();
-      });
+    it('returns error if tag does not exist', async () => {
+      await expect(api.tag.del('tag-does-not-exist'))
+        .to.eventually.be.rejected;
     });
   });
 });

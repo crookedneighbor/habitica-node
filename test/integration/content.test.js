@@ -6,117 +6,70 @@ describe('Content', () => {
   });
 
   describe('#get', () => {
-    it('gets all content if no argument is provided', (done) => {
-      api.content.get()
-        .then((res) => {
-          expect(res.eggs).to.exist;
-          expect(res.quests).to.exist;
-          expect(res.gear).to.exist;
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets all content if no argument is provided', async () => {
+      let res = await api.content.get();
+
+      expect(res.eggs).to.exist;
+      expect(res.quests).to.exist;
+      expect(res.gear).to.exist;
     });
 
-    it('gets specific piece of content if valid argument is provided', (done) => {
-      api.content.get('eggs')
-        .then((res) => {
-          expect(res.Wolf).to.exist;
-          expect(res.Whale).to.exist;
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets specific piece of content if valid argument is provided', async () => {
+      let res = await api.content.get('eggs');
+
+      expect(res.Wolf).to.exist;
+      expect(res.Whale).to.exist;
     });
 
-    it('gets specific piece of content file with nested argument', (done) => {
-      api.content.get('gear.tree.weapon.warrior')
-        .then((res) => {
-          expect(res['0']).to.exist;
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets specific piece of content file with nested argument', async () => {
+      let res = await api.content.get('gear.tree.weapon.warrior');
+
+      expect(res['0']).to.exist;
     });
 
-    it('throws error if an invalid argument is provided', (done) => {
-      api.content.get('invalid-content-path')
-        .then((res) => {
-          done('Fail: Did not throw an error');
-        })
-        .catch((err) => {
-          expect(err).to.eql('invalid-content-path is not a valid content path');
-          done();
-        });
+    it('throws error if an invalid argument is provided', async () => {
+      await expect(api.content.get('invalid-content-path'))
+        .to.eventually.be.rejected.and.eql('invalid-content-path is not a valid content path');
     });
   });
 
   describe('#getKeys', () => {
-    it('gets top level keys of content object', (done) => {
-      api.content.getKeys()
-        .then((res) => {
-          expect(res).to.contain('eggs');
-          expect(res).to.contain('quests');
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets top level keys of content object', async () => {
+      let res = await api.content.getKeys();
+
+      expect(res).to.contain('eggs');
+      expect(res).to.contain('quests');
     });
 
-    it('gets keys of a specific piece of content', (done) => {
-      api.content.getKeys('eggs')
-        .then((res) => {
-          expect(res).to.contain('Wolf');
-          expect(res).to.contain('Whale');
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets keys of a specific piece of content', async () => {
+      let res = await api.content.getKeys('eggs');
+
+      expect(res).to.contain('Wolf');
+      expect(res).to.contain('Whale');
     });
 
-    it('gets keys of specific piece of content file with nested argument', (done) => {
-      api.content.getKeys('gear.tree.weapon.warrior')
-        .then((res) => {
-          expect(res).to.contain('0');
-          expect(res).to.contain('1');
-          expect(res).to.contain('2');
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets keys of specific piece of content file with nested argument', async () => {
+      let res = await api.content.getKeys('gear.tree.weapon.warrior');
+
+      expect(res).to.contain('0');
+      expect(res).to.contain('1');
+      expect(res).to.contain('2');
     });
 
-    it('throws error if an invalid argument is provided', (done) => {
-      api.content.getKeys('invalid-content-path')
-        .then((res) => {
-          done('Fail: Did not throw an error');
-        })
-        .catch((err) => {
-          expect(err).to.eql('invalid-content-path is not a valid content path');
-          done();
-        });
+    it('throws error if an invalid argument is provided', async () => {
+      await expect(api.content.getKeys('invalid-content-path'))
+        .to.eventually.be.rejected.and.eql('invalid-content-path is not a valid content path');
     });
   });
 
   describe('#getUserPaths', () => {
-    it('gets user paths', (done) => {
-      api.content.getUserPaths()
-        .then((res) => {
-          expect(res._id).to.exist;
-          expect(res.apiToken).to.exist;
-          expect(res['contributor.level']).to.exist;
-          expect(res['items.gear.owned.weapon_warrior_0']).to.exist;
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets user paths', async () => {
+      let res = await api.content.getUserPaths()
+
+      expect(res._id).to.exist;
+      expect(res.apiToken).to.exist;
+      expect(res['contributor.level']).to.exist;
+      expect(res['items.gear.owned.weapon_warrior_0']).to.exist;
     });
   });
 });

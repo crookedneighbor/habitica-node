@@ -7,24 +7,16 @@ describe('User', () => {
       endpoint: `localhost:${process.env.PORT}/api/v2`,
     });
 
-    beforeEach((done) => {
-      generateUser(null, api)
-        .then((creds) => {
-          done();
-        });
+    beforeEach(async () => {
+      await generateUser(null, api);
     });
 
-    it('gets user object', (done) => {
-      api.user.get()
-        .then((user) => {
-          expect(user._id).to.eql(api.getUuid());
-          expect(user).to.include.keys(['todos', 'habits', 'dailys', 'rewards']);
-          expect(user).to.include.keys(['stats', 'balance', 'preferences', 'flags']);
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
+    it('gets user object', async () => {
+      let user = await api.user.get();
+
+      expect(user._id).to.eql(api.getUuid());
+      expect(user).to.include.keys(['todos', 'habits', 'dailys', 'rewards']);
+      expect(user).to.include.keys(['stats', 'balance', 'preferences', 'flags']);
     });
   });
 });
