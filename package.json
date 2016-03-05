@@ -48,7 +48,7 @@
     "docco": "^0.7.0",
     "eslint": "^1.10.3",
     "eslint-plugin-mocha": "^1.0.0",
-    "glob": "^6.0.3",
+    "glob": "^7.0.3",
     "gulp": "^3.9.0",
     "gulp-gh-pages": "^0.5.3",
     "kerberos": "^0.0.18",
