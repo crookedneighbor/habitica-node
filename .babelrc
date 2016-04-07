@@ -1,5 +1,5 @@
 {
   "comments": false,
   "presets": ["es2015"],
-  "plugins": ["syntax-async-functions","transform-regenerator"]
+  "plugins": ["syntax-async-functions", "transform-regenerator", "transform-runtime"]
 }
