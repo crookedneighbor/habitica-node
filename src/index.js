@@ -1,6 +1,7 @@
 // Initialize
 // heartbeat
 // Set up your client!
+require('babel-polyfill')
 import Connection from './lib/connection'
 
 import Account from './account'
