@@ -17,7 +17,7 @@ export default class {
   // api.account.register(
   //   'username',
   //   'email',
-  //   'password',
+  //   'password'
   // )
   // ```
   //
@@ -28,7 +28,7 @@ export default class {
   //   'username',
   //   'email',
   //   'password',
-  //   { resetOldCreds: true },
+  //   {resetOldCreds: true}
   // )
   // ```
   async register (username, email, password, options = {}) {
@@ -71,7 +71,7 @@ export default class {
   // ```js
   // api.account.login(
   //   'username or email',
-  //   'password',
+  //   'password'
   // )
   // ```
   async login (username_email, password, options = {}) {

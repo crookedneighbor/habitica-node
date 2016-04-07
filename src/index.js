@@ -22,7 +22,7 @@ module.exports = class {
     // let api = new Habitica({
     //   uuid: 'your-habitica.com-user-id',
     //   token: 'your-habitica.com-api-token',
-    //   endpoint: 'custom-url',
+    //   endpoint: 'custom-url'
     // })
     // ```
     //
@@ -103,7 +103,7 @@ module.exports = class {
   // api.setCredentials({
   //   uuid: 'new-user-id',
   //   token: 'new-api-token',
-  //   endpoint: 'http://localhost:3000/api/v2',
+  //   endpoint: 'http://localhost:3000/api/v2'
   // })
   // ```
   setCredentials (creds) {

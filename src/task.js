@@ -17,20 +17,18 @@ export default class {
   // If no arguments are passed in, all the tasks are returned.
   //
   // ```js
-  // api.task.get()
-  //   .then((tasks) => {
-  //     tasks[0] // one of your tasks
-  //   })
+  // api.task.get().then((tasks) => {
+  //   tasks[0] // one of your tasks
+  // })
   // ```
   //
   // If you pass in a task id, it will get that specific task.
   //
   // ```js
-  // api.task.get('id-of-your-task')
-  //   .then((task) => {
-  //     task.name // the task name
-  //     task.type // the task type
-  //   })
+  // api.task.get('id-of-your-task').then((task) => {
+  //   task.name // the task name
+  //   task.type // the task type
+  // })
   // ```
   async get (id) {
     let url = 'user/tasks'
@@ -49,10 +47,9 @@ export default class {
   // Get all your dailys. Gives back an array of tasks.
   //
   // ```js
-  // api.task.getDailys()
-  //   .then((dailys) => {
-  //     dailys[0] // one of your dailys
-  //   })
+  // api.task.getDailys().then((dailys) => {
+  //   dailys[0] // one of your dailys
+  // })
   // ```
   async getDailys () {
     return this._filterTasksByType('daily')
@@ -63,10 +60,9 @@ export default class {
   // Get all your rewards. Gives back an array of tasks.
   //
   // ```js
-  // api.task.getRewards()
-  //   .then((rewards) => {
-  //     rewards[0] // one of your rewards
-  //   })
+  // api.task.getRewards().then((rewards) => {
+  //   rewards[0] // one of your rewards
+  // })
   // ```
   async getRewards () {
     return this._filterTasksByType('reward')
@@ -77,10 +73,9 @@ export default class {
   // Get all your habits. Gives back an array of tasks.
   //
   // ```js
-  // api.task.getHabits()
-  //   .then((habits) => {
-  //     habits[0] // one of your habits
-  //   })
+  // api.task.getHabits().then((habits) => {
+  //   habits[0] // one of your habits
+  // })
   // ```
   async getHabits () {
     return this._filterTasksByType('habit')
@@ -91,10 +86,9 @@ export default class {
   // Get all your todos. Gives back an array of tasks.
   //
   // ```js
-  // api.task.getTodos()
-  //   .then((todos) => {
-  //     todos[0] // one of your todos
-  //   })
+  // api.task.getTodos().then((todos) => {
+  //   todos[0] // one of your todos
+  // })
   // ```
   async getTodos () {
     return this._filterTasksByType('todo')
@@ -107,10 +101,7 @@ export default class {
   // Takes a task id and a direction (either `'up'` or `'down'`).
   //
   // ```js
-  // api.task.score(
-  //  'task-id',
-  //  'down',
-  // ).then((stats) => {
+  // api.task.score('task-id','down').then((stats) => {
   //   stats.delta // Change in task value, negative number
   //   stats._tmp.drop // If scoring the task resulted in a drop
   // })
@@ -119,19 +110,15 @@ export default class {
   // Direction defaults to 'up' when not provided
   //
   // ```js
-  // api.task.score('task-id')
-  //   .then((stats) => {
-  //     stats.delta // Change in task value, positive number
-  //   })
+  // api.task.score('task-id').then((stats) => {
+  //   stats.delta // Change in task value, positive number
+  // })
   // ```
   //
   // If the task id does not already exist, it will create a new habit.
   //
   // ```js
-  // api.task.score(
-  //  'task-id',
-  //  'down',
-  // ).then((stats) => {
+  // api.task.score('task-id','down').then((stats) => {
   //   return api.task.get('task-id')
   // }).then((task) => {
   //   task.type // 'habit'
@@ -143,15 +130,11 @@ export default class {
   // If the task id does not already exist, you can pass in an optional body object to customize certain fields
   //
   // ```js
-  // api.task.score(
-  //  'task-id',
-  //  'down',
-  //  {
-  //    type: 'todo',
-  //    text: 'Custom Name',
-  //    notes: 'Custom Note',
-  //  },
-  // ).then((stats) => {
+  // api.task.score('task-id','down', {
+  //  type: 'todo',
+  //  text: 'Custom Name',
+  //  notes: 'Custom Note'
+  // }).then((stats) => {
   //   return api.task.get('task-id')
   // }).then((task) => {
   //   task.type // 'todo'
@@ -180,7 +163,7 @@ export default class {
   // api.task.post({
   //  text: 'task name',
   //  type: 'daily',
-  //  notes: 'notes',
+  //  notes: 'notes'
   // }).then((task) => {
   //   task.text // 'task name'
   // })
@@ -199,10 +182,10 @@ export default class {
   // Task id and task body are required arguments.
   //
   // ```js
-  // api.task.put(
-  //   'task-id',
-  //   { text: 'new task name', notes: 'new task notes' }
-  // ).then((task) => {
+  // api.task.put('task-id', {
+  //   text: 'new task name',
+  //   notes: 'new task notes'
+  // }).then((task) => {
   //   task.text // 'new task name'
   // })
   // ```
@@ -224,9 +207,7 @@ export default class {
   // Task id is a required argument.
   //
   // ```js
-  // api.task.del(
-  //   'task-id',
-  // ).then((task) => {
+  // api.task.del('task-id').then((task) => {
   //   task // {}
   // })
   // ```

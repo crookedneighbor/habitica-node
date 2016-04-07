@@ -17,20 +17,18 @@ export default class {
   // If no arguments are passed in, all the tags are returned.
   //
   // ```js
-  // api.tag.get()
-  //   .then((tags) => {
-  //     tags[0] // one of your tags
-  //   })
+  // api.tag.get().then((tags) => {
+  //   tags[0] // one of your tags
+  // })
   // ```
   //
   // If you pass in a tag id, it will get that specific tag.
   //
   // ```js
-  // api.tag.get('id-of-your-tag')
-  //   .then((tag) => {
-  //     tag.name // the tag name
-  //     tag.id // the tag id
-  //   })
+  // api.tag.get('id-of-your-tag').then((tag) => {
+  //   tag.name // the tag name
+  //   tag.id // the tag id
+  // })
   // ```
   async get (id) {
     let url = 'user/tags'
@@ -73,7 +71,7 @@ export default class {
   // ```js
   // api.tag.put(
   //   'tag-id',
-  //   { name: 'new tag name' }
+  //   {name: 'new tag name'}
   // ).then((tag) => {
   //   tag.name // 'new tag name'
   // })
@@ -96,9 +94,7 @@ export default class {
   // Tag id is a required argument.
   //
   // ```js
-  // api.tag.del(
-  //   'tag-id',
-  // ).then((tags) => {
+  // api.tag.del('tag-id').then((tags) => {
   //   tags // remaining existing tags
   // })
   // ```
