@@ -1,7 +1,7 @@
 // Task
 // checkmark box
 // Get em, check em, level up!
-import {filter} from 'lodash'
+import filter from 'lodash/filter'
 import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {

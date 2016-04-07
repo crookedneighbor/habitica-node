@@ -1,7 +1,8 @@
 // Content
 // archive
 // For all your content needs!
-import {get, keys} from 'lodash'
+import get from 'lodash/get'
+import keys from 'lodash/keys'
 import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {
