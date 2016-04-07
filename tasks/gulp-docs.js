@@ -7,7 +7,7 @@ gulp.task('docs', (done) => {
   var options = {
     template: 'docs/assets/template.jst',
     css: 'docs/assets/css/style.css',
-    args: glob('src/**/*.js')
+    args: glob('src/*.js')
   }
 
   docco.document(options, done)
