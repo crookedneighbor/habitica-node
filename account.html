@@ -10,13 +10,13 @@
   <title>Account</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" media="all" href="assets/css/style.css" />
+  <link rel="stylesheet" media="all" href="/assets/css/style.css" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/tomorrow-night.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.js"></script>
-  <script src="assets/js/javascript.js"></script>
+  <script src="/assets/js/javascript.js"></script>
 </head>
 <body>
   <div class="ui left push vertical inverted sidebar menu">
@@ -26,13 +26,6 @@
         
         
         Account
-      </a>
-    
-      
-      <a class="item menu-link" href="connection.html">
-        
-        
-        Connection
       </a>
     
       
@@ -113,46 +106,47 @@
 <pre><code class="lang-js">api.account.register(
   <span class="hljs-string">'username'</span>,
   <span class="hljs-string">'email'</span>,
-  <span class="hljs-string">'password'</span>,
-);
+  <span class="hljs-string">'password'</span>
+)
 </code></pre>
 <p>If the uuid or api token are already set, the register call will throw an error. You can override this behavior by passing in an object with a <code>resetOldCreds</code> parameter set to true</p>
 <pre><code class="lang-js">api.account.register(
   <span class="hljs-string">'username'</span>,
   <span class="hljs-string">'email'</span>,
   <span class="hljs-string">'password'</span>,
-  { resetOldCreds: <span class="hljs-literal">true</span> },
-);
+  {resetOldCreds: <span class="hljs-literal">true</span>}
+)
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  register (username, email, password, options={}) {
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> register (username, email, password, options = {}) {
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._connection._uuid || <span class="hljs-keyword">this</span>._connection._token) {
       <span class="hljs-keyword">if</span> (!options.resetOldCreds) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-string">'User id or api token already set'</span>;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.InvalidActionError(<span class="hljs-string">'User id or api token already set'</span>)
       }
 
-      <span class="hljs-keyword">this</span>._connection.setCredentials({uuid: <span class="hljs-literal">null</span>, token: <span class="hljs-literal">null</span>});
+      <span class="hljs-keyword">this</span>._connection.setCredentials({uuid: <span class="hljs-literal">null</span>, token: <span class="hljs-literal">null</span>})
     }
 
     <span class="hljs-keyword">let</span> creds = {
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: password,
-    };
+      username,
+      email,
+      password,
+      confirmPassword: password
+    }
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
+    <span class="hljs-keyword">let</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
         <span class="hljs-string">'register'</span>,
         {send: creds}
-      ).then((user) =&gt; {
-        <span class="hljs-keyword">this</span>._connection.setCredentials({
-          uuid: user._id,
-          token: user.apiToken,
-        });
-        <span class="hljs-keyword">return</span> user;
-      });
+      )
+
+    <span class="hljs-keyword">this</span>._connection.setCredentials({
+      uuid: user._id,
+      token: user.apiToken
+    })
+
+    <span class="hljs-keyword">return</span> user
   }</pre></div></div>
               
             </div>
@@ -175,30 +169,28 @@
 <p>The uuid and api token will be set automatically after a sucessful login call.</p>
 <pre><code class="lang-js">api.account.login(
   <span class="hljs-string">'username or email'</span>,
-  <span class="hljs-string">'password'</span>,
-);
+  <span class="hljs-string">'password'</span>
+)
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  login (username_email, password, options={}) {
-    <span class="hljs-keyword">let</span> creds = {
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> login (username_email, password, options = {}) {
+    <span class="hljs-keyword">let</span> loginCreds = {
       username: username_email,
-      password: password,
-    };
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
-        <span class="hljs-string">'user/auth/local'</span>,
-        {send: creds}
-      ).then((creds) =&gt; {
-        <span class="hljs-keyword">this</span>._connection.setCredentials({
-          uuid: creds.id,
-          token: creds.token,
-        });
-        <span class="hljs-keyword">return</span> creds;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+      password
+    }
+    <span class="hljs-keyword">let</span> creds = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">'user/auth/local'</span>,
+      {send: loginCreds}
+    )
+
+    <span class="hljs-keyword">this</span>._connection.setCredentials({
+      uuid: creds.id,
+      token: creds.token
+    })
+
+    <span class="hljs-keyword">return</span> creds
   }</pre></div></div>
               
             </div>

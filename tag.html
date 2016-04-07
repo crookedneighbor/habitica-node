@@ -10,13 +10,13 @@
   <title>Tag</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" media="all" href="assets/css/style.css" />
+  <link rel="stylesheet" media="all" href="/assets/css/style.css" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/tomorrow-night.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.js"></script>
-  <script src="assets/js/javascript.js"></script>
+  <script src="/assets/js/javascript.js"></script>
 </head>
 <body>
   <div class="ui left push vertical inverted sidebar menu">
@@ -26,13 +26,6 @@
         
         
         Account
-      </a>
-    
-      
-      <a class="item menu-link" href="connection.html">
-        
-        
-        Connection
       </a>
     
       
@@ -110,35 +103,29 @@
                 <h1 id="tag-get-">tag.get()</h1>
 <p>Get your tags.</p>
 <p>If no arguments are passed in, all the tags are returned.</p>
-<pre><code class="lang-js">api.tag.get()
-  .then((tags) =&gt; {
-    tags[<span class="hljs-number">0</span>]; <span class="hljs-comment">// one of your tags</span>
-  });
+<pre><code class="lang-js">api.tag.get().then((tags) =&gt; {
+  tags[<span class="hljs-number">0</span>] <span class="hljs-comment">// one of your tags</span>
+})
 </code></pre>
 <p>If you pass in a tag id, it will get that specific tag.</p>
-<pre><code class="lang-js">api.tag.get(<span class="hljs-string">'id-of-your-tag'</span>)
-  .then((tag) =&gt; {
-    tag.name; <span class="hljs-comment">// the tag name</span>
-    tag.id; <span class="hljs-comment">// the tag id</span>
-  });
+<pre><code class="lang-js">api.tag.get(<span class="hljs-string">'id-of-your-tag'</span>).then((tag) =&gt; {
+  tag.name <span class="hljs-comment">// the tag name</span>
+  tag.id <span class="hljs-comment">// the tag id</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  get (id) {
-    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'user/tags'</span>;
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> get (id) {
+    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'user/tags'</span>
 
     <span class="hljs-keyword">if</span> (id) {
-      url += <span class="hljs-string">`/<span class="hljs-subst">${id}</span>`</span>;
+      url += <span class="hljs-string">`/<span class="hljs-subst">${id}</span>`</span>
     }
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.get(url)
-      .then((tags) =&gt; {
-        <span class="hljs-keyword">return</span> tags;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+    <span class="hljs-keyword">let</span> tags = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(url)
+
+    <span class="hljs-keyword">return</span> tags
   }</pre></div></div>
               
             </div>
@@ -161,22 +148,19 @@
 <pre><code class="lang-js">api.tag.post({
  name: <span class="hljs-string">'tag name'</span>,
 }).then((tags) =&gt; {
-  tags; <span class="hljs-comment">// it returns all of the existing tags</span>
-});
+  tags <span class="hljs-comment">// it returns all of the existing tags</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  post (tagBody) {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
-        <span class="hljs-string">'user/tags'</span>,
-        { send: tagBody}
-      ).then((tag) =&gt; {
-        <span class="hljs-keyword">return</span> tag;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> post (tagBody) {
+    <span class="hljs-keyword">let</span> tags = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">'user/tags'</span>,
+      {send: tagBody}
+    )
+
+    <span class="hljs-keyword">return</span> tags
   }</pre></div></div>
               
             </div>
@@ -198,27 +182,24 @@
 <p>Tag id and tag body are required arguments.</p>
 <pre><code class="lang-js">api.tag.put(
   <span class="hljs-string">'tag-id'</span>,
-  { name: <span class="hljs-string">'new tag name'</span> }
+  {name: <span class="hljs-string">'new tag name'</span>}
 ).then((tag) =&gt; {
-  tag.name; <span class="hljs-comment">// 'new tag name'</span>
-});
+  tag.name <span class="hljs-comment">// 'new tag name'</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  put (id, tagBody) {
-    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Tag id is required'</span>;
-    <span class="hljs-keyword">if</span> (!tagBody) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Tag body is required'</span>;
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> put (id, tagBody) {
+    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Tag id is required'</span>)
+    <span class="hljs-keyword">if</span> (!tagBody) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Tag body is required'</span>)
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.put(
-        <span class="hljs-string">`user/tags/<span class="hljs-subst">${id}</span>`</span>,
-        { send: tagBody }
-      ).then((tag) =&gt; {
-        <span class="hljs-keyword">return</span> tag;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+    <span class="hljs-keyword">let</span> tag = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.put(
+      <span class="hljs-string">`user/tags/<span class="hljs-subst">${id}</span>`</span>,
+      { send: tagBody }
+    )
+
+    <span class="hljs-keyword">return</span> tag
   }</pre></div></div>
               
             </div>
@@ -238,25 +219,19 @@
                 <h1 id="tag-del-">tag.del()</h1>
 <p>Delete existing tag.</p>
 <p>Tag id is a required argument.</p>
-<pre><code class="lang-js">api.tag.del(
-  <span class="hljs-string">'tag-id'</span>,
-).then((tags) =&gt; {
-  tags; <span class="hljs-comment">// remaining existing tags</span>
-});
+<pre><code class="lang-js">api.tag.del(<span class="hljs-string">'tag-id'</span>).then((tags) =&gt; {
+  tags <span class="hljs-comment">// remaining existing tags</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  del (id) {
-    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Tag id is required'</span>;
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> del (id) {
+    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Tag id is required'</span>)
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`user/tags/<span class="hljs-subst">${id}</span>`</span>)
-      .then((tags) =&gt; {
-        <span class="hljs-keyword">return</span> tags;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+    <span class="hljs-keyword">let</span> remainingTags = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`user/tags/<span class="hljs-subst">${id}</span>`</span>)
+
+    <span class="hljs-keyword">return</span> remainingTags
   }
 }</pre></div></div>
               

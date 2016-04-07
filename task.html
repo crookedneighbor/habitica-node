@@ -10,13 +10,13 @@
   <title>Task</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" media="all" href="assets/css/style.css" />
+  <link rel="stylesheet" media="all" href="/assets/css/style.css" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/tomorrow-night.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.js"></script>
-  <script src="assets/js/javascript.js"></script>
+  <script src="/assets/js/javascript.js"></script>
 </head>
 <body>
   <div class="ui left push vertical inverted sidebar menu">
@@ -26,13 +26,6 @@
         
         
         Account
-      </a>
-    
-      
-      <a class="item menu-link" href="connection.html">
-        
-        
-        Connection
       </a>
     
       
@@ -110,35 +103,29 @@
                 <h1 id="task-get-">task.get()</h1>
 <p>Get your tasks.</p>
 <p>If no arguments are passed in, all the tasks are returned.</p>
-<pre><code class="lang-js">api.task.get()
-  .then((tasks) =&gt; {
-    tasks[<span class="hljs-number">0</span>]; <span class="hljs-comment">// one of your tasks</span>
-  });
+<pre><code class="lang-js">api.task.get().then((tasks) =&gt; {
+  tasks[<span class="hljs-number">0</span>] <span class="hljs-comment">// one of your tasks</span>
+})
 </code></pre>
 <p>If you pass in a task id, it will get that specific task.</p>
-<pre><code class="lang-js">api.task.get(<span class="hljs-string">'id-of-your-task'</span>)
-  .then((task) =&gt; {
-    task.name; <span class="hljs-comment">// the task name</span>
-    task.type; <span class="hljs-comment">// the task type</span>
-  });
+<pre><code class="lang-js">api.task.get(<span class="hljs-string">'id-of-your-task'</span>).then((task) =&gt; {
+  task.name <span class="hljs-comment">// the task name</span>
+  task.type <span class="hljs-comment">// the task type</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  get (id) {
-    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'user/tasks'</span>;
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> get (id) {
+    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'user/tasks'</span>
 
     <span class="hljs-keyword">if</span> (id) {
-      url += <span class="hljs-string">`/<span class="hljs-subst">${id}</span>`</span>;
+      url += <span class="hljs-string">`/<span class="hljs-subst">${id}</span>`</span>
     }
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.get(url)
-      .then((tasks) =&gt; {
-        <span class="hljs-keyword">return</span> tasks;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+    <span class="hljs-keyword">let</span> tasks = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(url)
+
+    <span class="hljs-keyword">return</span> tasks
   }</pre></div></div>
               
             </div>
@@ -157,16 +144,15 @@
                 </a>
                 <h1 id="task-getdailys-">task.getDailys()</h1>
 <p>Get all your dailys. Gives back an array of tasks.</p>
-<pre><code class="lang-js">api.task.getDailys()
-  .then((dailys) =&gt; {
-    dailys[<span class="hljs-number">0</span>]; <span class="hljs-comment">// one of your dailys</span>
-  });
+<pre><code class="lang-js">api.task.getDailys().then((dailys) =&gt; {
+  dailys[<span class="hljs-number">0</span>] <span class="hljs-comment">// one of your dailys</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getDailys () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'daily'</span>);
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getDailys () {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'daily'</span>)
   }</pre></div></div>
               
             </div>
@@ -185,16 +171,15 @@
                 </a>
                 <h1 id="task-getrewards-">task.getRewards()</h1>
 <p>Get all your rewards. Gives back an array of tasks.</p>
-<pre><code class="lang-js">api.task.getRewards()
-  .then((rewards) =&gt; {
-    rewards[<span class="hljs-number">0</span>]; <span class="hljs-comment">// one of your rewards</span>
-  });
+<pre><code class="lang-js">api.task.getRewards().then((rewards) =&gt; {
+  rewards[<span class="hljs-number">0</span>] <span class="hljs-comment">// one of your rewards</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getRewards () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'reward'</span>);
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getRewards () {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'reward'</span>)
   }</pre></div></div>
               
             </div>
@@ -213,16 +198,15 @@
                 </a>
                 <h1 id="task-gethabits-">task.getHabits()</h1>
 <p>Get all your habits. Gives back an array of tasks.</p>
-<pre><code class="lang-js">api.task.getHabits()
-  .then((habits) =&gt; {
-    habits[<span class="hljs-number">0</span>]; <span class="hljs-comment">// one of your habits</span>
-  });
+<pre><code class="lang-js">api.task.getHabits().then((habits) =&gt; {
+  habits[<span class="hljs-number">0</span>] <span class="hljs-comment">// one of your habits</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getHabits () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'habit'</span>);
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getHabits () {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'habit'</span>)
   }</pre></div></div>
               
             </div>
@@ -241,16 +225,15 @@
                 </a>
                 <h1 id="task-gettodos-">task.getTodos()</h1>
 <p>Get all your todos. Gives back an array of tasks.</p>
-<pre><code class="lang-js">api.task.getTodos()
-  .then((todos) =&gt; {
-    todos[<span class="hljs-number">0</span>]; <span class="hljs-comment">// one of your todos</span>
-  });
+<pre><code class="lang-js">api.task.getTodos().then((todos) =&gt; {
+  todos[<span class="hljs-number">0</span>] <span class="hljs-comment">// one of your todos</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getTodos () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'todo'</span>);
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getTodos () {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'todo'</span>)
   }</pre></div></div>
               
             </div>
@@ -270,65 +253,51 @@
                 <h1 id="task-score-">task.score()</h1>
 <p>Scores a task.</p>
 <p>Takes a task id and a direction (either <code>&#39;up&#39;</code> or <code>&#39;down&#39;</code>).</p>
-<pre><code class="lang-js">api.task.score(
- <span class="hljs-string">'task-id'</span>,
- <span class="hljs-string">'down'</span>,
-).then((stats) =&gt; {
-  stats.delta; <span class="hljs-comment">// Change in task value, negative number</span>
-  stats._tmp.drop; <span class="hljs-comment">// If scoring the task resulted in a drop</span>
-});
+<pre><code class="lang-js">api.task.score(<span class="hljs-string">'task-id'</span>,<span class="hljs-string">'down'</span>).then((stats) =&gt; {
+  stats.delta <span class="hljs-comment">// Change in task value, negative number</span>
+  stats._tmp.drop <span class="hljs-comment">// If scoring the task resulted in a drop</span>
+})
 </code></pre>
 <p>Direction defaults to ‘up’ when not provided</p>
-<pre><code class="lang-js">api.task.score(<span class="hljs-string">'task-id'</span>)
-  .then((stats) =&gt; {
-    stats.delta; <span class="hljs-comment">// Change in task value, positive number</span>
-  });
+<pre><code class="lang-js">api.task.score(<span class="hljs-string">'task-id'</span>).then((stats) =&gt; {
+  stats.delta <span class="hljs-comment">// Change in task value, positive number</span>
+})
 </code></pre>
 <p>If the task id does not already exist, it will create a new habit.</p>
-<pre><code class="lang-js">api.task.score(
- <span class="hljs-string">'task-id'</span>,
- <span class="hljs-string">'down'</span>,
-).then((stats) =&gt; {
-  <span class="hljs-keyword">return</span> api.task.get(<span class="hljs-string">'task-id'</span>);
+<pre><code class="lang-js">api.task.score(<span class="hljs-string">'task-id'</span>,<span class="hljs-string">'down'</span>).then((stats) =&gt; {
+  <span class="hljs-keyword">return</span> api.task.get(<span class="hljs-string">'task-id'</span>)
 }).then((task) =&gt; {
-  task.type; <span class="hljs-comment">// 'habit'</span>
-  task.id; <span class="hljs-comment">// 'task-id'</span>
-  task.text; <span class="hljs-comment">// 'task-id'</span>
-});
+  task.type <span class="hljs-comment">// 'habit'</span>
+  task.id <span class="hljs-comment">// 'task-id'</span>
+  task.text <span class="hljs-comment">// 'task-id'</span>
+})
 </code></pre>
 <p>If the task id does not already exist, you can pass in an optional body object to customize certain fields</p>
-<pre><code class="lang-js">api.task.score(
- <span class="hljs-string">'task-id'</span>,
- <span class="hljs-string">'down'</span>,
- {
-   type: <span class="hljs-string">'todo'</span>,
-   text: <span class="hljs-string">'Custom Name'</span>,
-   notes: <span class="hljs-string">'Custom Note'</span>,
- },
-).then((stats) =&gt; {
-  <span class="hljs-keyword">return</span> api.task.get(<span class="hljs-string">'task-id'</span>);
+<pre><code class="lang-js">api.task.score(<span class="hljs-string">'task-id'</span>,<span class="hljs-string">'down'</span>, {
+ type: <span class="hljs-string">'todo'</span>,
+ text: <span class="hljs-string">'Custom Name'</span>,
+ notes: <span class="hljs-string">'Custom Note'</span>
+}).then((stats) =&gt; {
+  <span class="hljs-keyword">return</span> api.task.get(<span class="hljs-string">'task-id'</span>)
 }).then((task) =&gt; {
-  task.type; <span class="hljs-comment">// 'todo'</span>
-  task.id; <span class="hljs-comment">// 'task-id'</span>
-  task.text; <span class="hljs-comment">// 'Custom Name'</span>
-  task.notes; <span class="hljs-comment">// 'Custom Note'</span>
-});
+  task.type <span class="hljs-comment">// 'todo'</span>
+  task.id <span class="hljs-comment">// 'task-id'</span>
+  task.text <span class="hljs-comment">// 'Custom Name'</span>
+  task.notes <span class="hljs-comment">// 'Custom Note'</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  score (id, direction=<span class="hljs-string">'up'</span>, body={}) {
-    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> score (id, direction = <span class="hljs-string">'up'</span>, body = {}) {
+    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task id is required'</span>)
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
-        <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>/<span class="hljs-subst">${direction}</span>`</span>,
-        { send: body }
-      ).then((stats) =&gt; {
-        <span class="hljs-keyword">return</span> stats;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+    <span class="hljs-keyword">let</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>/<span class="hljs-subst">${direction}</span>`</span>,
+      { send: body }
+    )
+
+    <span class="hljs-keyword">return</span> stats
   }</pre></div></div>
               
             </div>
@@ -351,24 +320,20 @@
 <pre><code class="lang-js">api.task.post({
  text: <span class="hljs-string">'task name'</span>,
  type: <span class="hljs-string">'daily'</span>,
- notes: <span class="hljs-string">'notes'</span>,
+ notes: <span class="hljs-string">'notes'</span>
 }).then((task) =&gt; {
-  task.text; <span class="hljs-comment">// 'task name'</span>
-});
+  task.text <span class="hljs-comment">// 'task name'</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  post (taskBody) {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.post(
-        <span class="hljs-string">'user/tasks'</span>,
-        { send: taskBody }
-      ).then((task) =&gt; {
-        <span class="hljs-keyword">return</span> task;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> post (taskBody) {
+    <span class="hljs-keyword">let</span> task = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">'user/tasks'</span>,
+      { send: taskBody }
+    )
+    <span class="hljs-keyword">return</span> task
   }</pre></div></div>
               
             </div>
@@ -388,29 +353,26 @@
                 <h1 id="task-put-">task.put()</h1>
 <p>Update an existing task</p>
 <p>Task id and task body are required arguments.</p>
-<pre><code class="lang-js">api.task.put(
-  <span class="hljs-string">'task-id'</span>,
-  { text: <span class="hljs-string">'new task name'</span>, notes: <span class="hljs-string">'new task notes'</span> }
-).then((task) =&gt; {
-  task.text; <span class="hljs-comment">// 'new task name'</span>
-});
+<pre><code class="lang-js">api.task.put(<span class="hljs-string">'task-id'</span>, {
+  text: <span class="hljs-string">'new task name'</span>,
+  notes: <span class="hljs-string">'new task notes'</span>
+}).then((task) =&gt; {
+  task.text <span class="hljs-comment">// 'new task name'</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  put (id, taskBody) {
-    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
-    <span class="hljs-keyword">if</span> (!taskBody) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task body is required'</span>;
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> put (id, taskBody) {
+    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task id is required'</span>)
+    <span class="hljs-keyword">if</span> (!taskBody) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task body is required'</span>)
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.put(
-        <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>,
-        { send: taskBody }
-      ).then((task) =&gt; {
-        <span class="hljs-keyword">return</span> task;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+    <span class="hljs-keyword">let</span> task = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.put(
+      <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>,
+      { send: taskBody }
+    )
+
+    <span class="hljs-keyword">return</span> task
   }</pre></div></div>
               
             </div>
@@ -430,25 +392,19 @@
                 <h1 id="task-del-">task.del()</h1>
 <p>Delete existing task.</p>
 <p>Task id is a required argument.</p>
-<pre><code class="lang-js">api.task.del(
-  <span class="hljs-string">'task-id'</span>,
-).then((task) =&gt; {
-  task; <span class="hljs-comment">// {}</span>
-});
+<pre><code class="lang-js">api.task.del(<span class="hljs-string">'task-id'</span>).then((task) =&gt; {
+  task <span class="hljs-comment">// {}</span>
+})
 </code></pre>
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  del (id) {
-    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-string">'Task id is required'</span>;
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> del (id) {
+    <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task id is required'</span>)
 
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>)
-      .then((task) =&gt; {
-        <span class="hljs-keyword">return</span> task;
-      })
-      .catch((err) =&gt; {
-        <span class="hljs-keyword">throw</span> err;
-      });
+    <span class="hljs-keyword">let</span> task = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>)
+
+    <span class="hljs-keyword">return</span> task
   }</pre></div></div>
               
             </div>

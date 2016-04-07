@@ -10,13 +10,13 @@
   <title>Initialize</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" media="all" href="assets/css/style.css" />
+  <link rel="stylesheet" media="all" href="/assets/css/style.css" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/tomorrow-night.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.js"></script>
-  <script src="assets/js/javascript.js"></script>
+  <script src="/assets/js/javascript.js"></script>
 </head>
 <body>
   <div class="ui left push vertical inverted sidebar menu">
@@ -26,13 +26,6 @@
         
         
         Account
-      </a>
-    
-      
-      <a class="item menu-link" href="connection.html">
-        
-        
-        Connection
       </a>
     
       
@@ -110,16 +103,16 @@
                 <h1 id="habitica-">Habitica()</h1>
 <p>Set up your instance of Habitica.</p>
 <p>The endpoint will default to <a href="https://habitica.com/api/v2">https://habitica.com/api/v2</a> if not provided.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>)
 <span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica({
   uuid: <span class="hljs-string">'your-habitica.com-user-id'</span>,
   token: <span class="hljs-string">'your-habitica.com-api-token'</span>,
-  endpoint: <span class="hljs-string">'custom-url'</span>,
-});
+  endpoint: <span class="hljs-string">'custom-url'</span>
+})
 </code></pre>
 <p>The uuid and token parameters are not required and can be <a href="#setCredentials">set later</a> or be set at time of <a href="account.html#account.register">registration</a> or <a href="account.html#account.login">login</a>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>);
-<span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica();
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>)
+<span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica()
 </code></pre>
 
               </div>
@@ -127,8 +120,8 @@
                 <div class="content column hljs javascript"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._connection = <span class="hljs-keyword">new</span> Connection({
       uuid: options.uuid,
       token: options.token,
-      endpoint: options.endpoint,
-    });</pre></div></div>
+      endpoint: options.endpoint
+    })</pre></div></div>
               
             </div>
           
@@ -150,13 +143,13 @@
                 </a>
                 <h1 id="getuuid-">getUuid()</h1>
 <p>Gets the uuid of habitica instance.</p>
-<pre><code class="lang-js">api.getUuid();
+<pre><code class="lang-js">api.getUuid()
 </code></pre>
 
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  getUuid () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getUuid();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getUuid()
   }</pre></div></div>
               
             </div>
@@ -175,13 +168,13 @@
                 </a>
                 <h1 id="gettoken-">getToken()</h1>
 <p>Gets the token of habitica instance.</p>
-<pre><code class="lang-js">api.getToken();
+<pre><code class="lang-js">api.getToken()
 </code></pre>
 
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  getToken () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getToken();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getToken()
   }</pre></div></div>
               
             </div>
@@ -200,13 +193,13 @@
                 </a>
                 <h1 id="getendpoint-">getEndpoint()</h1>
 <p>Gets the configured endpoint of habitica instance.</p>
-<pre><code class="lang-js">api.getEndpoint();
+<pre><code class="lang-js">api.getEndpoint()
 </code></pre>
 
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  getEndpoint () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getEndpoint();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getEndpoint()
   }</pre></div></div>
               
             </div>
@@ -229,14 +222,14 @@
 <pre><code class="lang-js">api.setCredentials({
   uuid: <span class="hljs-string">'new-user-id'</span>,
   token: <span class="hljs-string">'new-api-token'</span>,
-  endpoint: <span class="hljs-string">'http://localhost:3000/api/v2'</span>,
-});
+  endpoint: <span class="hljs-string">'http://localhost:3000/api/v2'</span>
+})
 </code></pre>
 
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  setCredentials (creds) {
-    <span class="hljs-keyword">this</span>._connection.setCredentials(creds);
+    <span class="hljs-keyword">this</span>._connection.setCredentials(creds)
   }</pre></div></div>
               
             </div>
