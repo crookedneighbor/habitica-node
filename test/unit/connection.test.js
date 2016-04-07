@@ -1,5 +1,5 @@
 import nock from 'nock';
-import Connection from '../../src/connection';
+import Connection from '../../src/lib/connection';
 import {API_ERRORS} from '../../src/lib/errors';
 
 describe('Connection', () => {

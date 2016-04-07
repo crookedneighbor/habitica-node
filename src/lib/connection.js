@@ -3,7 +3,7 @@
 // This is a private lib used by the other classes. It has no public interface.
 import superagent from 'superagent';
 import Q from 'q';
-import {API_ERRORS} from './lib/errors';
+import {API_ERRORS} from './errors';
 
 export default class {
   constructor (options) {

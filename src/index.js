@@ -1,7 +1,7 @@
 // Initialize
 // heartbeat
 // Set up your client!
-import Connection from './connection';
+import Connection from './lib/connection';
 
 import Account from './account';
 import Content from './content';
