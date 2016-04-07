@@ -16,3 +16,10 @@ export class MissingArgumentError extends InternalModuleError {
   }
 }
 
+export class InvalidActionError extends InternalModuleError {
+  constructor (message) {
+    super();
+
+    this.message = message || 'The action you are trying to do is not allowed';
+  }
+}

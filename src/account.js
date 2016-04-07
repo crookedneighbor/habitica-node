@@ -6,6 +6,7 @@ import {
   isEmpty,
   isString,
 } from 'lodash';
+import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors';
 
 export default class {
   constructor (options) {
@@ -38,7 +39,7 @@ export default class {
   async register (username, email, password, options={}) {
     if (this._connection._uuid || this._connection._token) {
       if (!options.resetOldCreds) {
-        throw 'User id or api token already set';
+        throw new IME.InvalidActionError('User id or api token already set');
       }
 
       this._connection.setCredentials({uuid: null, token: null});

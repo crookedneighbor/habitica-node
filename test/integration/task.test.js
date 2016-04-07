@@ -1,5 +1,6 @@
 import {generateUser} from '../support/integration_helper';
 import Habitica from '../../src/index';
+import {INTERNAL_MODULE_ERRORS as IME} from '../../src/lib/errors';
 
 describe('Task', () => {
   let api = new Habitica({
@@ -152,8 +153,10 @@ describe('Task', () => {
     });
 
     it('throws an error if id is not provided', async () => {
+      let err = new IME.MissingArgumentError('Task id is required');
+
       await expect(api.task.score())
-        .to.eventually.be.rejected.and.eql('Task id is required');
+        .to.eventually.be.rejected.and.eql(err);
     });
 
     it('thows an error if a non-valid direction is used', async () => {
@@ -195,16 +198,20 @@ describe('Task', () => {
     });
 
     it('throws an error if no task id is provided', async () => {
+      let err = new IME.MissingArgumentError('Task id is required');
+
       await expect(api.task.put())
-        .to.eventually.be.rejected.and.eql('Task id is required');
+        .to.eventually.be.rejected.and.eql(err);
     });
 
     it('throws an error if no task body is provided', async () => {
+      let err = new IME.MissingArgumentError('Task body is required');
+
       await expect(api.task.put('habit-1'))
-        .to.eventually.be.rejected.and.eql('Task body is required');
+        .to.eventually.be.rejected.and.eql(err);
     });
 
-    it('returns error if task does not exist', async () => {
+    it('rejects with error if task does not exist', async () => {
       await expect(api.task.put(
         'task-does-not-exist',
         { text: 'updated todo name', notes: 'updated todo notes' }
@@ -222,11 +229,13 @@ describe('Task', () => {
     });
 
     it('throws an error if no task id is provided', async () => {
+      let err = new IME.MissingArgumentError('Task id is required');
+
       await expect(api.task.del())
-        .to.eventually.be.rejected.and.eql('Task id is required');
+        .to.eventually.be.rejected.and.eql(err);
     });
 
-    it('returns error if task does not exist', async () => {
+    it('rejects with error if task does not exist', async () => {
       await expect(api.task.del('task-does-not-exist'))
         .to.eventually.be.rejected;
     });

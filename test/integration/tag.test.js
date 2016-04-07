@@ -1,5 +1,6 @@
 import {generateUser} from '../support/integration_helper';
 import Habitica from '../../src/index';
+import {INTERNAL_MODULE_ERRORS as IME} from '../../src/lib/errors';
 
 describe('Tag', () => {
   let api = new Habitica({
@@ -88,13 +89,17 @@ describe('Tag', () => {
     });
 
     it('throws an error if no tag id is provided', async () => {
+      let err = new IME.MissingArgumentError('Tag id is required');
+
       await expect(api.tag.put())
-        .to.eventually.be.rejected.and.eql('Tag id is required');
+        .to.eventually.be.rejected.and.eql(err);
     });
 
     it('throws an error if no tag body is provided', async () => {
+      let err = new IME.MissingArgumentError('Tag body is required');
+
       await expect(api.tag.put('tag-1'))
-        .to.eventually.be.rejected.and.eql('Tag body is required');
+        .to.eventually.be.rejected.and.eql(err);
     });
 
     it('returns error if tag does not exist', async () => {
@@ -120,8 +125,10 @@ describe('Tag', () => {
     });
 
     it('throws an error if no tag id is provided', async () => {
+      let err = new IME.MissingArgumentError('Tag id is required');
+
       await expect(api.tag.del())
-        .to.eventually.be.rejected.and.eql('Tag id is required');
+        .to.eventually.be.rejected.and.eql(err);
     });
 
     it('returns error if tag does not exist', async () => {

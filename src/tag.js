@@ -1,6 +1,9 @@
 // Tag
 // tags
 // Sort thy stuff!
+
+import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors';
+
 export default class {
   constructor (option) {
     this._connection = option.connection;
@@ -76,8 +79,8 @@ export default class {
   // });
   // ```
   async put (id, tagBody) {
-    if (!id) throw 'Tag id is required';
-    if (!tagBody) throw 'Tag body is required';
+    if (!id) throw new IME.MissingArgumentError('Tag id is required');
+    if (!tagBody) throw new IME.MissingArgumentError('Tag body is required');
 
     let tag = await this._connection.put(
       `user/tags/${id}`,
@@ -100,7 +103,7 @@ export default class {
   // });
   // ```
   async del (id) {
-    if (!id) throw 'Tag id is required';
+    if (!id) throw new IME.MissingArgumentError('Tag id is required');
 
     let remainingTags = await this._connection.del(`user/tags/${id}`);
 

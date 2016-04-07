@@ -2,6 +2,7 @@ import {generateUser} from '../support/integration_helper';
 import {each} from 'lodash';
 import {v4 as generateRandomUserName} from 'uuid';
 import Habitica from '../../src/index';
+import {INTERNAL_MODULE_ERRORS as IME} from '../../src/lib/errors';
 
 describe('Account', () => {
   describe('#register', () => {
@@ -47,16 +48,18 @@ describe('Account', () => {
     context('Uuid or token already set', () => {
       it('throws an error if uuid is already set', async () => {
         api.setCredentials({uuid: 'some-uuid'});
+        let err = new IME.InvalidActionError('User id or api token already set');
 
         await expect(api.account.register(username, email, password))
-          .to.eventually.be.rejected.and.eql('User id or api token already set');
+          .to.eventually.be.rejected.and.eql(err);
       });
 
       it('throws an error if token is already set', async () => {
         api.setCredentials({token: 'some-token'});
+        let err = new IME.InvalidActionError('User id or api token already set');
 
         await expect(api.account.register(username, email, password))
-          .to.eventually.be.rejected.and.eql('User id or api token already set');
+          .to.eventually.be.rejected.and.eql(err);
       });
 
       it('allows the creation of a new user when uuid or token is already set if resetOldCreds option is passed in', async () => {

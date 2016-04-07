@@ -2,6 +2,7 @@
 // checkmark box
 // Get em, check em, level up!
 import {filter} from 'lodash';
+import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors';
 
 export default class {
   constructor (options) {
@@ -160,7 +161,7 @@ export default class {
   // });
   // ```
   async score (id, direction='up', body={}) {
-    if (!id) throw 'Task id is required';
+    if (!id) throw new IME.MissingArgumentError('Task id is required');
 
     let stats = await this._connection.post(
       `user/tasks/${id}/${direction}`,
@@ -206,8 +207,8 @@ export default class {
   // });
   // ```
   async put (id, taskBody) {
-    if (!id) throw 'Task id is required';
-    if (!taskBody) throw 'Task body is required';
+    if (!id) throw new IME.MissingArgumentError('Task id is required');
+    if (!taskBody) throw new IME.MissingArgumentError('Task body is required');
 
     let task = await this._connection.put(
       `user/tasks/${id}`,
@@ -230,7 +231,7 @@ export default class {
   // });
   // ```
   async del (id) {
-    if (!id) throw 'Task id is required';
+    if (!id) throw new IME.MissingArgumentError('Task id is required');
 
     let task = await this._connection.del(`user/tasks/${id}`)
 
