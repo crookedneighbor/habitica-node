@@ -1,5 +1,6 @@
 import nock from 'nock';
 import Connection from '../../src/connection';
+import {API_ERRORS} from '../../src/lib/errors';
 
 describe('Connection', () => {
   let habiticaUrl;
@@ -39,7 +40,9 @@ describe('Connection', () => {
     it('rejects with connection error if habit is unreachable', () => {
       let request = connection.get('user');
 
-      return expect(request).to.be.rejectedWith(/Nock: Not allow net connect/);
+      let unknownError = new API_ERRORS.UNKNOWN();
+
+      return expect(request).to.be.rejectedWith(unknownError.message);
     });
   });
 
@@ -166,8 +169,7 @@ describe('Connection', () => {
     });
 
     context('unsuccesful request', () => {
-
-      it('rejects if credentials are not valid', () => {
+      it('rejects with NotAuthenticated error if credentials are not valid', async () => {
         let expectedRequest = habiticaUrl.reply(() => {
           return [401, {response: { status: 401, text: 'Not Authorized' } }];
         });
@@ -176,7 +178,23 @@ describe('Connection', () => {
         let request = connection.get('user');
 
         expectedRequest.done();
-        return expect(request).to.be.rejected;
+        await expect(request).to.eventually.be.rejected
+          .and.be.an.instanceOf(API_ERRORS['401']);
+
+      });
+
+      it('rejects with NotFound Error if request 404s', async () => {
+        let expectedRequest = habiticaUrl.reply(() => {
+          return [404, {response: { status: 404, text: 'Not Authorized' } }];
+        });
+
+        let connection = new Connection(defaultOptions);
+        let request = connection.get('user');
+
+        expectedRequest.done();
+        await expect(request).to.eventually.be.rejected
+          .and.be.an.instanceOf(API_ERRORS['404']);
+
       });
     });
   });

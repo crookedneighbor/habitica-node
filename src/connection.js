@@ -3,6 +3,7 @@
 // This is a private lib used by the other classes. It has no public interface.
 import superagent from 'superagent';
 import Q from 'q';
+import {API_ERRORS} from './lib/errors';
 
 export default class {
   constructor (options) {
@@ -63,17 +64,29 @@ export default class {
         .send(options.send)
         .end((err, response) => {
           if (err) {
-            if (err.response) {
-              err = {
-                code: err.response.status,
-                text: err.response.body.err,
-              }
-            }
-            return reject(err);
+            let connectionError = this._formatError(err);
+            return reject(connectionError);
           }
 
           resolve(response.body);
         });
     });
+  }
+
+  _formatError (err) {
+    let connectionError;
+
+    if (err.response) {
+      let HttpError = API_ERRORS[err.response.status];
+      if (HttpError) {
+        connectionError = new HttpError(err.response.body.err);
+      }
+    }
+
+    if (!connectionError) {
+      connectionError = new API_ERRORS.UNKNOWN(err);
+    }
+
+    return connectionError;
   }
 }
