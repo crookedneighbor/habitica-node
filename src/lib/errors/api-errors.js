@@ -1,71 +1,71 @@
-import CustomError from './custom-error';
+import CustomError from './custom-error'
 
 class HabiticaApiError extends CustomError {
   constructor () {
-    super();
+    super()
 
-    this.type = 'Habitica-API-Error';
+    this.type = 'Habitica-API-Error'
   }
 }
 
 export class UnknownConnectionError extends HabiticaApiError {
   constructor (err) {
-    super();
+    super()
 
-    this.message = 'An unknown error occurred';
-    this.originalError = err;
+    this.message = 'An unknown error occurred'
+    this.originalError = err
   }
 
-  static get statusCode() {
-    return 'UNKNOWN';
+  static get statusCode () {
+    return 'UNKNOWN'
   }
 }
 
 export class NotAuthenticatedError extends HabiticaApiError {
   constructor (customMessage) {
-    super();
+    super()
 
-    this.message = customMessage || 'You are not authenticated';
+    this.message = customMessage || 'You are not authenticated'
   }
 
-  static get statusCode() {
-    return 401;
+  static get statusCode () {
+    return 401
   }
 }
 
 export class NotAuthorizedError extends HabiticaApiError {
   constructor (customMessage) {
-    super();
+    super()
 
-    this.statusCode = 403;
-    this.message = customMessage || 'You are not authorized to perform that action';
+    this.statusCode = 403
+    this.message = customMessage || 'You are not authorized to perform that action'
   }
 
-  static get statusCode() {
-    return 403;
+  static get statusCode () {
+    return 403
   }
 }
 
 export class NotFoundError extends HabiticaApiError {
   constructor (customMessage) {
-    super();
+    super()
 
-    this.message = customMessage || 'The resource could not be found';
+    this.message = customMessage || 'The resource could not be found'
   }
 
-  static get statusCode() {
-    return 404;
+  static get statusCode () {
+    return 404
   }
 }
 
 export class InternalServerError extends HabiticaApiError {
   constructor (customMessage) {
-    super();
+    super()
 
-    this.message = customMessage || 'An internal server error occurred';
+    this.message = customMessage || 'An internal server error occurred'
   }
 
-  static get statusCode() {
-    return 500;
+  static get statusCode () {
+    return 500
   }
 }

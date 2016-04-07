@@ -1,16 +1,16 @@
-$( document ).ready(function() {
-  $('.ui.dropdown').dropdown();
+$(document).ready(function () {
+  $('.ui.dropdown').dropdown()
 
-  $('.annotation pre').addClass('ui message');
+  $('.annotation pre').addClass('ui message')
 
-  $('#menu-button').click(function() {
-    $('.ui.sidebar').sidebar('toggle');
-  });
+  $('#menu-button').click(function () {
+    $('.ui.sidebar').sidebar('toggle')
+  })
 
   $('.ui.sticky').sticky({
     context: '#container',
-    offset: 10,
-  });
+    offset: 10
+  })
 
-  $('#menu-buttons .button').popup();
-});
+  $('#menu-buttons .button').popup()
+})

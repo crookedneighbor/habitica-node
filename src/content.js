@@ -1,11 +1,12 @@
 // Content
 // archive
 // For all your content needs!
-import {get, keys} from 'lodash';
+import {get, keys} from 'lodash'
+import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {
   constructor (options) {
-    this._connection = options.connection;
+    this._connection = options.connection
   }
 
   // # content.get()
@@ -16,10 +17,10 @@ export default class {
   // // Get all content
   // api.content.get()
   //   .then((content) => {
-  //     content.gear.tree; // all gear objects
-  //     content.egg.Wolf; // wolf egg object
-  //     content.quests.whale; // whale quest object
-  //   });
+  //     content.gear.tree // all gear objects
+  //     content.egg.Wolf // wolf egg object
+  //     content.quests.whale // whale quest object
+  //   })
   // ```
   //
   // If a path is specified, only that portion of the content object is passed back.
@@ -27,29 +28,29 @@ export default class {
   // // Get specific piece of content
   // api.content.get('eggs')
   //   .then((eggs) => {
-  //     eggs.Wolf; // wolf egg object
-  //   });
+  //     eggs.Wolf // wolf egg object
+  //   })
   //
   // // Get specific piece of nested content
   // api.content.get('gear.tree.weapon.warrior')
   //   .then((warriorWeapons) => {
-  //     warriorWeapons['0']; // initial warrior weapon
-  //   });
+  //     warriorWeapons['0'] // initial warrior weapon
+  //   })
   // ```
   async get (path) {
-    let content = await this._connection.get('content');
+    let content = await this._connection.get('content')
 
     if (path) {
-      let nestedContent = get(content, path);
+      let nestedContent = get(content, path)
 
       if (nestedContent) {
-        return nestedContent;
+        return nestedContent
       }
 
-      throw `${path} is not a valid content path`;
+      throw new IME.InvalidActionError(`${path} is not a valid content path`)
     }
 
-    return content;
+    return content
   }
 
   // # content.getKeys()
@@ -58,35 +59,35 @@ export default class {
   // ```js
   // api.content.getKeys()
   //   .then((keys) => {
-  //     keys; // an array, ['eggs', 'quests', ...]
-  //   });
+  //     keys // an array, ['eggs', 'quests', ...]
+  //   })
   // ```
   //
   // If a path is specified, only the keys for that portion of the content object are passed back.
   // ```
   // api.content.getKeys('eggs')
   //   .then((eggs) => {
-  //     eggs; // an array, ['Wolf', 'Whale', ...]
-  //   });
+  //     eggs // an array, ['Wolf', 'Whale', ...]
+  //   })
   //
   // api.content.getKeys('gear.tree.weapon.warrior')
   //   .then((warriorWeapons) => {
-  //     warriorWeapons; // an array, ['0', '1', ...]
-  //   });
+  //     warriorWeapons // an array, ['0', '1', ...]
+  //   })
   // ```
   async getKeys (path) {
-    let content = await this._connection.get('content');
+    let content = await this._connection.get('content')
     if (path) {
-      let nestedContent = get(content, path);
+      let nestedContent = get(content, path)
 
       if (nestedContent) {
-        return keys(nestedContent);
+        return keys(nestedContent)
       }
 
-      throw `${path} is not a valid content path`;
+      throw new IME.InvalidActionError(`${path} is not a valid content path`)
     }
 
-    return keys(content);
+    return keys(content)
   }
 
   // # content.getUserPaths()
@@ -96,16 +97,16 @@ export default class {
   // // Get all possible user paths
   // api.content.getUserPaths()
   //   .then((paths) => {
-  //     paths['achievements.beastMaster']; // Boolean
-  //     paths['contributor.level']; // Number
-  //     paths['items.currentPet']; // String
-  //     paths['items.gear.owned.weapon_warrior_0']; // Boolean
-  //   });
+  //     paths['achievements.beastMaster'] // Boolean
+  //     paths['contributor.level'] // Number
+  //     paths['items.currentPet'] // String
+  //     paths['items.gear.owned.weapon_warrior_0'] // Boolean
+  //   })
   // ```
   async getUserPaths () {
-    let paths = await this._connection.get('content/paths');
+    let paths = await this._connection.get('content/paths')
 
-    return paths;
+    return paths
   }
   // NOOP
 }

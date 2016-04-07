@@ -1,13 +1,13 @@
 // Initialize
 // heartbeat
 // Set up your client!
-import Connection from './lib/connection';
+import Connection from './lib/connection'
 
-import Account from './account';
-import Content from './content';
-import Task from './task';
-import User from './user';
-import Tag from './tag';
+import Account from './account'
+import Content from './content'
+import Task from './task'
+import User from './user'
+import Tag from './tag'
 
 module.exports = class {
   constructor (options = {}) {
@@ -18,58 +18,57 @@ module.exports = class {
     // The endpoint will default to https://habitica.com/api/v2 if not provided.
     //
     // ```js
-    // let Habitica = require('habitica');
+    // let Habitica = require('habitica')
     // let api = new Habitica({
     //   uuid: 'your-habitica.com-user-id',
     //   token: 'your-habitica.com-api-token',
     //   endpoint: 'custom-url',
-    // });
+    // })
     // ```
     //
     // The uuid and token parameters are not required and can be [set later](#setCredentials) or be set at time of [registration](account.html#account.register) or [login](account.html#account.login).
     //
     // ```js
-    // let Habitica = require('habitica');
-    // let api = new Habitica();
+    // let Habitica = require('habitica')
+    // let api = new Habitica()
     // ```
     this._connection = new Connection({
       uuid: options.uuid,
       token: options.token,
-      endpoint: options.endpoint,
-    });
+      endpoint: options.endpoint
+    })
 
     // NOOP
     this.account = new Account({
-      connection: this._connection,
-    });
+      connection: this._connection
+    })
 
     this.content = new Content({
-      connection: this._connection,
-    });
+      connection: this._connection
+    })
 
     this.task = new Task({
-      connection: this._connection,
-    });
+      connection: this._connection
+    })
 
     this.user = new User({
-      connection: this._connection,
-    });
+      connection: this._connection
+    })
 
     this.tag = new Tag({
-      connection: this._connection,
+      connection: this._connection
     })
   }
-
 
   // # getUuid()
   //
   // Gets the uuid of habitica instance.
   //
   // ```js
-  // api.getUuid();
+  // api.getUuid()
   // ```
   getUuid () {
-    return this._connection.getUuid();
+    return this._connection.getUuid()
   }
 
   // # getToken()
@@ -77,10 +76,10 @@ module.exports = class {
   // Gets the token of habitica instance.
   //
   // ```js
-  // api.getToken();
+  // api.getToken()
   // ```
   getToken () {
-    return this._connection.getToken();
+    return this._connection.getToken()
   }
 
   // # getEndpoint()
@@ -88,10 +87,10 @@ module.exports = class {
   // Gets the configured endpoint of habitica instance.
   //
   // ```js
-  // api.getEndpoint();
+  // api.getEndpoint()
   // ```
   getEndpoint () {
-    return this._connection.getEndpoint();
+    return this._connection.getEndpoint()
   }
 
   // # setCredentials()
@@ -105,10 +104,10 @@ module.exports = class {
   //   uuid: 'new-user-id',
   //   token: 'new-api-token',
   //   endpoint: 'http://localhost:3000/api/v2',
-  // });
+  // })
   // ```
   setCredentials (creds) {
-    this._connection.setCredentials(creds);
+    this._connection.setCredentials(creds)
   }
 // NOOP
 }

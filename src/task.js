@@ -1,14 +1,14 @@
 // Task
 // checkmark box
 // Get em, check em, level up!
-import {filter} from 'lodash';
-import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors';
+import {filter} from 'lodash'
+import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {
   constructor (options) {
-    this._connection = options.connection;
+    this._connection = options.connection
 
-    this.delete = this.del;
+    this.delete = this.del
   }
 
   // # task.get()
@@ -19,8 +19,8 @@ export default class {
   // ```js
   // api.task.get()
   //   .then((tasks) => {
-  //     tasks[0]; // one of your tasks
-  //   });
+  //     tasks[0] // one of your tasks
+  //   })
   // ```
   //
   // If you pass in a task id, it will get that specific task.
@@ -28,20 +28,20 @@ export default class {
   // ```js
   // api.task.get('id-of-your-task')
   //   .then((task) => {
-  //     task.name; // the task name
-  //     task.type; // the task type
-  //   });
+  //     task.name // the task name
+  //     task.type // the task type
+  //   })
   // ```
   async get (id) {
-    let url = 'user/tasks';
+    let url = 'user/tasks'
 
     if (id) {
-      url += `/${id}`;
+      url += `/${id}`
     }
 
-    let tasks = await this._connection.get(url);
+    let tasks = await this._connection.get(url)
 
-    return tasks;
+    return tasks
   }
 
   // # task.getDailys()
@@ -51,11 +51,11 @@ export default class {
   // ```js
   // api.task.getDailys()
   //   .then((dailys) => {
-  //     dailys[0]; // one of your dailys
-  //   });
+  //     dailys[0] // one of your dailys
+  //   })
   // ```
   async getDailys () {
-    return this._filterTasksByType('daily');
+    return this._filterTasksByType('daily')
   }
 
   // # task.getRewards()
@@ -65,11 +65,11 @@ export default class {
   // ```js
   // api.task.getRewards()
   //   .then((rewards) => {
-  //     rewards[0]; // one of your rewards
-  //   });
+  //     rewards[0] // one of your rewards
+  //   })
   // ```
   async getRewards () {
-    return this._filterTasksByType('reward');
+    return this._filterTasksByType('reward')
   }
 
   // # task.getHabits()
@@ -79,11 +79,11 @@ export default class {
   // ```js
   // api.task.getHabits()
   //   .then((habits) => {
-  //     habits[0]; // one of your habits
-  //   });
+  //     habits[0] // one of your habits
+  //   })
   // ```
   async getHabits () {
-    return this._filterTasksByType('habit');
+    return this._filterTasksByType('habit')
   }
 
   // # task.getTodos()
@@ -93,11 +93,11 @@ export default class {
   // ```js
   // api.task.getTodos()
   //   .then((todos) => {
-  //     todos[0]; // one of your todos
-  //   });
+  //     todos[0] // one of your todos
+  //   })
   // ```
   async getTodos () {
-    return this._filterTasksByType('todo');
+    return this._filterTasksByType('todo')
   }
 
   // # task.score()
@@ -111,9 +111,9 @@ export default class {
   //  'task-id',
   //  'down',
   // ).then((stats) => {
-  //   stats.delta; // Change in task value, negative number
-  //   stats._tmp.drop; // If scoring the task resulted in a drop
-  // });
+  //   stats.delta // Change in task value, negative number
+  //   stats._tmp.drop // If scoring the task resulted in a drop
+  // })
   // ```
   //
   // Direction defaults to 'up' when not provided
@@ -121,8 +121,8 @@ export default class {
   // ```js
   // api.task.score('task-id')
   //   .then((stats) => {
-  //     stats.delta; // Change in task value, positive number
-  //   });
+  //     stats.delta // Change in task value, positive number
+  //   })
   // ```
   //
   // If the task id does not already exist, it will create a new habit.
@@ -132,12 +132,12 @@ export default class {
   //  'task-id',
   //  'down',
   // ).then((stats) => {
-  //   return api.task.get('task-id');
+  //   return api.task.get('task-id')
   // }).then((task) => {
-  //   task.type; // 'habit'
-  //   task.id; // 'task-id'
-  //   task.text; // 'task-id'
-  // });
+  //   task.type // 'habit'
+  //   task.id // 'task-id'
+  //   task.text // 'task-id'
+  // })
   // ```
   //
   // If the task id does not already exist, you can pass in an optional body object to customize certain fields
@@ -152,23 +152,23 @@ export default class {
   //    notes: 'Custom Note',
   //  },
   // ).then((stats) => {
-  //   return api.task.get('task-id');
+  //   return api.task.get('task-id')
   // }).then((task) => {
-  //   task.type; // 'todo'
-  //   task.id; // 'task-id'
-  //   task.text; // 'Custom Name'
-  //   task.notes; // 'Custom Note'
-  // });
+  //   task.type // 'todo'
+  //   task.id // 'task-id'
+  //   task.text // 'Custom Name'
+  //   task.notes // 'Custom Note'
+  // })
   // ```
-  async score (id, direction='up', body={}) {
-    if (!id) throw new IME.MissingArgumentError('Task id is required');
+  async score (id, direction = 'up', body = {}) {
+    if (!id) throw new IME.MissingArgumentError('Task id is required')
 
     let stats = await this._connection.post(
       `user/tasks/${id}/${direction}`,
       { send: body }
-    );
+    )
 
-    return stats;
+    return stats
   }
 
   // # task.post()
@@ -182,15 +182,15 @@ export default class {
   //  type: 'daily',
   //  notes: 'notes',
   // }).then((task) => {
-  //   task.text; // 'task name'
-  // });
+  //   task.text // 'task name'
+  // })
   // ```
   async post (taskBody) {
     let task = await this._connection.post(
       'user/tasks',
       { send: taskBody }
-    );
-    return task;
+    )
+    return task
   }
 
   // # task.put()
@@ -203,19 +203,19 @@ export default class {
   //   'task-id',
   //   { text: 'new task name', notes: 'new task notes' }
   // ).then((task) => {
-  //   task.text; // 'new task name'
-  // });
+  //   task.text // 'new task name'
+  // })
   // ```
   async put (id, taskBody) {
-    if (!id) throw new IME.MissingArgumentError('Task id is required');
-    if (!taskBody) throw new IME.MissingArgumentError('Task body is required');
+    if (!id) throw new IME.MissingArgumentError('Task id is required')
+    if (!taskBody) throw new IME.MissingArgumentError('Task body is required')
 
     let task = await this._connection.put(
       `user/tasks/${id}`,
       { send: taskBody }
-    );
+    )
 
-    return task;
+    return task
   }
 
   // # task.del()
@@ -227,23 +227,23 @@ export default class {
   // api.task.del(
   //   'task-id',
   // ).then((task) => {
-  //   task; // {}
-  // });
+  //   task // {}
+  // })
   // ```
   async del (id) {
-    if (!id) throw new IME.MissingArgumentError('Task id is required');
+    if (!id) throw new IME.MissingArgumentError('Task id is required')
 
     let task = await this._connection.del(`user/tasks/${id}`)
 
-    return task;
+    return task
   }
 
   // NOOP
   async _filterTasksByType (type) {
-    let tasks = await this._connection.get('user/tasks');
+    let tasks = await this._connection.get('user/tasks')
     let taskByType = filter(tasks, (task) => {
-      return task.type === type;
-    });
-    return taskByType;
+      return task.type === type
+    })
+    return taskByType
   }
 }

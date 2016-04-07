@@ -3,7 +3,7 @@
 // That's you!
 export default class {
   constructor (options) {
-    this._connection = options.connection;
+    this._connection = options.connection
   }
 
   // # get()
@@ -12,15 +12,15 @@ export default class {
   // ```js
   // api.user.get()
   //   .then((user) => {
-  //     user._id; // your user id
-  //     user.todso; // an array of your todos
-  //     user.items; // your items object
-  //   });
+  //     user._id // your user id
+  //     user.todso // an array of your todos
+  //     user.items // your items object
+  //   })
   // ```
   async get () {
-    let user = await this._connection.get('user');
+    let user = await this._connection.get('user')
 
-    return user;
+    return user
   }
   // NOOP
 }

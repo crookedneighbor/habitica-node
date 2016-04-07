@@ -1,25 +1,25 @@
-import CustomError from './custom-error';
+import CustomError from './custom-error'
 
 class InternalModuleError extends CustomError {
   constructor () {
-    super();
+    super()
 
-    this.type = 'Internal-Module-Error';
+    this.type = 'Internal-Module-Error'
   }
 }
 
 export class MissingArgumentError extends InternalModuleError {
   constructor (message) {
-    super();
+    super()
 
-    this.message = message || 'Missing necessary function argument';
+    this.message = message || 'Missing necessary function argument'
   }
 }
 
 export class InvalidActionError extends InternalModuleError {
   constructor (message) {
-    super();
+    super()
 
-    this.message = message || 'The action you are trying to do is not allowed';
+    this.message = message || 'The action you are trying to do is not allowed'
   }
 }

@@ -2,13 +2,13 @@
 // tags
 // Sort thy stuff!
 
-import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors';
+import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {
   constructor (option) {
-    this._connection = option.connection;
+    this._connection = option.connection
 
-    this.delete = this.del;
+    this.delete = this.del
   }
 
   // # tag.get()
@@ -19,8 +19,8 @@ export default class {
   // ```js
   // api.tag.get()
   //   .then((tags) => {
-  //     tags[0]; // one of your tags
-  //   });
+  //     tags[0] // one of your tags
+  //   })
   // ```
   //
   // If you pass in a tag id, it will get that specific tag.
@@ -28,20 +28,20 @@ export default class {
   // ```js
   // api.tag.get('id-of-your-tag')
   //   .then((tag) => {
-  //     tag.name; // the tag name
-  //     tag.id; // the tag id
-  //   });
+  //     tag.name // the tag name
+  //     tag.id // the tag id
+  //   })
   // ```
   async get (id) {
-    let url = 'user/tags';
+    let url = 'user/tags'
 
     if (id) {
-      url += `/${id}`;
+      url += `/${id}`
     }
 
-    let tags = await this._connection.get(url);
+    let tags = await this._connection.get(url)
 
-    return tags;
+    return tags
   }
 
   // # tag.post()
@@ -53,16 +53,16 @@ export default class {
   // api.tag.post({
   //  name: 'tag name',
   // }).then((tags) => {
-  //   tags; // it returns all of the existing tags
-  // });
+  //   tags // it returns all of the existing tags
+  // })
   // ```
   async post (tagBody) {
     let tags = await this._connection.post(
       'user/tags',
-      { send: tagBody}
-    );
+      {send: tagBody}
+    )
 
-    return tags;
+    return tags
   }
 
   // # tag.put()
@@ -75,19 +75,19 @@ export default class {
   //   'tag-id',
   //   { name: 'new tag name' }
   // ).then((tag) => {
-  //   tag.name; // 'new tag name'
-  // });
+  //   tag.name // 'new tag name'
+  // })
   // ```
   async put (id, tagBody) {
-    if (!id) throw new IME.MissingArgumentError('Tag id is required');
-    if (!tagBody) throw new IME.MissingArgumentError('Tag body is required');
+    if (!id) throw new IME.MissingArgumentError('Tag id is required')
+    if (!tagBody) throw new IME.MissingArgumentError('Tag body is required')
 
     let tag = await this._connection.put(
       `user/tags/${id}`,
       { send: tagBody }
-    );
+    )
 
-    return tag;
+    return tag
   }
 
   // # tag.del()
@@ -99,14 +99,14 @@ export default class {
   // api.tag.del(
   //   'tag-id',
   // ).then((tags) => {
-  //   tags; // remaining existing tags
-  // });
+  //   tags // remaining existing tags
+  // })
   // ```
   async del (id) {
-    if (!id) throw new IME.MissingArgumentError('Tag id is required');
+    if (!id) throw new IME.MissingArgumentError('Tag id is required')
 
-    let remainingTags = await this._connection.del(`user/tags/${id}`);
+    let remainingTags = await this._connection.del(`user/tags/${id}`)
 
-    return remainingTags;
+    return remainingTags
   }
 }

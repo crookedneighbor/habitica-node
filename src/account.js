@@ -1,16 +1,11 @@
 // Account
 // settings
 // Manage your account
-import {
-  reject,
-  isEmpty,
-  isString,
-} from 'lodash';
-import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors';
+import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {
   constructor (options) {
-    this._connection = options.connection;
+    this._connection = options.connection
   }
 
   // # account.register()
@@ -23,7 +18,7 @@ export default class {
   //   'username',
   //   'email',
   //   'password',
-  // );
+  // )
   // ```
   //
   // If the uuid or api token are already set, the register call will throw an error. You can override this behavior by passing in an object with a `resetOldCreds` parameter set to true
@@ -34,35 +29,35 @@ export default class {
   //   'email',
   //   'password',
   //   { resetOldCreds: true },
-  // );
+  // )
   // ```
-  async register (username, email, password, options={}) {
+  async register (username, email, password, options = {}) {
     if (this._connection._uuid || this._connection._token) {
       if (!options.resetOldCreds) {
-        throw new IME.InvalidActionError('User id or api token already set');
+        throw new IME.InvalidActionError('User id or api token already set')
       }
 
-      this._connection.setCredentials({uuid: null, token: null});
+      this._connection.setCredentials({uuid: null, token: null})
     }
 
     let creds = {
       username,
       email,
       password,
-      confirmPassword: password,
-    };
+      confirmPassword: password
+    }
 
     let user = await this._connection.post(
         'register',
         {send: creds}
-      );
+      )
 
     this._connection.setCredentials({
       uuid: user._id,
-      token: user.apiToken,
-    });
+      token: user.apiToken
+    })
 
-    return user;
+    return user
   }
 
   // # account.login()
@@ -77,24 +72,24 @@ export default class {
   // api.account.login(
   //   'username or email',
   //   'password',
-  // );
+  // )
   // ```
-  async login (username_email, password, options={}) {
+  async login (username_email, password, options = {}) {
     let loginCreds = {
       username: username_email,
-      password,
-    };
+      password
+    }
     let creds = await this._connection.post(
       'user/auth/local',
       {send: loginCreds}
-    );
+    )
 
     this._connection.setCredentials({
       uuid: creds.id,
-      token: creds.token,
-    });
+      token: creds.token
+    })
 
-    return creds;
+    return creds
   }
 // NOOP
 }
