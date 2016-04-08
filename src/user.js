@@ -21,5 +21,28 @@ export default class {
 
     return user
   }
+
+  // # getBuyableGear()
+  //
+  // Returns an array of equipment objects that can be purchased with gold. These are the gear items that appear in the rewards column on the website.
+  // ```js
+  // api.user.getBuyableGear().then((gear) => {
+  //   gear.length // number of items returned
+  //
+  //   let item = gear[0] // the first item
+  //
+  //   item.type // 'weapon', 'shield', etc...
+  //   item.value // at least 0
+  //   item.str // at least 0
+  //   item.con // at least 0
+  //   item.int // at least 0
+  //   item.per // at least 0
+  // })
+  // ```
+  async getBuyableGear () {
+    let gear = await this._connection.get('user/inventory/buy')
+
+    return gear
+  }
   // NOOP
 }
