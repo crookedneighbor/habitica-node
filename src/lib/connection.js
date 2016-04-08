@@ -1,5 +1,4 @@
 import superagent from 'superagent'
-import Q from 'q'
 import {API_ERRORS} from './errors'
 
 export default class {
@@ -45,29 +44,27 @@ export default class {
     return this._router('del', route, options)
   }
 
-  _router (method, route, options) {
-    return Q.Promise((resolve, reject) => { // eslint-disable-line new-cap
-      let request = superagent[method](`${this._endpoint}/${route}`)
-        .accept('application/json')
+  async _router (method, route, options) {
+    let request = superagent[method](`${this._endpoint}/${route}`)
+      .accept('application/json')
 
-      if (this._uuid && this._token) {
-        request
-          .set('x-api-user', this._uuid)
-          .set('x-api-key', this._token)
-      }
-
+    if (this._uuid && this._token) {
       request
+        .set('x-api-user', this._uuid)
+        .set('x-api-key', this._token)
+    }
+
+    try {
+      let response = await request
         .query(options.query)
         .send(options.send)
-        .end((err, response) => {
-          if (err) {
-            let connectionError = this._formatError(err)
-            return reject(connectionError)
-          }
 
-          resolve(response.body)
-        })
-    })
+      return response.body
+    } catch (err) {
+      let connectionError = this._formatError(err)
+
+      throw connectionError
+    }
   }
 
   _formatError (err) {

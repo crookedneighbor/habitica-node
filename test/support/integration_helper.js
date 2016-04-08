@@ -1,6 +1,5 @@
 import {isEmpty} from 'lodash'
 import {MongoClient as mongo} from 'mongodb'
-import Q from 'q'
 import {v4 as generateRandomUserName} from 'uuid'
 import superagent from 'superagent'
 
@@ -9,7 +8,7 @@ export function generateUser (update = {}, connection) {
   let password = 'password'
   let email = username + '@example.com'
 
-  return new Q.Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     superagent.post(`localhost:${process.env.PORT}/api/v2/register`)
       .accept('application/json')
       .send({

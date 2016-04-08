@@ -37,12 +37,12 @@ describe('Connection', () => {
       connection = new Connection(defaultOptions)
     })
 
-    it('rejects with connection error if habit is unreachable', () => {
+    it('rejects with connection error if habit is unreachable (this is broken with got)', async function () {
       let request = connection.get('user')
 
       let unknownError = new API_ERRORS.UNKNOWN()
 
-      return expect(request).to.be.rejectedWith(unknownError.message)
+      await expect(request).to.eventually.be.rejected.and.have.property('message', unknownError.message)
     })
   })
 
@@ -128,41 +128,41 @@ describe('Connection', () => {
     it('returns a promise', () => {
       let request = connection.get('user')
 
-      expect(request).to.respondTo('then')
+      expect(request).to.be.a('promise')
     })
 
-    it('takes in an optional query parameter', () => {
+    it('takes in an optional query parameter', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .get('/group')
         .query({type: 'party'})
         .reply(200)
 
-      connection.get('group', {query: {type: 'party'}})
+      await connection.get('group', {query: {type: 'party'}})
 
       expectedRequest.done()
     })
 
-    it('ignores send parameter if passed in', () => {
+    it('ignores send parameter if passed in', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .get('/group')
         .reply(200)
 
-      connection.get('group', {send: {type: 'party'}})
+      await connection.get('group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
     context('succesful request', () => {
-      it('returns requested data', () => {
+      it('returns requested data', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
           return [200, { some: 'data' }]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.get('user')
+        let response = await connection.get('user')
 
+        expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
-        return expect(request).to.eventually.eql({ some: 'data' })
       })
     })
 
@@ -175,9 +175,10 @@ describe('Connection', () => {
         let connection = new Connection(defaultOptions)
         let request = connection.get('user')
 
-        expectedRequest.done()
         await expect(request).to.eventually.be.rejected
           .and.be.an.instanceOf(API_ERRORS['401'])
+
+        expectedRequest.done()
       })
 
       it('rejects with NotFound Error if request 404s', async function () {
@@ -188,9 +189,10 @@ describe('Connection', () => {
         let connection = new Connection(defaultOptions)
         let request = connection.get('user')
 
-        expectedRequest.done()
         await expect(request).to.eventually.be.rejected
           .and.be.an.instanceOf(API_ERRORS['404'])
+
+        expectedRequest.done()
       })
     })
   })
@@ -202,17 +204,16 @@ describe('Connection', () => {
     })
 
     it('returns a promise', () => {
-      let expectedRequest = habiticaUrl.reply(() => {
+      habiticaUrl.reply(() => {
         return [200, { some: 'data' }]
       })
       let connection = new Connection(defaultOptions)
       let request = connection.post('user/tasks')
 
-      expect(request).to.respondTo('then')
-      expectedRequest.done()
+      expect(request).to.be.a('promise')
     })
 
-    it('takes in an optional query parameter', () => {
+    it('takes in an optional query parameter', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .post('/user/tasks')
         .query({
@@ -222,7 +223,7 @@ describe('Connection', () => {
         .reply(201, {})
 
       let connection = new Connection(defaultOptions)
-      connection.post('user/tasks', {
+      await connection.post('user/tasks', {
         query: {
           type: 'habit',
           text: 'test habit'
@@ -232,7 +233,7 @@ describe('Connection', () => {
       expectedRequest.done()
     })
 
-    it('takes in an optional send parameter', () => {
+    it('takes in an optional send parameter', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .post('/group', {
           type: 'party'
@@ -240,36 +241,35 @@ describe('Connection', () => {
         .reply(200)
 
       let connection = new Connection(defaultOptions)
-      connection.post('group', {send: {type: 'party'}})
+      await connection.post('group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
     context('succesful request', () => {
-      it('returns requested data', () => {
+      it('returns requested data', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
           return [200, { some: 'data' }]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.post('user/tasks')
+        let response = await connection.post('user/tasks')
 
+        expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
-        return expect(request).to.eventually.eql({ some: 'data' })
       })
     })
 
     context('unsuccesful request', () => {
-      it('rejects if credentials are not valid', () => {
+      it('rejects if credentials are not valid', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
           return [401, {response: {status: 401, text: 'Not Authorized'}}]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.post('user/tasks')
+        await expect(connection.post('user/tasks')).to.eventually.be.rejected
 
         expectedRequest.done()
-        return expect(request).to.be.rejected
       })
     })
   })
@@ -281,17 +281,16 @@ describe('Connection', () => {
     })
 
     it('returns a promise', () => {
-      let expectedRequest = habiticaUrl.reply(() => {
+      habiticaUrl.reply(() => {
         return [200, { some: 'data' }]
       })
       let connection = new Connection(defaultOptions)
       let request = connection.put('user/tasks')
 
-      expect(request).to.respondTo('then')
-      expectedRequest.done()
+      expect(request).to.be.a('promise')
     })
 
-    it('takes in an optional query parameter', () => {
+    it('takes in an optional query parameter', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .put('/user/tasks')
         .query({
@@ -301,7 +300,7 @@ describe('Connection', () => {
         .reply(201, {})
 
       let connection = new Connection(defaultOptions)
-      connection.put('user/tasks', {
+      await connection.put('user/tasks', {
         query: {
           type: 'habit',
           text: 'test habit'
@@ -311,7 +310,7 @@ describe('Connection', () => {
       expectedRequest.done()
     })
 
-    it('takes in an optional send parameter', () => {
+    it('takes in an optional send parameter', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .put('/group', {
           type: 'party'
@@ -319,36 +318,35 @@ describe('Connection', () => {
         .reply(200)
 
       let connection = new Connection(defaultOptions)
-      connection.put('group', {send: {type: 'party'}})
+      await connection.put('group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
     context('succesful request', () => {
-      it('returns requested data', () => {
+      it('returns requested data', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
           return [200, { some: 'data' }]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.put('user/tasks')
+        let response = await connection.put('user/tasks')
 
+        expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
-        return expect(request).to.eventually.eql({ some: 'data' })
       })
     })
 
     context('unsuccesful request', () => {
-      it('rejects if credentials are not valid', () => {
+      it('rejects if credentials are not valid', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
           return [401, {response: {status: 401, text: 'Not Authorized'}}]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.put('user/tasks')
+        await expect(connection.put('user/tasks')).to.eventually.be.rejected
 
         expectedRequest.done()
-        return expect(request).to.be.rejected
       })
     })
   })
@@ -360,17 +358,16 @@ describe('Connection', () => {
     })
 
     it('returns a promise', () => {
-      let expectedRequest = habiticaUrl.reply(() => {
+      habiticaUrl.reply(() => {
         return [200, { some: 'data' }]
       })
       let connection = new Connection(defaultOptions)
       let request = connection.del('user/tasks')
 
-      expect(request).to.respondTo('then')
-      expectedRequest.done()
+      expect(request).to.be.a('promise')
     })
 
-    it('takes in an optional query parameter', () => {
+    it('takes in an optional query parameter', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .delete('/user/tasks')
         .query({
@@ -380,7 +377,7 @@ describe('Connection', () => {
         .reply(201, {})
 
       let connection = new Connection(defaultOptions)
-      connection.del('user/tasks', {
+      await connection.del('user/tasks', {
         query: {
           type: 'habit',
           text: 'test habit'
@@ -390,7 +387,7 @@ describe('Connection', () => {
       expectedRequest.done()
     })
 
-    it('takes in an optional send parameter', () => {
+    it('takes in an optional send parameter', async function () {
       let expectedRequest = nock('https://habitica.com/api/v2')
         .delete('/group', {
           type: 'party'
@@ -398,36 +395,35 @@ describe('Connection', () => {
         .reply(200)
 
       let connection = new Connection(defaultOptions)
-      connection.del('group', {send: {type: 'party'}})
+      await connection.del('group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
     context('succesful request', () => {
-      it('returns requested data', () => {
+      it('returns requested data', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
           return [200, { some: 'data' }]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.del('user/tasks')
+        let response = await connection.del('user/tasks')
 
+        expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
-        return expect(request).to.eventually.eql({ some: 'data' })
       })
     })
 
     context('unsuccesful request', () => {
-      it('rejects if credentials are not valid', () => {
+      it('rejects if credentials are not valid', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
           return [401, {response: {status: 401, text: 'Not Authorized'}}]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.del('user/tasks')
+        await expect(connection.del('user/tasks')).to.eventually.be.rejected
 
         expectedRequest.done()
-        return expect(request).to.be.rejected
       })
     })
   })
