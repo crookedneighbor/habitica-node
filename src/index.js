@@ -40,24 +40,18 @@ module.exports = class {
     })
 
     // NOOP
-    this.account = new Account({
-      connection: this._connection
-    })
+    let modules = {
+      account: Account,
+      content: Content,
+      tag: Tag,
+      task: Task,
+      user: User
+    }
 
-    this.content = new Content({
-      connection: this._connection
-    })
-
-    this.task = new Task({
-      connection: this._connection
-    })
-
-    this.user = new User({
-      connection: this._connection
-    })
-
-    this.tag = new Tag({
-      connection: this._connection
+    Object.keys(modules).forEach((module) => {
+      this[module] = new modules[module]({
+        connection: this._connection
+      })
     })
   }
 
