@@ -123,6 +123,44 @@
           
           
           
+            
+            
+            <div id="getBuyableGear" class="section-2 ui middle aligned two column grid">
+              <div class="annotation column">
+                
+                <a class='section-link' href="#getBuyableGear">
+                  <i class="linkify icon"></i>
+                </a>
+                <h1 id="getbuyablegear-">getBuyableGear()</h1>
+<p>Returns an array of equipment objects that can be purchased with gold. These are the gear items that appear in the rewards column on the website.</p>
+<pre><code class="lang-js">api.user.getBuyableGear().then((gear) =&gt; {
+  gear.length <span class="hljs-comment">// number of items returned</span>
+
+  <span class="hljs-keyword">let</span> item = gear[<span class="hljs-number">0</span>] <span class="hljs-comment">// the first item</span>
+
+  item.type <span class="hljs-comment">// 'weapon', 'shield', etc...</span>
+  item.value <span class="hljs-comment">// at least 0</span>
+  item.str <span class="hljs-comment">// at least 0</span>
+  item.con <span class="hljs-comment">// at least 0</span>
+  item.int <span class="hljs-comment">// at least 0</span>
+  item.per <span class="hljs-comment">// at least 0</span>
+})
+</code></pre>
+
+              </div>
+              
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getBuyableGear () {
+    <span class="hljs-keyword">let</span> gear = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'user/inventory/buy'</span>)
+
+    <span class="hljs-keyword">return</span> gear
+  }</pre></div></div>
+              
+            </div>
+          
+        
+          
+          
+          
         
       </div>
     </div>
