@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-## Unreleased
+## 2.1.0
 
 * Add user.getBuyableGear method
+* Fix docs links
 
 ## 2.0.5
 
