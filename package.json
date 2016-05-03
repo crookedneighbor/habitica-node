@@ -62,7 +62,7 @@
     "uuid": "^2.0.1"
   },
   "dependencies": {
-    "babel-polyfill": "^6.5.0",
+    "babel-polyfill": "^6.7.4",
     "lodash": "^4.0.0",
     "over-extend": "^1.1.1",
     "superagent": "^2.0.0-alpha.1"
