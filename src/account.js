@@ -74,9 +74,9 @@ export default class {
   //   'password'
   // )
   // ```
-  async login (username_email, password, options = {}) {
+  async login (usernameEmail, password, options = {}) {
     let loginCreds = {
-      username: username_email,
+      username: usernameEmail,
       password
     }
     let creds = await this._connection.post(
