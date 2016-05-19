@@ -20,7 +20,7 @@ describe('Habitica Api', () => {
 
   describe('#getEndpoint', () => {
     it('returns token', () => {
-      expect(api.getEndpoint()).to.eql('https://habitica.com/api/v2')
+      expect(api.getEndpoint()).to.eql('https://habitica.com/api/v3')
     })
   })
 

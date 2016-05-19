@@ -13,7 +13,7 @@ if (args.length > 2) {
 process.env.PORT = process.env.HABITICA_PORT || 3321
 process.env.NODE_DB_URI = process.env.HABITICA_DB_URI || 'mongodb://localhost/habitica-node-test'
 
-var server = require(`${PATH_TO_HABITICA}/website/src/server.js`)
+var server = require(`${PATH_TO_HABITICA}/website/server/`)
 
 server.listen(process.env.PORT, function () {
   if (command) {

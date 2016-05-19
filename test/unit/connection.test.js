@@ -12,7 +12,7 @@ describe('Connection', () => {
   describe('initialization', () => {
     it('defaults to habitica endpoint', () => {
       let connection = new Connection(defaultOptions)
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v2')
+      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
     })
 
     it('accepts an override for endpoint', () => {
@@ -63,7 +63,7 @@ describe('Connection', () => {
   describe('#getEndpoint', () => {
     it('returns endpoint', () => {
       let connection = new Connection(defaultOptions)
-      expect(connection.getEndpoint()).to.eql('https://habitica.com/api/v2')
+      expect(connection.getEndpoint()).to.eql('https://habitica.com/api/v3')
     })
   })
 
@@ -103,17 +103,17 @@ describe('Connection', () => {
     })
 
     it('leaves old endpoint if not passed in after initalization', () => {
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v2')
+      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
 
       connection.setCredentials({uuid: 'foo'})
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v2')
+      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
     })
 
     it('sets endpoint after iniitalization', () => {
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v2')
+      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
 
-      connection.setCredentials({endpoint: 'http://localhost:3321/api/v2'})
-      expect(connection._endpoint).to.eql('http://localhost:3321/api/v2')
+      connection.setCredentials({endpoint: 'http://localhost:3321/api/v3'})
+      expect(connection._endpoint).to.eql('http://localhost:3321/api/v3')
     })
   })
 
@@ -122,7 +122,7 @@ describe('Connection', () => {
 
     beforeEach(() => {
       connection = new Connection(defaultOptions)
-      habiticaUrl = nock('https://habitica.com/api/v2').get('/user')
+      habiticaUrl = nock('https://habitica.com/api/v3').get('/user')
     })
 
     it('returns a promise', () => {
@@ -132,7 +132,7 @@ describe('Connection', () => {
     })
 
     it('takes in an optional query parameter', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .get('/group')
         .query({type: 'party'})
         .reply(200)
@@ -143,7 +143,7 @@ describe('Connection', () => {
     })
 
     it('ignores send parameter if passed in', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .get('/group')
         .reply(200)
 
@@ -199,7 +199,7 @@ describe('Connection', () => {
 
   describe('#post', () => {
     beforeEach(() => {
-      habiticaUrl = nock('https://habitica.com/api/v2')
+      habiticaUrl = nock('https://habitica.com/api/v3')
         .post('/user/tasks')
     })
 
@@ -214,7 +214,7 @@ describe('Connection', () => {
     })
 
     it('takes in an optional query parameter', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .post('/user/tasks')
         .query({
           type: 'habit',
@@ -234,7 +234,7 @@ describe('Connection', () => {
     })
 
     it('takes in an optional send parameter', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .post('/group', {
           type: 'party'
         })
@@ -276,7 +276,7 @@ describe('Connection', () => {
 
   describe('#put', () => {
     beforeEach(() => {
-      habiticaUrl = nock('https://habitica.com/api/v2')
+      habiticaUrl = nock('https://habitica.com/api/v3')
         .put('/user/tasks')
     })
 
@@ -291,7 +291,7 @@ describe('Connection', () => {
     })
 
     it('takes in an optional query parameter', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .put('/user/tasks')
         .query({
           type: 'habit',
@@ -311,7 +311,7 @@ describe('Connection', () => {
     })
 
     it('takes in an optional send parameter', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .put('/group', {
           type: 'party'
         })
@@ -353,7 +353,7 @@ describe('Connection', () => {
 
   describe('#del', () => {
     beforeEach(() => {
-      habiticaUrl = nock('https://habitica.com/api/v2')
+      habiticaUrl = nock('https://habitica.com/api/v3')
         .delete('/user/tasks')
     })
 
@@ -368,7 +368,7 @@ describe('Connection', () => {
     })
 
     it('takes in an optional query parameter', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .delete('/user/tasks')
         .query({
           type: 'habit',
@@ -388,7 +388,7 @@ describe('Connection', () => {
     })
 
     it('takes in an optional send parameter', async function () {
-      let expectedRequest = nock('https://habitica.com/api/v2')
+      let expectedRequest = nock('https://habitica.com/api/v3')
         .delete('/group', {
           type: 'party'
         })

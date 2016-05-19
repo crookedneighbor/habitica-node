@@ -16,7 +16,7 @@ module.exports = class {
     //
     // Set up your instance of Habitica.
     //
-    // The endpoint will default to https://habitica.com/api/v2 if not provided.
+    // The endpoint will default to https://habitica.com/api/v3 if not provided.
     //
     // ```js
     // let Habitica = require('habitica')
@@ -98,7 +98,7 @@ module.exports = class {
   // api.setCredentials({
   //   uuid: 'new-user-id',
   //   token: 'new-api-token',
-  //   endpoint: 'http://localhost:3000/api/v2'
+  //   endpoint: 'http://localhost:3000/api/v3'
   // })
   // ```
   setCredentials (creds) {

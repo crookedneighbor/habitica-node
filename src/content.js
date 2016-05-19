@@ -36,7 +36,7 @@ export default class {
   // })
   // ```
   async get (path) {
-    let content = await this._connection.get('content')
+    let {data: content} = await this._connection.get('content')
 
     if (path) {
       let nestedContent = get(content, path)
@@ -71,7 +71,7 @@ export default class {
   // })
   // ```
   async getKeys (path) {
-    let content = await this._connection.get('content')
+    let {data: content} = await this._connection.get('content')
     if (path) {
       let nestedContent = get(content, path)
 
@@ -83,24 +83,6 @@ export default class {
     }
 
     return keys(content)
-  }
-
-  // # content.getUserPaths()
-  // Gets the content paths for a user object
-  //
-  // ```js
-  // // Get all possible user paths
-  // api.content.getUserPaths().then((paths) => {
-  //   paths['achievements.beastMaster'] // Boolean
-  //   paths['contributor.level'] // Number
-  //   paths['items.currentPet'] // String
-  //   paths['items.gear.owned.weapon_warrior_0'] // Boolean
-  // })
-  // ```
-  async getUserPaths () {
-    let paths = await this._connection.get('content/paths')
-
-    return paths
   }
   // NOOP
 }

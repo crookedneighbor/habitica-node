@@ -11,7 +11,7 @@ let Habitica = require('habitica');
 let api = new Habitica({
   uuid: 'your-habitica.com-user-id',
   token: 'your-habitica.com-api-token',
-  endpoint: 'custom-url', // defaults to https://habitica.com/api/v2
+  endpoint: 'custom-url', // defaults to https://habitica.com/api/v3
 });
 ```
 

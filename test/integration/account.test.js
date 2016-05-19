@@ -8,7 +8,7 @@ describe('Account', () => {
 
     beforeEach(() => {
       api = new Habitica({
-        endpoint: `localhost:${process.env.PORT}/api/v2`
+        endpoint: `localhost:${process.env.PORT}/api/v3`
       })
       username = generateRandomUserName()
       password = 'password'
@@ -94,10 +94,10 @@ describe('Account', () => {
 
     beforeEach(async function () {
       let registerApi = new Habitica({
-        endpoint: `localhost:${process.env.PORT}/api/v2`
+        endpoint: `localhost:${process.env.PORT}/api/v3`
       })
       api = new Habitica({
-        endpoint: `localhost:${process.env.PORT}/api/v2`
+        endpoint: `localhost:${process.env.PORT}/api/v3`
       })
 
       username = generateRandomUserName()
@@ -112,28 +112,28 @@ describe('Account', () => {
         let creds = await api.account.login(username, password)
 
         expect(creds.id).to.exist
-        expect(creds.token).to.exist
+        expect(creds.apiToken).to.exist
       })
 
       it('sets uuid and token after logging in with username', async function () {
         let creds = await api.account.login(username, password)
 
         expect(api.getUuid()).to.be.eql(creds.id)
-        expect(api.getToken()).to.be.eql(creds.token)
+        expect(api.getToken()).to.be.eql(creds.apiToken)
       })
 
       it('logs in with email and password', async function () {
         let creds = await api.account.login(email, password)
 
         expect(creds.id).to.exist
-        expect(creds.token).to.exist
+        expect(creds.apiToken).to.exist
       })
 
       it('sets uuid and token after logging in with email', async function () {
         let creds = await api.account.login(email, password)
 
         expect(api.getUuid()).to.be.eql(creds.id)
-        expect(api.getToken()).to.be.eql(creds.token)
+        expect(api.getToken()).to.be.eql(creds.apiToken)
       })
     })
 

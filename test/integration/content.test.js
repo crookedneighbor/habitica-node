@@ -3,7 +3,7 @@ import {INTERNAL_MODULE_ERRORS as IME} from '../../src/lib/errors'
 
 describe('Content', () => {
   let api = new Habitica({
-    endpoint: `localhost:${process.env.PORT}/api/v2`
+    endpoint: `localhost:${process.env.PORT}/api/v3`
   })
 
   describe('#get', () => {
@@ -64,17 +64,6 @@ describe('Content', () => {
 
       await expect(api.content.getKeys('invalid-content-path'))
         .to.eventually.be.rejected.and.eql(err)
-    })
-  })
-
-  describe('#getUserPaths', () => {
-    it('gets user paths', async function () {
-      let res = await api.content.getUserPaths()
-
-      expect(res._id).to.exist
-      expect(res.apiToken).to.exist
-      expect(res['contributor.level']).to.exist
-      expect(res['items.gear.owned.weapon_warrior_0']).to.exist
     })
   })
 })

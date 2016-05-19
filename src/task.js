@@ -1,7 +1,6 @@
 // Task
 // checkmark box
 // Get em, check em, level up!
-import filter from 'lodash/filter'
 import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {
@@ -31,13 +30,15 @@ export default class {
   // })
   // ```
   async get (id) {
-    let url = 'user/tasks'
+    let url = 'tasks'
 
     if (id) {
       url += `/${id}`
+    } else {
+      url += '/user'
     }
 
-    let tasks = await this._connection.get(url)
+    let {data: tasks} = await this._connection.get(url)
 
     return tasks
   }
@@ -52,7 +53,7 @@ export default class {
   // })
   // ```
   async getDailys () {
-    return this._filterTasksByType('daily')
+    return this._filterTasksByType('dailys')
   }
 
   // # task.getRewards()
@@ -65,7 +66,7 @@ export default class {
   // })
   // ```
   async getRewards () {
-    return this._filterTasksByType('reward')
+    return this._filterTasksByType('rewards')
   }
 
   // # task.getHabits()
@@ -78,7 +79,7 @@ export default class {
   // })
   // ```
   async getHabits () {
-    return this._filterTasksByType('habit')
+    return this._filterTasksByType('habits')
   }
 
   // # task.getTodos()
@@ -91,7 +92,7 @@ export default class {
   // })
   // ```
   async getTodos () {
-    return this._filterTasksByType('todo')
+    return this._filterTasksByType('todos')
   }
 
   // # task.score()
@@ -146,8 +147,8 @@ export default class {
   async score (id, direction = 'up', body = {}) {
     if (!id) throw new IME.MissingArgumentError('Task id is required')
 
-    let stats = await this._connection.post(
-      `user/tasks/${id}/${direction}`,
+    let {data: stats} = await this._connection.post(
+      `tasks/${id}/score/${direction}`,
       { send: body }
     )
 
@@ -169,8 +170,8 @@ export default class {
   // })
   // ```
   async post (taskBody) {
-    let task = await this._connection.post(
-      'user/tasks',
+    let {data: task} = await this._connection.post(
+      'tasks/user',
       { send: taskBody }
     )
     return task
@@ -193,8 +194,8 @@ export default class {
     if (!id) throw new IME.MissingArgumentError('Task id is required')
     if (!taskBody) throw new IME.MissingArgumentError('Task body is required')
 
-    let task = await this._connection.put(
-      `user/tasks/${id}`,
+    let {data: task} = await this._connection.put(
+      `tasks/${id}`,
       { send: taskBody }
     )
 
@@ -214,17 +215,16 @@ export default class {
   async del (id) {
     if (!id) throw new IME.MissingArgumentError('Task id is required')
 
-    let task = await this._connection.del(`user/tasks/${id}`)
+    let {data: task} = await this._connection.del(`tasks/${id}`)
 
     return task
   }
 
   // NOOP
   async _filterTasksByType (type) {
-    let tasks = await this._connection.get('user/tasks')
-    let taskByType = filter(tasks, (task) => {
-      return task.type === type
+    let {data: tasks} = await this._connection.get('tasks/user', {
+      query: {type}
     })
-    return taskByType
+    return tasks
   }
 }

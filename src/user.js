@@ -17,7 +17,7 @@ export default class {
   // })
   // ```
   async get () {
-    let user = await this._connection.get('user')
+    let {data: user} = await this._connection.get('user')
 
     return user
   }
@@ -40,7 +40,7 @@ export default class {
   // })
   // ```
   async getBuyableGear () {
-    let gear = await this._connection.get('user/inventory/buy')
+    let {data: gear} = await this._connection.get('user/inventory/buy')
 
     return gear
   }

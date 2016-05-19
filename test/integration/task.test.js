@@ -1,32 +1,41 @@
+import {v4 as makeUuid} from 'uuid'
 import {generateUser} from '../support/integration_helper'
 import Habitica from '../../src/index'
 import {INTERNAL_MODULE_ERRORS as IME} from '../../src/lib/errors'
 
 describe('Task', () => {
   let api = new Habitica({
-    endpoint: `localhost:${process.env.PORT}/api/v2`
+    endpoint: `localhost:${process.env.PORT}/api/v3`
   })
 
   beforeEach(async function () {
-    let update = {
-      'todos': [
-        {type: 'todo', id: 'todo-1'},
-        {type: 'todo', id: 'todo-2'}
-      ],
-      'habits': [
-        {type: 'habit', id: 'habit-1'},
-        {type: 'habit', id: 'habit-2'}
-      ],
-      'dailys': [
-        {type: 'daily', id: 'daily-1'},
-        {type: 'daily', id: 'daily-2'}
-      ],
-      'rewards': [
-        {type: 'reward', id: 'reward-1'},
-        {type: 'reward', id: 'reward-2'}
-      ]
-    }
-    await generateUser(update, api)
+    this.todo1id = makeUuid()
+    this.todo2id = makeUuid()
+    this.habit1id = makeUuid()
+    this.habit2id = makeUuid()
+    this.daily1id = makeUuid()
+    this.daily2id = makeUuid()
+    this.reward1id = makeUuid()
+    this.reward2id = makeUuid()
+
+    await generateUser(null, api)
+
+    // Remove starting tasks
+    let tasks = await api.task.get()
+
+    await Promise.all(tasks.map((task) => api.task.del(task._id)))
+
+    // Populate with known tasks
+    await api.task.post([
+      {text: 'task-1', type: 'todo', _id: this.todo1id},
+      {text: 'task-2', type: 'todo', _id: this.todo2id},
+      {text: 'task-3', type: 'habit', _id: this.habit1id},
+      {text: 'task-4', type: 'habit', _id: this.habit2id},
+      {text: 'task-5', type: 'daily', _id: this.daily1id},
+      {text: 'task-6', type: 'daily', _id: this.daily2id},
+      {text: 'task-7', type: 'reward', _id: this.reward1id},
+      {text: 'task-8', type: 'reward', _id: this.reward2id}
+    ])
   })
 
   describe('#get', () => {
@@ -37,9 +46,10 @@ describe('Task', () => {
     })
 
     it('gets a specific task by id', async function () {
-      let task = await api.task.get('todo-1')
+      let task = await api.task.get(this.todo1id)
 
-      expect(task.id).to.eql('todo-1')
+      expect(task._id).to.eql(this.todo1id)
+      expect(task.text).to.eql('task-1')
     })
 
     it('throws error if task does not exist', async function () {
@@ -81,7 +91,7 @@ describe('Task', () => {
   describe('#getTodos', () => {
     it('gets only todos', async function () {
       let todos = await api.task.getTodos()
-      expect(todos).to.have.a.lengthOf(2)
+      expect(todos).have.a.lengthOf(2)
       expect(todos[0].type).to.eql('todo')
       expect(todos[1].type).to.eql('todo')
     })
@@ -89,65 +99,43 @@ describe('Task', () => {
 
   describe('#score', () => {
     it('scores up a task', async function () {
-      let { value: originalValue } = await api.task.get('habit-1')
-      let stats = await api.task.score('habit-1', 'up')
-      let { value: newValue } = await api.task.get('habit-1')
+      let { value: originalValue } = await api.task.get(this.habit1id)
+      let stats = await api.task.score(this.habit1id, 'up')
+      let { value: newValue } = await api.task.get(this.habit1id)
 
       expect(stats.delta).to.be.greaterThan(0)
       expect(newValue).to.be.greaterThan(originalValue)
     })
 
     it('scores down a task', async function () {
-      let { value: originalValue } = await api.task.get('habit-1')
-      let stats = await api.task.score('habit-1', 'down')
-      let { value: newValue } = await api.task.get('habit-1')
+      let { value: originalValue } = await api.task.get(this.habit1id)
+      let stats = await api.task.score(this.habit1id, 'down')
+      let { value: newValue } = await api.task.get(this.habit1id)
 
       expect(stats.delta).to.be.lessThan(0)
       expect(newValue).to.be.lessThan(originalValue)
     })
 
     it('defaults to scoring up', async function () {
-      let { value: originalValue } = await api.task.get('habit-1')
-      let stats = await api.task.score('habit-1')
-      let { value: newValue } = await api.task.get('habit-1')
+      let { value: originalValue } = await api.task.get(this.habit1id)
+      let stats = await api.task.score(this.habit1id)
+      let { value: newValue } = await api.task.get(this.habit1id)
 
       expect(stats.delta).to.be.greaterThan(0)
       expect(newValue).to.be.greaterThan(originalValue)
     })
 
-    it('creates new habit if it does not already exist', async function () {
-      await api.task.score('new-habit')
-      let habit = await api.task.get('new-habit')
-
-      expect(habit.type).to.eql('habit')
-    })
-
-    it('allows extra data to be passed in when creating the task', async function () {
-      let todoBody = {
-        type: 'todo',
-        text: 'Custom Name',
-        notes: 'Custom Note'
-      }
-      await api.task.score('new-todo', 'up', todoBody)
-
-      let todo = await api.task.get('new-todo')
-
-      expect(todo.type).to.eql('todo')
-      expect(todo.text).to.eql('Custom Name')
-      expect(todo.notes).to.eql('Custom Note')
-    })
-
     it('completes task if scored task is a todo', async function () {
-      await api.task.score('todo-1')
-      let todo = await api.task.get('todo-1')
+      await api.task.score(this.todo1id)
+      let todo = await api.task.get(this.todo1id)
 
       expect(todo.completed).to.eql(true)
     })
 
     it('completes task if scored task is a daily', async function () {
-      await api.task.score('daily-1')
+      await api.task.score(this.daily1id)
 
-      let daily = await api.task.get('daily-1')
+      let daily = await api.task.get(this.daily1id)
 
       expect(daily.completed).to.eql(true)
     })
@@ -160,16 +148,18 @@ describe('Task', () => {
     })
 
     it('thows an error if a non-valid direction is used', async function () {
-      await expect(api.task.score('habit-1', 'foo'))
+      await expect(api.task.score(this.habit1id, 'foo'))
         .to.eventually.be.rejected
     })
   })
 
   describe('#post', () => {
     it('creates a new task', async function () {
-      let task = await api.task.post()
+      let task = await api.task.post({ text: 'foo', type: 'habit' })
 
-      expect(task.id).to.exist
+      expect(task._id).to.exist
+      expect(task.text).to.eql('foo')
+      expect(task.type).to.eql('habit')
     })
 
     it('creates a new task with specified task attributes', async function () {
@@ -188,11 +178,11 @@ describe('Task', () => {
   describe('#put', () => {
     it('updates an existing task', async function () {
       let task = await api.task.put(
-        'todo-1',
+        this.todo1id,
         { text: 'updated todo name', notes: 'updated todo notes' }
       )
 
-      expect(task.id).to.eql('todo-1')
+      expect(task._id).to.eql(this.todo1id)
       expect(task.text).to.eql('updated todo name')
       expect(task.notes).to.eql('updated todo notes')
     })
@@ -207,7 +197,7 @@ describe('Task', () => {
     it('throws an error if no task body is provided', async function () {
       let err = new IME.MissingArgumentError('Task body is required')
 
-      await expect(api.task.put('habit-1'))
+      await expect(api.task.put(this.habit1id))
         .to.eventually.be.rejected.and.eql(err)
     })
 
@@ -221,10 +211,10 @@ describe('Task', () => {
 
   describe('#del', () => {
     it('del an existing task', async function () {
-      let task = await api.task.del('todo-1')
+      let task = await api.task.del(this.todo1id)
       expect(task).to.eql({})
 
-      await expect(api.task.get('todo-1'))
+      await expect(api.task.get(this.todo1id))
         .to.eventually.be.rejected
     })
 

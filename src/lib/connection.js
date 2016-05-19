@@ -5,7 +5,7 @@ export default class {
   constructor (options) {
     this._uuid = options.uuid
     this._token = options.token
-    this._endpoint = options.endpoint || 'https://habitica.com/api/v2'
+    this._endpoint = options.endpoint || 'https://habitica.com/api/v3'
 
     this.delete = this.del
   }
@@ -23,9 +23,15 @@ export default class {
   }
 
   setCredentials (creds = {}) {
-    this._uuid = creds.uuid || this._uuid
-    this._token = creds.token || this._token
-    this._endpoint = creds.endpoint || this._endpoint
+    if (creds.uuid !== undefined) {
+      this._uuid = creds.uuid
+    }
+    if (creds.token !== undefined) {
+      this._token = creds.token
+    }
+    if (creds.endpoint !== undefined) {
+      this._endpoint = creds.endpoint
+    }
   }
 
   get (route, options = {}) {
