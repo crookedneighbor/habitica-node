@@ -9,7 +9,7 @@ export function generateUser (update = {}, connection) {
   let email = username + '@example.com'
 
   return new Promise((resolve, reject) => {
-    superagent.post(`localhost:${process.env.PORT}/api/v2/register`)
+    superagent.post(`localhost:${process.env.PORT}/api/v3/user/auth/local/register`)
       .accept('application/json')
       .send({
         username,
@@ -20,9 +20,9 @@ export function generateUser (update = {}, connection) {
       .end((err, res) => {
         if (err) throw new Error(`Error generating user: ${err}`)
 
-        let user = res.body
+        let {data: user} = res.body
         let userCreds = {
-          uuid: user._id,
+          uuid: user.id,
           token: user.apiToken
         }
 
@@ -30,7 +30,7 @@ export function generateUser (update = {}, connection) {
           connection.setCredentials(userCreds)
         }
 
-        updateDocument('users', user._id, update, () => {
+        updateDocument('users', user.id, update, () => {
           resolve(userCreds)
         })
       })

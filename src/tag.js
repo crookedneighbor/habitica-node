@@ -31,13 +31,13 @@ export default class {
   // })
   // ```
   async get (id) {
-    let url = 'user/tags'
+    let url = 'tags'
 
     if (id) {
       url += `/${id}`
     }
 
-    let tags = await this._connection.get(url)
+    let {data: tags} = await this._connection.get(url)
 
     return tags
   }
@@ -55,8 +55,8 @@ export default class {
   // })
   // ```
   async post (tagBody) {
-    let tags = await this._connection.post(
-      'user/tags',
+    let {data: tags} = await this._connection.post(
+      'tags',
       {send: tagBody}
     )
 
@@ -80,8 +80,8 @@ export default class {
     if (!id) throw new IME.MissingArgumentError('Tag id is required')
     if (!tagBody) throw new IME.MissingArgumentError('Tag body is required')
 
-    let tag = await this._connection.put(
-      `user/tags/${id}`,
+    let {data: tag} = await this._connection.put(
+      `tags/${id}`,
       { send: tagBody }
     )
 
@@ -101,7 +101,7 @@ export default class {
   async del (id) {
     if (!id) throw new IME.MissingArgumentError('Tag id is required')
 
-    let remainingTags = await this._connection.del(`user/tags/${id}`)
+    let {data: remainingTags} = await this._connection.del(`tags/${id}`)
 
     return remainingTags
   }

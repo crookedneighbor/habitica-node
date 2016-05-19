@@ -47,10 +47,10 @@ export default class {
       confirmPassword: password
     }
 
-    let user = await this._connection.post(
-        'register',
-        {send: creds}
-      )
+    let {data: user} = await this._connection.post(
+      'user/auth/local/register',
+      {send: creds}
+    )
 
     this._connection.setCredentials({
       uuid: user._id,
@@ -79,14 +79,14 @@ export default class {
       username: usernameEmail,
       password
     }
-    let creds = await this._connection.post(
-      'user/auth/local',
+    let {data: creds} = await this._connection.post(
+      'user/auth/local/login',
       {send: loginCreds}
     )
 
     this._connection.setCredentials({
       uuid: creds.id,
-      token: creds.token
+      token: creds.apiToken
     })
 
     return creds

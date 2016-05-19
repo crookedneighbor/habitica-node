@@ -3,7 +3,7 @@ import {INTERNAL_MODULE_ERRORS as IME} from '../../src/lib/errors'
 
 describe('Content', () => {
   let api = new Habitica({
-    endpoint: `localhost:${process.env.PORT}/api/v2`
+    endpoint: `localhost:${process.env.PORT}/api/v3`
   })
 
   describe('#get', () => {

@@ -2,7 +2,7 @@ import {generateUser} from '../support/integration_helper'
 import Habitica from '../../src/index'
 
 let api = new Habitica({
-  endpoint: `localhost:${process.env.PORT}/api/v2`
+  endpoint: `localhost:${process.env.PORT}/api/v3`
 })
 
 describe('User', () => {
@@ -15,7 +15,7 @@ describe('User', () => {
       let user = await api.user.get()
 
       expect(user._id).to.eql(api.getUuid())
-      expect(user).to.include.keys(['todos', 'habits', 'dailys', 'rewards'])
+      expect(user).to.include.keys(['tasksOrder', 'tags'])
       expect(user).to.include.keys(['stats', 'balance', 'preferences', 'flags'])
     })
   })

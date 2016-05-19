@@ -36,7 +36,7 @@ export default class {
   // })
   // ```
   async get (path) {
-    let content = await this._connection.get('content')
+    let {data: content} = await this._connection.get('content')
 
     if (path) {
       let nestedContent = get(content, path)
@@ -71,7 +71,7 @@ export default class {
   // })
   // ```
   async getKeys (path) {
-    let content = await this._connection.get('content')
+    let {data: content} = await this._connection.get('content')
     if (path) {
       let nestedContent = get(content, path)
 
@@ -98,7 +98,7 @@ export default class {
   // })
   // ```
   async getUserPaths () {
-    let paths = await this._connection.get('content/paths')
+    let {data: paths} = await this._connection.get('models/user/paths')
 
     return paths
   }
