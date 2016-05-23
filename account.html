@@ -136,10 +136,10 @@
       confirmPassword: password
     }
 
-    <span class="hljs-keyword">let</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
-        <span class="hljs-string">'register'</span>,
-        {send: creds}
-      )
+    <span class="hljs-keyword">let</span> {data: user} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">'user/auth/local/register'</span>,
+      {send: creds}
+    )
 
     <span class="hljs-keyword">this</span>._connection.setCredentials({
       uuid: user._id,
@@ -175,19 +175,19 @@
 
               </div>
               
-                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> login (username_email, password, options = {}) {
+                <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> login (usernameEmail, password, options = {}) {
     <span class="hljs-keyword">let</span> loginCreds = {
-      username: username_email,
+      username: usernameEmail,
       password
     }
-    <span class="hljs-keyword">let</span> creds = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
-      <span class="hljs-string">'user/auth/local'</span>,
+    <span class="hljs-keyword">let</span> {data: creds} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">'user/auth/local/login'</span>,
       {send: loginCreds}
     )
 
     <span class="hljs-keyword">this</span>._connection.setCredentials({
       uuid: creds.id,
-      token: creds.token
+      token: creds.apiToken
     })
 
     <span class="hljs-keyword">return</span> creds

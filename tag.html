@@ -117,13 +117,13 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> get (id) {
-    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'user/tags'</span>
+    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'tags'</span>
 
     <span class="hljs-keyword">if</span> (id) {
       url += <span class="hljs-string">`/<span class="hljs-subst">${id}</span>`</span>
     }
 
-    <span class="hljs-keyword">let</span> tags = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(url)
+    <span class="hljs-keyword">let</span> {data: tags} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(url)
 
     <span class="hljs-keyword">return</span> tags
   }</pre></div></div>
@@ -155,8 +155,8 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> post (tagBody) {
-    <span class="hljs-keyword">let</span> tags = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
-      <span class="hljs-string">'user/tags'</span>,
+    <span class="hljs-keyword">let</span> {data: tags} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">'tags'</span>,
       {send: tagBody}
     )
 
@@ -194,8 +194,8 @@
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Tag id is required'</span>)
     <span class="hljs-keyword">if</span> (!tagBody) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Tag body is required'</span>)
 
-    <span class="hljs-keyword">let</span> tag = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.put(
-      <span class="hljs-string">`user/tags/<span class="hljs-subst">${id}</span>`</span>,
+    <span class="hljs-keyword">let</span> {data: tag} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.put(
+      <span class="hljs-string">`tags/<span class="hljs-subst">${id}</span>`</span>,
       { send: tagBody }
     )
 
@@ -229,7 +229,7 @@
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> del (id) {
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Tag id is required'</span>)
 
-    <span class="hljs-keyword">let</span> remainingTags = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`user/tags/<span class="hljs-subst">${id}</span>`</span>)
+    <span class="hljs-keyword">let</span> {data: remainingTags} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`tags/<span class="hljs-subst">${id}</span>`</span>)
 
     <span class="hljs-keyword">return</span> remainingTags
   }

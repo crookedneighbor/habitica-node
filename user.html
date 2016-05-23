@@ -112,7 +112,7 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> get () {
-    <span class="hljs-keyword">let</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'user'</span>)
+    <span class="hljs-keyword">let</span> {data: user} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'user'</span>)
 
     <span class="hljs-keyword">return</span> user
   }</pre></div></div>
@@ -150,7 +150,7 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getBuyableGear () {
-    <span class="hljs-keyword">let</span> gear = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'user/inventory/buy'</span>)
+    <span class="hljs-keyword">let</span> {data: gear} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'user/inventory/buy'</span>)
 
     <span class="hljs-keyword">return</span> gear
   }</pre></div></div>

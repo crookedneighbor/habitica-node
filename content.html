@@ -124,7 +124,7 @@ api.content.get(<span class="hljs-string">'gear.tree.weapon.warrior'</span>).the
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> get (path) {
-    <span class="hljs-keyword">let</span> content = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'content'</span>)
+    <span class="hljs-keyword">let</span> {data: content} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'content'</span>)
 
     <span class="hljs-keyword">if</span> (path) {
       <span class="hljs-keyword">let</span> nestedContent = get(content, path)
@@ -171,7 +171,7 @@ api.content.getKeys(<span class="hljs-string">'gear.tree.weapon.warrior'</span>)
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getKeys (path) {
-    <span class="hljs-keyword">let</span> content = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'content'</span>)
+    <span class="hljs-keyword">let</span> {data: content} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'content'</span>)
     <span class="hljs-keyword">if</span> (path) {
       <span class="hljs-keyword">let</span> nestedContent = get(content, path)
 
@@ -213,7 +213,7 @@ api.content.getUserPaths().then((paths) =&gt; {
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getUserPaths () {
-    <span class="hljs-keyword">let</span> paths = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'content/paths'</span>)
+    <span class="hljs-keyword">let</span> {data: paths} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(<span class="hljs-string">'models/user/paths'</span>)
 
     <span class="hljs-keyword">return</span> paths
   }</pre></div></div>

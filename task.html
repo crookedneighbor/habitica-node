@@ -117,13 +117,15 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> get (id) {
-    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'user/tasks'</span>
+    <span class="hljs-keyword">let</span> url = <span class="hljs-string">'tasks'</span>
 
     <span class="hljs-keyword">if</span> (id) {
       url += <span class="hljs-string">`/<span class="hljs-subst">${id}</span>`</span>
+    } <span class="hljs-keyword">else</span> {
+      url += <span class="hljs-string">'/user'</span>
     }
 
-    <span class="hljs-keyword">let</span> tasks = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(url)
+    <span class="hljs-keyword">let</span> {data: tasks} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.get(url)
 
     <span class="hljs-keyword">return</span> tasks
   }</pre></div></div>
@@ -152,7 +154,7 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getDailys () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'daily'</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'dailys'</span>)
   }</pre></div></div>
               
             </div>
@@ -179,7 +181,7 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getRewards () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'reward'</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'rewards'</span>)
   }</pre></div></div>
               
             </div>
@@ -206,7 +208,7 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getHabits () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'habit'</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'habits'</span>)
   }</pre></div></div>
               
             </div>
@@ -233,7 +235,7 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> getTodos () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'todo'</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._filterTasksByType(<span class="hljs-string">'todos'</span>)
   }</pre></div></div>
               
             </div>
@@ -292,8 +294,8 @@
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> score (id, direction = <span class="hljs-string">'up'</span>, body = {}) {
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task id is required'</span>)
 
-    <span class="hljs-keyword">let</span> stats = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
-      <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>/<span class="hljs-subst">${direction}</span>`</span>,
+    <span class="hljs-keyword">let</span> {data: stats} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">`tasks/<span class="hljs-subst">${id}</span>/score/<span class="hljs-subst">${direction}</span>`</span>,
       { send: body }
     )
 
@@ -329,8 +331,8 @@
               </div>
               
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> post (taskBody) {
-    <span class="hljs-keyword">let</span> task = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
-      <span class="hljs-string">'user/tasks'</span>,
+    <span class="hljs-keyword">let</span> {data: task} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.post(
+      <span class="hljs-string">'tasks/user'</span>,
       { send: taskBody }
     )
     <span class="hljs-keyword">return</span> task
@@ -367,8 +369,8 @@
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task id is required'</span>)
     <span class="hljs-keyword">if</span> (!taskBody) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task body is required'</span>)
 
-    <span class="hljs-keyword">let</span> task = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.put(
-      <span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>,
+    <span class="hljs-keyword">let</span> {data: task} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.put(
+      <span class="hljs-string">`tasks/<span class="hljs-subst">${id}</span>`</span>,
       { send: taskBody }
     )
 
@@ -402,7 +404,7 @@
                 <div class="content column hljs javascript"><div class='highlight'><pre>  <span class="hljs-keyword">async</span> del (id) {
     <span class="hljs-keyword">if</span> (!id) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.MissingArgumentError(<span class="hljs-string">'Task id is required'</span>)
 
-    <span class="hljs-keyword">let</span> task = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`user/tasks/<span class="hljs-subst">${id}</span>`</span>)
+    <span class="hljs-keyword">let</span> {data: task} = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>._connection.del(<span class="hljs-string">`tasks/<span class="hljs-subst">${id}</span>`</span>)
 
     <span class="hljs-keyword">return</span> task
   }</pre></div></div>

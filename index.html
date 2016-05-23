@@ -102,7 +102,7 @@
                 </a>
                 <h1 id="habitica-">Habitica()</h1>
 <p>Set up your instance of Habitica.</p>
-<p>The endpoint will default to <a href="https://habitica.com/api/v2">https://habitica.com/api/v2</a> if not provided.</p>
+<p>The endpoint will default to <a href="https://habitica.com/api/v3">https://habitica.com/api/v3</a> if not provided.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>)
 <span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica({
   uuid: <span class="hljs-string">'your-habitica.com-user-id'</span>,
@@ -222,7 +222,7 @@
 <pre><code class="lang-js">api.setCredentials({
   uuid: <span class="hljs-string">'new-user-id'</span>,
   token: <span class="hljs-string">'new-api-token'</span>,
-  endpoint: <span class="hljs-string">'http://localhost:3000/api/v2'</span>
+  endpoint: <span class="hljs-string">'http://localhost:3000/api/v3'</span>
 })
 </code></pre>
 
