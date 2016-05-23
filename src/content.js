@@ -2,7 +2,6 @@
 // archive
 // For all your content needs!
 import get from 'lodash/get'
-import keys from 'lodash/keys'
 import {INTERNAL_MODULE_ERRORS as IME} from './lib/errors'
 
 export default class {
@@ -76,13 +75,13 @@ export default class {
       let nestedContent = get(content, path)
 
       if (nestedContent) {
-        return keys(nestedContent)
+        return Object.keys(nestedContent)
       }
 
       throw new IME.InvalidActionError(`${path} is not a valid content path`)
     }
 
-    return keys(content)
+    return Object.keys(content)
   }
 
   // # content.getUserPaths()
