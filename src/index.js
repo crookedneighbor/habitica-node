@@ -5,6 +5,7 @@ require('babel-polyfill')
 import Connection from './lib/connection'
 
 import Account from './account'
+import Chat from './chat'
 import Content from './content'
 import Task from './task'
 import User from './user'
@@ -42,6 +43,7 @@ module.exports = class {
     // NOOP
     let modules = {
       account: Account,
+      chat: Chat,
       content: Content,
       tag: Tag,
       task: Task,
