@@ -29,6 +29,13 @@
       </a>
     
       
+      <a class="item menu-link" href="chat.html">
+        
+        
+        Chat
+      </a>
+    
+      
       <a class="item menu-link" href="content.html">
         
         
@@ -176,13 +183,13 @@ api.content.getKeys(<span class="hljs-string">'gear.tree.weapon.warrior'</span>)
       <span class="hljs-keyword">let</span> nestedContent = get(content, path)
 
       <span class="hljs-keyword">if</span> (nestedContent) {
-        <span class="hljs-keyword">return</span> keys(nestedContent)
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(nestedContent)
       }
 
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IME.InvalidActionError(<span class="hljs-string">`<span class="hljs-subst">${path}</span> is not a valid content path`</span>)
     }
 
-    <span class="hljs-keyword">return</span> keys(content)
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(content)
   }</pre></div></div>
               
             </div>
