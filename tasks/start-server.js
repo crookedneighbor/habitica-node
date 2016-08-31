@@ -20,7 +20,9 @@ var server = require(`${PATH_TO_HABITICA}/website/server/`)
 server.listen(process.env.PORT, function () {
   if (command) {
     exec(command, function (error, stdout, stderr) {
-      if (error) throw error
+      if (error) {
+        console.error(error)
+      }
       if (stdout) console.log(stdout)
       if (stderr) {
         console.error(stderr)

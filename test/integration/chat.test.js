@@ -36,26 +36,18 @@ describe('Chat', () => {
       expect(message.uuid).to.eql(api.getUuid())
     })
 
-    it('requires a group id', async function (done) {
-      try {
-        await api.chat.post()
-      } catch (err) {
+    it('requires a group id', async function () {
+      await api.chat.post().catch((err) => {
         expect(err).to.be.an.instanceof(IME.MissingArgumentError)
         expect(err.message).to.eql('Group Id is required')
-
-        done()
-      }
+      })
     })
 
-    it('requires a message param', async function (done) {
-      try {
-        await api.chat.post(group.id, {})
-      } catch (err) {
+    it('requires a message param', async function () {
+      await api.chat.post(group.id, {}).catch((err) => {
         expect(err).to.be.an.instanceof(IME.MissingArgumentError)
         expect(err.message).to.eql('Message is a required param')
-
-        done()
-      }
+      })
     })
   })
 })
