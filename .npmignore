@@ -3,3 +3,10 @@ src/*
 tasks/
 test/
 gulpfile.js
+docs/
+.publish/
+.travis.yml
+.editorconfig
+.babelrc
+.nvmrc
+.mversionrc
