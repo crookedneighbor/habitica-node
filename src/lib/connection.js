@@ -1,5 +1,5 @@
 import superagent from 'superagent'
-import {API_ERRORS} from './errors'
+import { HabiticaApiError, UnknownConnectionError } from './errors'
 
 export default class {
   constructor (options) {
@@ -76,15 +76,19 @@ export default class {
   _formatError (err) {
     let connectionError
 
-    if (err.response) {
-      let HttpError = API_ERRORS[err.response.status]
-      if (HttpError) {
-        connectionError = new HttpError(err.response.body.err)
-      }
+    if (err.response && err.response.error) {
+      let { status, text } = err.response.error
+      let data = JSON.parse(text)
+      let { error, message } = data
+      connectionError = new HabiticaApiError({
+        type: error,
+        status,
+        message,
+      })
     }
 
     if (!connectionError) {
-      connectionError = new API_ERRORS.UNKNOWN(err)
+      connectionError = new UnknownConnectionError(err)
     }
 
     return connectionError

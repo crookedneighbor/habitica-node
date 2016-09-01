@@ -1,6 +1,9 @@
 import nock from 'nock'
 import Connection from '../../src/lib/connection'
-import { API_ERRORS } from '../../src/lib/errors'
+import {
+  HabiticaApiError,
+  UnknownConnectionError
+} from '../../src/lib/errors'
 
 describe('Connection', () => {
   let habiticaUrl
@@ -40,7 +43,7 @@ describe('Connection', () => {
     it('rejects with connection error if habit is unreachable (this is broken with got)', async function () {
       let request = connection.get('user')
 
-      let unknownError = new API_ERRORS.UNKNOWN()
+      let unknownError = new UnknownConnectionError()
 
       await expect(request).to.eventually.be.rejected.and.have.property('message', unknownError.message)
     })
@@ -167,30 +170,24 @@ describe('Connection', () => {
     })
 
     context('unsuccesful request', () => {
-      it('rejects with NotAuthenticated error if credentials are not valid', async function () {
+      it('passes on error data from API', async function () {
         let expectedRequest = habiticaUrl.reply(() => {
-          return [401, {response: {status: 401, text: 'Not Authorized'}}]
+          return [404, {
+            success: false,
+            error: 'NotFound',
+            message: 'User not found.'
+          }]
         })
 
         let connection = new Connection(defaultOptions)
-        let request = connection.get('user')
 
-        await expect(request).to.eventually.be.rejected
-          .and.be.an.instanceOf(API_ERRORS['401'])
-
-        expectedRequest.done()
-      })
-
-      it('rejects with NotFound Error if request 404s', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
-          return [404, {response: {status: 404, text: 'Not Authorized'}}]
+        await connection.get('user').catch((err) => {
+          expect(err).to.be.an.instanceof(HabiticaApiError)
+          expect(err.status).to.equal(404)
+          expect(err.name).to.equal('HabiticaApiNotFoundError')
+          expect(err.type).to.equal('NotFound')
+          expect(err.message).to.equal('User not found.')
         })
-
-        let connection = new Connection(defaultOptions)
-        let request = connection.get('user')
-
-        await expect(request).to.eventually.be.rejected
-          .and.be.an.instanceOf(API_ERRORS['404'])
 
         expectedRequest.done()
       })
