@@ -7,7 +7,28 @@ const CRED_KEYS = Object.freeze([
   'endpoint'
 ])
 
-export default class {
+function formatError (err) {
+  let connectionError
+
+  if (err.response && err.response.error) {
+    let { status, text } = err.response.error
+    let data = JSON.parse(text)
+    let { error, message } = data
+    connectionError = new HabiticaApiError({
+      type: error,
+      status,
+      message,
+    })
+  }
+
+  if (!connectionError) {
+    connectionError = new UnknownConnectionError(err)
+  }
+
+  return connectionError
+}
+
+class Connection {
   constructor (options) {
     this._uuid = options.uuid
     this._token = options.token
@@ -69,30 +90,11 @@ export default class {
 
       return response.body
     } catch (err) {
-      let connectionError = this._formatError(err)
+      let connectionError = formatError(err)
 
       throw connectionError
     }
   }
-
-  _formatError (err) {
-    let connectionError
-
-    if (err.response && err.response.error) {
-      let { status, text } = err.response.error
-      let data = JSON.parse(text)
-      let { error, message } = data
-      connectionError = new HabiticaApiError({
-        type: error,
-        status,
-        message,
-      })
-    }
-
-    if (!connectionError) {
-      connectionError = new UnknownConnectionError(err)
-    }
-
-    return connectionError
-  }
 }
+
+module.exports = Connection
