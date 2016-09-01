@@ -1,6 +1,12 @@
 import superagent from 'superagent'
 import { HabiticaApiError, UnknownConnectionError } from './errors'
 
+const CRED_KEYS = Object.freeze([
+  'uuid',
+  'token',
+  'endpoint'
+])
+
 export default class {
   constructor (options) {
     this._uuid = options.uuid
@@ -23,15 +29,11 @@ export default class {
   }
 
   setCredentials (creds = {}) {
-    if (creds.uuid !== undefined) {
-      this._uuid = creds.uuid
-    }
-    if (creds.token !== undefined) {
-      this._token = creds.token
-    }
-    if (creds.endpoint !== undefined) {
-      this._endpoint = creds.endpoint
-    }
+    CRED_KEYS.forEach((key) => {
+      if (creds.hasOwnProperty(key)) {
+        this[`_${key}`] = creds[key]
+      }
+    })
   }
 
   get (route, options = {}) {
