@@ -13,7 +13,7 @@ class CustomError extends overExtend(Error) {
   }
 }
 
-export class HabiticaApiError extends CustomError {
+class HabiticaApiError extends CustomError {
   constructor (options = {}) {
     super()
 
@@ -24,7 +24,7 @@ export class HabiticaApiError extends CustomError {
   }
 }
 
-export class UnknownConnectionError extends HabiticaApiError {
+class UnknownConnectionError extends HabiticaApiError {
   constructor (err) {
     super({
       type: 'Unknown',
@@ -39,7 +39,7 @@ export class UnknownConnectionError extends HabiticaApiError {
   }
 }
 
-export class IntegrationError extends CustomError {
+class IntegrationError extends CustomError {
   constructor (type, message) {
     super()
 
@@ -51,4 +51,10 @@ export class IntegrationError extends CustomError {
     this.type = type
     this.message = message
   }
+}
+
+module.exports = {
+  HabiticaApiError,
+  UnknownConnectionError,
+  IntegrationError
 }
