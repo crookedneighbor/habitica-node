@@ -1,6 +1,7 @@
 import superagent from 'superagent'
 import { HabiticaApiError, UnknownConnectionError } from './errors'
 
+const DEFAULT_ENDPOINT = 'https://habitica.com/api/v3'
 const CRED_KEYS = Object.freeze([
   'uuid',
   'token',
@@ -30,11 +31,9 @@ function formatError (err) {
 
 class Connection {
   constructor (options) {
-    this._uuid = options.uuid
-    this._token = options.token
-    this._endpoint = options.endpoint || 'https://habitica.com/api/v3'
+    options.endpoint = options.endpoint || DEFAULT_ENDPOINT
 
-    this.delete = this.del
+    this.setCredentials(options)
   }
 
   getUuid () {
