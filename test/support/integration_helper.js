@@ -3,55 +3,61 @@ import {MongoClient as mongo} from 'mongodb'
 import {v4 as generateRandomUserName} from 'uuid'
 import superagent from 'superagent'
 
-export function generateUser (update = {}, connection) {
+async function generateUser (update = {}, connection) {
   let username = generateRandomUserName()
   let password = 'password'
   let email = username + '@example.com'
 
-  return new Promise((resolve, reject) => {
-    superagent.post(`localhost:${process.env.PORT}/api/v3/user/auth/local/register`)
-      .accept('application/json')
-      .send({
-        username,
-        email,
-        password,
-        confirmPassword: password
-      })
-      .end((err, res) => {
-        if (err) throw new Error(`Error generating user: ${err}`)
+  let res = await superagent.post(`localhost:${process.env.PORT}/api/v3/user/auth/local/register`)
+    .accept('application/json')
+    .send({
+      username,
+      email,
+      password,
+      confirmPassword: password
+    })
 
-        let {data: user} = res.body
-        let userCreds = {
-          uuid: user.id,
-          token: user.apiToken
-        }
+  let {data: user} = res.body
+  let userCreds = {
+    uuid: user.id,
+    token: user.apiToken
+  }
 
-        if (connection) {
-          connection.setCredentials(userCreds)
-        }
+  if (connection) {
+    connection.setCredentials(userCreds)
+  }
 
-        updateDocument('users', user.id, update, () => {
-          resolve(userCreds)
-        })
-      })
-  })
+  await updateDocument('users', user.id, update)
+
+  return userCreds
 }
 
-function updateDocument (collectionName, uuid, update, cb) {
-  if (isEmpty(update)) { return cb() }
+async function updateDocument (collectionName, uuid, update) {
+  if (isEmpty(update)) { return }
 
   if (!process.env.NODE_DB_URI) {
     throw new Error('No process.env.NODE_DB_URI specified. Type `export NODE_DB_URI=\'mongodb://localhost/habitica-node-test\'` on the command line')
   }
 
-  mongo.connect(process.env.NODE_DB_URI, (err, db) => {
-    if (err) throw new Error(`Error connecting to database when updating ${collectionName} collection: ${err}`)
+  return new Promise((resolve, reject) => {
+    mongo.connect(process.env.NODE_DB_URI, (connectionError, db) => {
+      if (connectionError) {
+        reject(new Error(`Error connecting to database when updating ${collectionName} collection: ${connectionError}`))
+      }
 
-    let collection = db.collection(collectionName)
+      let collection = db.collection(collectionName)
 
-    collection.update({ _id: uuid }, { $set: update }, (err, result) => {
-      if (err) throw new Error(`Error updating ${collectionName}: ${err}`)
-      cb()
+      collection.update({ _id: uuid }, { $set: update }, (updateError, result) => {
+        if (updateError) {
+          reject(new Error(`Error updating ${collectionName}: ${updateError}`))
+        }
+        resolve()
+      })
     })
   })
+}
+
+module.exports = {
+  generateUser: generateUser,
+  updateDocument: updateDocument
 }
