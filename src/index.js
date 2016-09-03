@@ -1,59 +1,36 @@
-// Initialize
-// heartbeat
-// Set up your client!
+// Habitica API Wrapper
+// tasks
+// A thin wrapper around the Habitica API
 require('babel-polyfill')
 import Connection from './lib/connection'
 
-import Account from './account'
-import Chat from './chat'
-import Content from './content'
-import Task from './task'
-import User from './user'
-import Tag from './tag'
-
-module.exports = class {
+// # Habitica()
+//
+// Set up your instance of Habitica.
+//
+// The endpoint will default to https://habitica.com/ if not provided.
+//
+// ```js
+// let Habitica = require('habitica')
+// let api = new Habitica({
+//   uuid: 'your-habitica.com-user-id',
+//   token: 'your-habitica.com-api-token',
+//   endpoint: 'http://custom-url.com'
+// })
+// ```
+//
+// The uuid and token parameters are not required and can be [set later](#setCredentials) or be set at time of [registration](#register) or [login](#login).
+//
+// ```js
+// let Habitica = require('habitica')
+// let api = new Habitica()
+// ```
+class Habitica {
   constructor (options = {}) {
-    // # Habitica()
-    //
-    // Set up your instance of Habitica.
-    //
-    // The endpoint will default to https://habitica.com/ if not provided.
-    //
-    // ```js
-    // let Habitica = require('habitica')
-    // let api = new Habitica({
-    //   uuid: 'your-habitica.com-user-id',
-    //   token: 'your-habitica.com-api-token',
-    //   endpoint: 'http://custom-url.com'
-    // })
-    // ```
-    //
-    // The uuid and token parameters are not required and can be [set later](#setCredentials) or be set at time of [registration](account.html#account.register) or [login](account.html#account.login).
-    //
-    // ```js
-    // let Habitica = require('habitica')
-    // let api = new Habitica()
-    // ```
     this._connection = new Connection({
       uuid: options.uuid,
       token: options.token,
       endpoint: options.endpoint
-    })
-
-    // NOOP
-    let modules = {
-      account: Account,
-      chat: Chat,
-      content: Content,
-      tag: Tag,
-      task: Task,
-      user: User
-    }
-
-    Object.keys(modules).forEach((module) => {
-      this[module] = new modules[module]({
-        connection: this._connection
-      })
     })
   }
 
@@ -297,5 +274,7 @@ module.exports = class {
       query
     })
   }
-  //NOOP
+  // And you're ready!
 }
+
+module.exports = Habitica
