@@ -5,43 +5,52 @@ import {
   UnknownConnectionError
 } from '../../src/lib/errors'
 
-describe('Connection', () => {
-  let habiticaUrl
-  const defaultOptions = {
-    uuid: 'myUuid',
-    token: 'myToken'
-  }
+describe('Connection', function () {
+  beforeEach(function () {
+    this.defaultOptions = {
+      uuid: 'myUuid',
+      token: 'myToken'
+    }
+  })
 
-  describe('initialization', () => {
-    it('defaults to habitica endpoint', () => {
-      let connection = new Connection(defaultOptions)
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
+  describe('initialization', function () {
+    it('defaults to habitica endpoint', function () {
+      let connection = new Connection(this.defaultOptions)
+      expect(connection._endpoint).to.eql('https://habitica.com/')
     })
 
-    it('accepts an override for endpoint', () => {
+    it('accepts an override for endpoint', function () {
+      let connection = new Connection({
+        uuid: 'myUuid',
+        token: 'myToken',
+        endpoint: 'https://someotherendpoint/'
+      })
+
+      expect(connection._endpoint).to.eql('https://someotherendpoint/')
+    })
+
+    it('adds the trailing slash to the endpoint if it is missing', function () {
       let connection = new Connection({
         uuid: 'myUuid',
         token: 'myToken',
         endpoint: 'https://someotherendpoint'
       })
 
-      expect(connection._endpoint).to.eql('https://someotherendpoint')
+      expect(connection._endpoint).to.eql('https://someotherendpoint/')
     })
   })
 
-  context('connection error handling', () => {
-    let connection
-
+  context('connection error handling', function () {
     before(() => nock.disableNetConnect())
 
     after(() => nock.enableNetConnect())
 
-    beforeEach(() => {
-      connection = new Connection(defaultOptions)
+    beforeEach(function () {
+      this.connection = new Connection(this.defaultOptions)
     })
 
-    it('rejects with connection error if habit is unreachable (this is broken with got)', async function () {
-      let request = connection.get('user')
+    it('rejects with connection error if habit is unreachable', async function () {
+      let request = this.connection.get('/user')
 
       let unknownError = new UnknownConnectionError()
 
@@ -49,87 +58,83 @@ describe('Connection', () => {
     })
   })
 
-  describe('#getUuid', () => {
-    it('returns uuid', () => {
-      let connection = new Connection(defaultOptions)
+  describe('#getUuid', function () {
+    it('returns uuid', function () {
+      let connection = new Connection(this.defaultOptions)
       expect(connection.getUuid()).to.eql('myUuid')
     })
   })
 
-  describe('#getToken', () => {
-    it('returns token', () => {
-      let connection = new Connection(defaultOptions)
+  describe('#getToken', function () {
+    it('returns token', function () {
+      let connection = new Connection(this.defaultOptions)
       expect(connection.getToken()).to.eql('myToken')
     })
   })
 
-  describe('#getEndpoint', () => {
-    it('returns endpoint', () => {
-      let connection = new Connection(defaultOptions)
-      expect(connection.getEndpoint()).to.eql('https://habitica.com/api/v3')
+  describe('#getEndpoint', function () {
+    it('returns endpoint', function () {
+      let connection = new Connection(this.defaultOptions)
+      expect(connection.getEndpoint()).to.eql('https://habitica.com/')
     })
   })
 
-  describe('#setCredentials', () => {
-    let connection
-
-    beforeEach(() => {
-      connection = new Connection(defaultOptions)
+  describe('#setCredentials', function () {
+    beforeEach(function () {
+      this.connection = new Connection(this.defaultOptions)
     })
 
-    it('sets uuid after iniitalization', () => {
-      expect(connection._uuid).to.eql('myUuid')
+    it('sets uuid after iniitalization', function () {
+      expect(this.connection._uuid).to.eql('myUuid')
 
-      connection.setCredentials({uuid: 'newUuid'})
-      expect(connection._uuid).to.eql('newUuid')
+      this.connection.setCredentials({uuid: 'newUuid'})
+      expect(this.connection._uuid).to.eql('newUuid')
     })
 
-    it('leaves old uuid if not passed in after initalization', () => {
-      expect(connection._uuid).to.eql('myUuid')
+    it('leaves old uuid if not passed in after initalization', function () {
+      expect(this.connection._uuid).to.eql('myUuid')
 
-      connection.setCredentials({token: 'foo'})
-      expect(connection._uuid).to.eql('myUuid')
+      this.connection.setCredentials({token: 'foo'})
+      expect(this.connection._uuid).to.eql('myUuid')
     })
 
-    it('leaves old token if not passed in after initalization', () => {
-      expect(connection._token).to.eql('myToken')
+    it('leaves old token if not passed in after initalization', function () {
+      expect(this.connection._token).to.eql('myToken')
 
-      connection.setCredentials({uuid: 'foo'})
-      expect(connection._token).to.eql('myToken')
+      this.connection.setCredentials({uuid: 'foo'})
+      expect(this.connection._token).to.eql('myToken')
     })
 
-    it('sets token after iniitalization', () => {
-      expect(connection._token).to.eql('myToken')
+    it('sets token after iniitalization', function () {
+      expect(this.connection._token).to.eql('myToken')
 
-      connection.setCredentials({token: 'newToken'})
-      expect(connection._token).to.eql('newToken')
+      this.connection.setCredentials({token: 'newToken'})
+      expect(this.connection._token).to.eql('newToken')
     })
 
-    it('leaves old endpoint if not passed in after initalization', () => {
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
+    it('leaves old endpoint if not passed in after initalization', function () {
+      expect(this.connection._endpoint).to.eql('https://habitica.com/')
 
-      connection.setCredentials({uuid: 'foo'})
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
+      this.connection.setCredentials({uuid: 'foo'})
+      expect(this.connection._endpoint).to.eql('https://habitica.com/')
     })
 
-    it('sets endpoint after iniitalization', () => {
-      expect(connection._endpoint).to.eql('https://habitica.com/api/v3')
+    it('sets endpoint after iniitalization', function () {
+      expect(this.connection._endpoint).to.eql('https://habitica.com/')
 
-      connection.setCredentials({endpoint: 'http://localhost:3321/api/v3'})
-      expect(connection._endpoint).to.eql('http://localhost:3321/api/v3')
+      this.connection.setCredentials({endpoint: 'http://localhost:3321/'})
+      expect(this.connection._endpoint).to.eql('http://localhost:3321/')
     })
   })
 
-  describe('#get', () => {
-    let connection
-
-    beforeEach(() => {
-      connection = new Connection(defaultOptions)
-      habiticaUrl = nock('https://habitica.com/api/v3').get('/user')
+  describe('#get', function () {
+    beforeEach(function () {
+      this.connection = new Connection(this.defaultOptions)
+      this.habiticaUrl = nock('https://habitica.com/api/v3').get('/user')
     })
 
-    it('returns a promise', () => {
-      let request = connection.get('user')
+    it('returns a promise', function () {
+      let request = this.connection.get('/user')
 
       expect(request).to.be.a('promise')
     })
@@ -140,7 +145,7 @@ describe('Connection', () => {
         .query({type: 'party'})
         .reply(200)
 
-      await connection.get('group', {query: {type: 'party'}})
+      await this.connection.get('/group', {query: {type: 'party'}})
 
       expectedRequest.done()
     })
@@ -150,28 +155,28 @@ describe('Connection', () => {
         .get('/group')
         .reply(200)
 
-      await connection.get('group', {send: {type: 'party'}})
+      await this.connection.get('/group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
-    context('succesful request', () => {
+    context('succesful request', function () {
       it('returns requested data', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [200, { some: 'data' }]
         })
 
-        let connection = new Connection(defaultOptions)
-        let response = await connection.get('user')
+        let connection = new Connection(this.defaultOptions)
+        let response = await connection.get('/user')
 
         expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
       })
     })
 
-    context('unsuccesful request', () => {
+    context('unsuccesful request', function () {
       it('passes on error data from API', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [404, {
             success: false,
             error: 'NotFound',
@@ -179,9 +184,9 @@ describe('Connection', () => {
           }]
         })
 
-        let connection = new Connection(defaultOptions)
+        let connection = new Connection(this.defaultOptions)
 
-        await connection.get('user').catch((err) => {
+        await connection.get('/user').catch((err) => {
           expect(err).to.be.an.instanceof(HabiticaApiError)
           expect(err.status).to.equal(404)
           expect(err.name).to.equal('HabiticaApiNotFoundError')
@@ -194,18 +199,18 @@ describe('Connection', () => {
     })
   })
 
-  describe('#post', () => {
-    beforeEach(() => {
-      habiticaUrl = nock('https://habitica.com/api/v3')
+  describe('#post', function () {
+    beforeEach(function () {
+      this.habiticaUrl = nock('https://habitica.com/api/v3')
         .post('/user/tasks')
     })
 
-    it('returns a promise', () => {
-      habiticaUrl.reply(() => {
+    it('returns a promise', function () {
+      this.habiticaUrl.reply(function () {
         return [200, { some: 'data' }]
       })
-      let connection = new Connection(defaultOptions)
-      let request = connection.post('user/tasks')
+      let connection = new Connection(this.defaultOptions)
+      let request = connection.post('/user/tasks')
 
       expect(request).to.be.a('promise')
     })
@@ -219,8 +224,8 @@ describe('Connection', () => {
         })
         .reply(201, {})
 
-      let connection = new Connection(defaultOptions)
-      await connection.post('user/tasks', {
+      let connection = new Connection(this.defaultOptions)
+      await connection.post('/user/tasks', {
         query: {
           type: 'habit',
           text: 'test habit'
@@ -237,52 +242,52 @@ describe('Connection', () => {
         })
         .reply(200)
 
-      let connection = new Connection(defaultOptions)
-      await connection.post('group', {send: {type: 'party'}})
+      let connection = new Connection(this.defaultOptions)
+      await connection.post('/group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
-    context('succesful request', () => {
+    context('succesful request', function () {
       it('returns requested data', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [200, { some: 'data' }]
         })
 
-        let connection = new Connection(defaultOptions)
-        let response = await connection.post('user/tasks')
+        let connection = new Connection(this.defaultOptions)
+        let response = await connection.post('/user/tasks')
 
         expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
       })
     })
 
-    context('unsuccesful request', () => {
+    context('unsuccesful request', function () {
       it('rejects if credentials are not valid', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [401, {response: {status: 401, text: 'Not Authorized'}}]
         })
 
-        let connection = new Connection(defaultOptions)
-        await expect(connection.post('user/tasks')).to.eventually.be.rejected
+        let connection = new Connection(this.defaultOptions)
+        await expect(connection.post('/user/tasks')).to.eventually.be.rejected
 
         expectedRequest.done()
       })
     })
   })
 
-  describe('#put', () => {
-    beforeEach(() => {
-      habiticaUrl = nock('https://habitica.com/api/v3')
+  describe('#put', function () {
+    beforeEach(function () {
+      this.habiticaUrl = nock('https://habitica.com/api/v3')
         .put('/user/tasks')
     })
 
-    it('returns a promise', () => {
-      habiticaUrl.reply(() => {
+    it('returns a promise', function () {
+      this.habiticaUrl.reply(function () {
         return [200, { some: 'data' }]
       })
-      let connection = new Connection(defaultOptions)
-      let request = connection.put('user/tasks')
+      let connection = new Connection(this.defaultOptions)
+      let request = connection.put('/user/tasks')
 
       expect(request).to.be.a('promise')
     })
@@ -296,8 +301,8 @@ describe('Connection', () => {
         })
         .reply(201, {})
 
-      let connection = new Connection(defaultOptions)
-      await connection.put('user/tasks', {
+      let connection = new Connection(this.defaultOptions)
+      await connection.put('/user/tasks', {
         query: {
           type: 'habit',
           text: 'test habit'
@@ -314,52 +319,52 @@ describe('Connection', () => {
         })
         .reply(200)
 
-      let connection = new Connection(defaultOptions)
-      await connection.put('group', {send: {type: 'party'}})
+      let connection = new Connection(this.defaultOptions)
+      await connection.put('/group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
-    context('succesful request', () => {
+    context('succesful request', function () {
       it('returns requested data', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [200, { some: 'data' }]
         })
 
-        let connection = new Connection(defaultOptions)
-        let response = await connection.put('user/tasks')
+        let connection = new Connection(this.defaultOptions)
+        let response = await connection.put('/user/tasks')
 
         expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
       })
     })
 
-    context('unsuccesful request', () => {
+    context('unsuccesful request', function () {
       it('rejects if credentials are not valid', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [401, {response: {status: 401, text: 'Not Authorized'}}]
         })
 
-        let connection = new Connection(defaultOptions)
-        await expect(connection.put('user/tasks')).to.eventually.be.rejected
+        let connection = new Connection(this.defaultOptions)
+        await expect(connection.put('/user/tasks')).to.eventually.be.rejected
 
         expectedRequest.done()
       })
     })
   })
 
-  describe('#del', () => {
-    beforeEach(() => {
-      habiticaUrl = nock('https://habitica.com/api/v3')
+  describe('#del', function () {
+    beforeEach(function () {
+      this.habiticaUrl = nock('https://habitica.com/api/v3')
         .delete('/user/tasks')
     })
 
-    it('returns a promise', () => {
-      habiticaUrl.reply(() => {
+    it('returns a promise', function () {
+      this.habiticaUrl.reply(function () {
         return [200, { some: 'data' }]
       })
-      let connection = new Connection(defaultOptions)
-      let request = connection.del('user/tasks')
+      let connection = new Connection(this.defaultOptions)
+      let request = connection.del('/user/tasks')
 
       expect(request).to.be.a('promise')
     })
@@ -373,8 +378,8 @@ describe('Connection', () => {
         })
         .reply(201, {})
 
-      let connection = new Connection(defaultOptions)
-      await connection.del('user/tasks', {
+      let connection = new Connection(this.defaultOptions)
+      await connection.del('/user/tasks', {
         query: {
           type: 'habit',
           text: 'test habit'
@@ -391,34 +396,34 @@ describe('Connection', () => {
         })
         .reply(200)
 
-      let connection = new Connection(defaultOptions)
-      await connection.del('group', {send: {type: 'party'}})
+      let connection = new Connection(this.defaultOptions)
+      await connection.del('/group', {send: {type: 'party'}})
 
       expectedRequest.done()
     })
 
-    context('succesful request', () => {
+    context('succesful request', function () {
       it('returns requested data', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [200, { some: 'data' }]
         })
 
-        let connection = new Connection(defaultOptions)
-        let response = await connection.del('user/tasks')
+        let connection = new Connection(this.defaultOptions)
+        let response = await connection.del('/user/tasks')
 
         expect(response).to.eql({ some: 'data' })
         expectedRequest.done()
       })
     })
 
-    context('unsuccesful request', () => {
+    context('unsuccesful request', function () {
       it('rejects if credentials are not valid', async function () {
-        let expectedRequest = habiticaUrl.reply(() => {
+        let expectedRequest = this.habiticaUrl.reply(function () {
           return [401, {response: {status: 401, text: 'Not Authorized'}}]
         })
 
-        let connection = new Connection(defaultOptions)
-        await expect(connection.del('user/tasks')).to.eventually.be.rejected
+        let connection = new Connection(this.defaultOptions)
+        await expect(connection.del('/user/tasks')).to.eventually.be.rejected
 
         expectedRequest.done()
       })

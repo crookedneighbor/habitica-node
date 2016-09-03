@@ -17,7 +17,7 @@ module.exports = class {
     //
     // Set up your instance of Habitica.
     //
-    // The endpoint will default to https://habitica.com/api/v3 if not provided.
+    // The endpoint will default to https://habitica.com/ if not provided.
     //
     // ```js
     // let Habitica = require('habitica')

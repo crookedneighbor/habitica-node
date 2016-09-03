@@ -1,12 +1,7 @@
 import superagent from 'superagent'
 import { HabiticaApiError, UnknownConnectionError } from './errors'
 
-const DEFAULT_ENDPOINT = 'https://habitica.com/api/v3'
-const CRED_KEYS = Object.freeze([
-  'uuid',
-  'token',
-  'endpoint'
-])
+const DEFAULT_ENDPOINT = 'https://habitica.com/'
 
 function formatError (err) {
   let connectionError
@@ -18,7 +13,7 @@ function formatError (err) {
     connectionError = new HabiticaApiError({
       type: error,
       status,
-      message,
+      message
     })
   }
 
@@ -27,6 +22,16 @@ function formatError (err) {
   }
 
   return connectionError
+}
+
+function normalizeEndpoint (url) {
+  let lastChar = url[url.length - 1]
+
+  if (lastChar !== '/') {
+    url = url + '/'
+  }
+
+  return url
 }
 
 class Connection {
@@ -49,11 +54,16 @@ class Connection {
   }
 
   setCredentials (creds = {}) {
-    CRED_KEYS.forEach((key) => {
-      if (creds.hasOwnProperty(key)) {
-        this[`_${key}`] = creds[key]
-      }
-    })
+    if (creds.hasOwnProperty('uuid')) {
+      this._uuid = creds.uuid
+    }
+    if (creds.hasOwnProperty('token')) {
+      this._token = creds.token
+    }
+    if (creds.hasOwnProperty('endpoint')) {
+      let endpoint = normalizeEndpoint(creds.endpoint)
+      this._endpoint = endpoint
+    }
   }
 
   get (route, options = {}) {
@@ -73,7 +83,7 @@ class Connection {
   }
 
   async _router (method, route, options) {
-    let request = superagent[method](`${this._endpoint}/${route}`)
+    let request = superagent[method](`${this._endpoint}api/v3${route}`)
       .accept('application/json')
 
     if (this._uuid && this._token) {
