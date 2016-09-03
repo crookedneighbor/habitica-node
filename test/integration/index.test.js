@@ -68,7 +68,7 @@ describe('Habitica', function () {
     })
   })
 
-  describe.only('#localLogin', function () {
+  describe('#localLogin', function () {
     beforeEach(async function () {
       let registerApi = new Habitica({
         endpoint: `localhost:${process.env.PORT}`
