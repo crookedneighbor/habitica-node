@@ -1,19 +1,23 @@
-import superagent from 'superagent'
-import { HabiticaApiError, UnknownConnectionError } from './errors'
+'use strict'
 
-const DEFAULT_ENDPOINT = 'https://habitica.com/'
+var superagent = require('superagent')
+var errors = require('./errors')
+var HabiticaApiError = errors.HabiticaApiError
+var UnknownConnectionError = errors.UnknownConnectionError
+
+var DEFAULT_ENDPOINT = 'https://habitica.com/'
 
 function formatError (err) {
-  let connectionError
+  var connectionError, status, data
 
   if (err.response && err.response.error) {
-    let { status, text } = err.response.error
-    let data = JSON.parse(text)
-    let { error, message } = data
+    status = err.response.error.status
+    data = JSON.parse(err.response.error.text)
+
     connectionError = new HabiticaApiError({
-      type: error,
-      status,
-      message
+      type: data.error,
+      status: status,
+      message: data.message
     })
   }
 
@@ -25,7 +29,7 @@ function formatError (err) {
 }
 
 function normalizeEndpoint (url) {
-  let lastChar = url[url.length - 1]
+  var lastChar = url[url.length - 1]
 
   if (lastChar !== '/') {
     url = url + '/'
@@ -34,76 +38,77 @@ function normalizeEndpoint (url) {
   return url
 }
 
-class Connection {
-  constructor (options) {
-    options.endpoint = options.endpoint || DEFAULT_ENDPOINT
+function Connection (options) {
+  options.endpoint = options.endpoint || DEFAULT_ENDPOINT
 
-    this.setCredentials(options)
+  this.setCredentials(options)
+}
+
+Connection.prototype.getUuid = function () {
+  return this._uuid
+}
+
+Connection.prototype.getToken = function () {
+  return this._token
+}
+
+Connection.prototype.getEndpoint = function () {
+  return this._endpoint
+}
+
+Connection.prototype.setCredentials = function (creds) {
+  creds = creds || {}
+
+  if (creds.hasOwnProperty('uuid')) {
+    this._uuid = creds.uuid
+  }
+  if (creds.hasOwnProperty('token')) {
+    this._token = creds.token
+  }
+  if (creds.hasOwnProperty('endpoint')) {
+    this._endpoint = normalizeEndpoint(creds.endpoint)
+  }
+}
+
+Connection.prototype.get = function (route, options) {
+  return this._router('get', route, options)
+}
+
+Connection.prototype.post = function (route, options) {
+  return this._router('post', route, options)
+}
+
+Connection.prototype.put = function (route, options) {
+  return this._router('put', route, options)
+}
+
+Connection.prototype.del = function (route, options) {
+  return this._router('del', route, options)
+}
+
+Connection.prototype._router = function (method, route, options) {
+  var request
+
+  options = options || {}
+
+  request = superagent[method](this._endpoint + 'api/v3' + route)
+    .accept('application/json')
+
+  if (this._uuid && this._token) {
+    request
+      .set('x-api-user', this._uuid)
+      .set('x-api-key', this._token)
   }
 
-  getUuid () {
-    return this._uuid
-  }
+  request
+    .query(options.query)
+    .send(options.send)
 
-  getToken () {
-    return this._token
-  }
-
-  getEndpoint () {
-    return this._endpoint
-  }
-
-  setCredentials (creds = {}) {
-    if (creds.hasOwnProperty('uuid')) {
-      this._uuid = creds.uuid
-    }
-    if (creds.hasOwnProperty('token')) {
-      this._token = creds.token
-    }
-    if (creds.hasOwnProperty('endpoint')) {
-      let endpoint = normalizeEndpoint(creds.endpoint)
-      this._endpoint = endpoint
-    }
-  }
-
-  get (route, options = {}) {
-    return this._router('get', route, options)
-  }
-
-  post (route, options = {}) {
-    return this._router('post', route, options)
-  }
-
-  put (route, options = {}) {
-    return this._router('put', route, options)
-  }
-
-  del (route, options = {}) {
-    return this._router('del', route, options)
-  }
-
-  async _router (method, route, options) {
-    let request = superagent[method](`${this._endpoint}api/v3${route}`)
-      .accept('application/json')
-
-    if (this._uuid && this._token) {
-      request
-        .set('x-api-user', this._uuid)
-        .set('x-api-key', this._token)
-    }
-
-    try {
-      let response = await request
-        .query(options.query)
-        .send(options.send)
-
-      return response.body
-    } catch (err) {
-      let connectionError = formatError(err)
-
-      throw connectionError
-    }
-  }
+  return request.then(function (response) {
+    return response.body
+  }).catch(function (err) {
+    throw formatError(err)
+  })
 }
 
 module.exports = Connection
