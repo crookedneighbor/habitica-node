@@ -106,5 +106,118 @@ module.exports = class {
   setCredentials (creds) {
     this._connection.setCredentials(creds)
   }
-// NOOP
+
+  // # get
+  //
+  // Perform a GET request to Habitica's API.
+  //
+  // The first argument is the path. The second argument (optional) is an object that will be converted to a query string.
+  //
+  // ```js
+  // api.get('/user').then((res) => {
+  //   let user = res.data
+  //
+  //   user.profile.name // the user's display name
+  // })
+  //
+  // api.get('/groups', {
+  //   type: 'publicGuilds,privateGuilds'
+  // }).then((res) => {
+  //   let guilds = res.data
+  //   let guild = guilds[0]
+  //
+  //   guild.name // the name of the group
+  // })
+  // ```
+  async get (path, query) {
+    return await this._connection.get(path, {
+      query
+    })
+  }
+
+  // # post
+  //
+  // Perform a POST request to Habitica's API.
+  //
+  // The first argument is the path. The second argument (optional) is an object that will be sent as the body of the POST request. The thrid argument (optional) is an object that will be converted to a query string.
+  //
+  // ```js
+  // api.post('/tasks/user', {
+  //   text: 'Task Name',
+  //   notes: 'Text Notes'
+  // }).then((res) => {
+  //   let task = res.data
+  //
+  //   task.text // 'Task Name'
+  // })
+  //
+  // api.post('/groups', {
+  //   type: 'party',
+  //   name: 'My Party'
+  // }).then((res) => {
+  //   let party = res.data
+  //
+  //   party.name // 'My Party'
+  // })
+  // ```
+  async post (path, body, query) {
+    return await this._connection.post(path, {
+      send: body,
+      query
+    })
+  }
+
+  // # put
+  //
+  // Perform a PUT request to Habitica's API.
+  //
+  // The first argument is the path. The second argument (optional) is an object that will be sent as the body of the PUT request. The thrid argument (optional) is an object that will be converted to a query string.
+  //
+  // ```js
+  // api.put('/tasks/the-task-id', {
+  //   text: 'New Task Name',
+  //   notes: 'New Text Notes'
+  // }).then((res) => {
+  //   let task = res.data
+  //
+  //   task.text // 'New Task Name'
+  // })
+  //
+  // api.put('/groups/the-group-id', {
+  //   name: 'New Group Name'
+  // }).then((res) => {
+  //   let group = res.data
+  //
+  //   group.name // 'New Group Name'
+  // })
+  // ```
+  async put (path, body, query) {
+    return await this._connection.put(path, {
+      send: body,
+      query
+    })
+  }
+
+  // # del
+  //
+  // Perform a DELETE request to Habitica's API.
+  //
+  // The first argument is the path. The second argument (optional) is an object that will be sent as the body of the DELETE request. The thrid argument (optional) is an object that will be converted to a query string.
+  //
+  // ```js
+  // api.del('/tasks/the-task-id').then(() => {
+  //   // The task has been deleted
+  // })
+  //
+  // api.del('/groups/the-group-id').then(() => {
+  //  // The group has been deleted
+  // })
+  // ```
+  async del (path, body, query) {
+    return await this._connection.del(path, {
+      send: body,
+      query
+    })
+  }
+  //NOOP
 }
