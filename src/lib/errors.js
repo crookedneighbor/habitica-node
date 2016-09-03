@@ -1,57 +1,54 @@
-import overExtend from 'over-extend'
+'use strict'
 
-const INTEGRATION_ERROR_TYPES = Object.freeze({
+var INTEGRATION_ERROR_TYPES = Object.freeze({
   MISSING_ARGUMENT: true
 })
 
-class CustomError extends overExtend(Error) {
-  constructor (message) {
-    super()
+function CustomError (message) {
+  this.name = this.constructor.name
+  this.message = message
 
-    this.name = this.constructor.name
-    Error.captureStackTrace && Error.captureStackTrace(this, this.constructor)
-  }
+  Error.captureStackTrace && Error.captureStackTrace(this, this.constructor)
 }
 
-class HabiticaApiError extends CustomError {
-  constructor (options = {}) {
-    super()
+CustomError.prototype = Object.create(Error.prototype)
 
-    this.name = `HabiticaApi${options.type}Error`
-    this.status = options.status
-    this.type = options.type
-    this.message = options.message
-  }
+function HabiticaApiError (options) {
+  options = options || {}
+
+  CustomError.call(this, options.message)
+
+  this.name = 'HabiticaApi' + options.type + 'Error'
+  this.status = options.status
+  this.type = options.type
 }
 
-class UnknownConnectionError extends HabiticaApiError {
-  constructor (err) {
-    super({
-      type: 'Unknown',
-      message: 'An unknown error occurred'
-    })
+HabiticaApiError.prototype = Object.create(CustomError.prototype)
 
-    this.originalError = err
-  }
+function UnknownConnectionError (err) {
+  HabiticaApiError.call(this, {
+    type: 'Unknown',
+    message: 'An unknown error occurred'
+  })
 
-  static get statusCode () {
-    return 'UNKNOWN'
-  }
+  this.originalError = err
 }
 
-class IntegrationError extends CustomError {
-  constructor (type, message) {
-    super()
+UnknownConnectionError.prototype = Object.create(HabiticaApiError.prototype)
 
-    if (!INTEGRATION_ERROR_TYPES.hasOwnProperty(type)) {
-      let types = Object.keys(INTEGRATION_ERROR_TYPES).join(', ')
-      throw new Error(`type must be one of: ${types}`)
-    }
+function IntegrationError (type, message) {
+  CustomError.call(this, message)
 
-    this.type = type
-    this.message = message
+  if (!INTEGRATION_ERROR_TYPES.hasOwnProperty(type)) {
+    let types = Object.keys(INTEGRATION_ERROR_TYPES).join(', ')
+    throw new Error(`type must be one of: ${types}`)
   }
+
+  this.name = 'IntegrationError'
+  this.type = type
 }
+
+IntegrationError.prototype = Object.create(CustomError.prototype)
 
 module.exports = {
   HabiticaApiError,
