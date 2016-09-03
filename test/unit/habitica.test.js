@@ -1,4 +1,6 @@
-import Habitica from '../../src/index'
+'use strict'
+
+var Habitica = require('../../src/index')
 
 describe('Habitica Api', function () {
   beforeEach(function () {

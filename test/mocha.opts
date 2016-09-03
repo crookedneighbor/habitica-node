@@ -1,4 +1,2 @@
 --recursive
---require babel-polyfill
---compilers js:babel-register
 --require test/support/globals

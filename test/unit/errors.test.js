@@ -1,13 +1,14 @@
-import {
-  HabiticaApiError,
-  UnknownConnectionError,
-  IntegrationError
-} from '../../src/lib/errors'
+'use strict'
+
+var errors = require('../../src/lib/errors')
+var HabiticaApiError = errors.HabiticaApiError
+var UnknownConnectionError = errors.UnknownConnectionError
+var IntegrationError = errors.IntegrationError
 
 describe('Errors', function () {
   describe('UnknownConnectionError', function () {
     it('instantiates an error', function () {
-      let error = new UnknownConnectionError()
+      var error = new UnknownConnectionError()
 
       expect(error).to.be.an.instanceof(HabiticaApiError)
       expect(error.name).to.equal('HabiticaApiUnknownError')
@@ -15,15 +16,15 @@ describe('Errors', function () {
     })
 
     it('saves original error', function () {
-      let originalError = new Error('foo')
-      let error = new UnknownConnectionError(originalError)
+      var originalError = new Error('foo')
+      var error = new UnknownConnectionError(originalError)
 
       expect(error.originalError).to.equal(originalError)
     })
 
     it('does not overwrite error from original error', function () {
-      let originalError = new Error('foo')
-      let error = new UnknownConnectionError(originalError)
+      var originalError = new Error('foo')
+      var error = new UnknownConnectionError(originalError)
 
       expect(error.message).to.equal('An unknown error occurred')
     })
@@ -31,12 +32,12 @@ describe('Errors', function () {
 
   describe('HabiticaApiError', function () {
     it('instantiates an API error', function () {
-      let responseError = {
+      var responseError = {
         status: 404,
         type: 'NotFound',
         message: 'User not found.'
       }
-      let error = new HabiticaApiError(responseError)
+      var error = new HabiticaApiError(responseError)
 
       expect(error.name).to.equal('HabiticaApiNotFoundError')
       expect(error.type).to.equal('NotFound')
@@ -47,7 +48,7 @@ describe('Errors', function () {
 
   describe('IntegrationError', function () {
     it('instantiates an IntegrationError', function () {
-      let intError = new IntegrationError('MISSING_ARGUMENT', 'Missing argument')
+      var intError = new IntegrationError('MISSING_ARGUMENT', 'Missing argument')
 
       expect(intError.name).to.equal('IntegrationError')
       expect(intError.type).to.equal('MISSING_ARGUMENT')
