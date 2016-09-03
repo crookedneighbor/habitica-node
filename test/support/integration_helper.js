@@ -1,4 +1,3 @@
-import {isEmpty} from 'lodash'
 import {MongoClient as mongo} from 'mongodb'
 import {v4 as generateRandomUserName} from 'uuid'
 import superagent from 'superagent'
@@ -33,7 +32,7 @@ async function generateUser (update = {}, connection) {
 }
 
 async function updateDocument (collectionName, uuid, update) {
-  if (isEmpty(update)) { return }
+  if (!update) { return }
 
   if (!process.env.NODE_DB_URI) {
     throw new Error('No process.env.NODE_DB_URI specified. Type `export NODE_DB_URI=\'mongodb://localhost/habitica-node-test\'` on the command line')
