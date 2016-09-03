@@ -128,6 +128,14 @@ module.exports = class {
   //
   //   guild.name // the name of the group
   // })
+  //
+  // // error handling
+  // api.get('/tasks/non-existant-id').then((res) => {
+  //   // will never get here
+  // }).catch((err) => {
+  //   // handle task not found error
+  //   err.message // 'Task not found'
+  // })
   // ```
   async get (path, query) {
     return await this._connection.get(path, {
@@ -144,7 +152,8 @@ module.exports = class {
   // ```js
   // api.post('/tasks/user', {
   //   text: 'Task Name',
-  //   notes: 'Text Notes'
+  //   notes: 'Task Notes',
+  //   type: 'todo'
   // }).then((res) => {
   //   let task = res.data
   //
@@ -158,6 +167,8 @@ module.exports = class {
   //   let party = res.data
   //
   //   party.name // 'My Party'
+  // }).catch((err) => {
+  //   // handle errors
   // })
   // ```
   async post (path, body, query) {
@@ -189,6 +200,8 @@ module.exports = class {
   //   let group = res.data
   //
   //   group.name // 'New Group Name'
+  // }).catch((err) => {
+  //   // handle errors
   // })
   // ```
   async put (path, body, query) {
@@ -211,6 +224,8 @@ module.exports = class {
   //
   // api.del('/groups/the-group-id').then(() => {
   //  // The group has been deleted
+  // }).catch((err) => {
+  //   // handle errors
   // })
   // ```
   async del (path, body, query) {
