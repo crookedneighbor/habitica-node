@@ -56,7 +56,7 @@ describe('Errors', () => {
 
     it('requires type to be of enumerated types', () => {
       expect(function () {
-        new IntegrationError('FOO', 'foo')
+        new IntegrationError('FOO', 'foo') // eslint-disable-line no-new
       }).to.throw(/^type must be one of/)
     })
   })
