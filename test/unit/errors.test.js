@@ -4,9 +4,9 @@ import {
   IntegrationError
 } from '../../src/lib/errors'
 
-describe('Errors', () => {
-  describe('UnknownConnectionError', () => {
-    it('instantiates an error', () => {
+describe('Errors', function () {
+  describe('UnknownConnectionError', function () {
+    it('instantiates an error', function () {
       let error = new UnknownConnectionError()
 
       expect(error).to.be.an.instanceof(HabiticaApiError)
@@ -14,23 +14,23 @@ describe('Errors', () => {
       expect(error.message).to.equal('An unknown error occurred')
     })
 
-    it('saves original error', () => {
+    it('saves original error', function () {
       let originalError = new Error('foo')
       let error = new UnknownConnectionError(originalError)
 
       expect(error.originalError).to.equal(originalError)
     })
 
-    it('does not overwrite error from original error', () => {
+    it('does not overwrite error from original error', function () {
       let originalError = new Error('foo')
       let error = new UnknownConnectionError(originalError)
 
-      expect(error.message).to.eql('An unknown error occurred')
+      expect(error.message).to.equal('An unknown error occurred')
     })
   })
 
-  describe('HabiticaApiError', () => {
-    it('instantiates an API error', () => {
+  describe('HabiticaApiError', function () {
+    it('instantiates an API error', function () {
       let responseError = {
         status: 404,
         type: 'NotFound',
@@ -45,8 +45,8 @@ describe('Errors', () => {
     })
   })
 
-  describe('IntegrationError', () => {
-    it('instantiates an IntegrationError', () => {
+  describe('IntegrationError', function () {
+    it('instantiates an IntegrationError', function () {
       let intError = new IntegrationError('MISSING_ARGUMENT', 'Missing argument')
 
       expect(intError.name).to.equal('IntegrationError')
@@ -54,7 +54,7 @@ describe('Errors', () => {
       expect(intError.message).to.equal('Missing argument')
     })
 
-    it('requires type to be of enumerated types', () => {
+    it('requires type to be of enumerated types', function () {
       expect(function () {
         new IntegrationError('FOO', 'foo') // eslint-disable-line no-new
       }).to.throw(/^type must be one of/)

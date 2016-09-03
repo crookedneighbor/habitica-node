@@ -1,35 +1,34 @@
 import Habitica from '../../src/index'
 
-describe('Habitica Api', () => {
-  let api
-  beforeEach(() => {
-    api = new Habitica({uuid: 'myUuid', token: 'myToken'})
+describe('Habitica Api', function () {
+  beforeEach(function () {
+    this.api = new Habitica({uuid: 'myUuid', token: 'myToken'})
   })
 
-  describe('#getUuid', () => {
-    it('returns uuid', () => {
-      expect(api.getUuid()).to.eql('myUuid')
+  describe('#getUuid', function () {
+    it('returns uuid', function () {
+      expect(this.api.getUuid()).to.equal('myUuid')
     })
   })
 
-  describe('#getToken', () => {
-    it('returns token', () => {
-      expect(api.getToken()).to.eql('myToken')
+  describe('#getToken', function () {
+    it('returns token', function () {
+      expect(this.api.getToken()).to.equal('myToken')
     })
   })
 
-  describe('#getEndpoint', () => {
-    it('returns token', () => {
-      expect(api.getEndpoint()).to.eql('https://habitica.com/api/v3')
+  describe('#getEndpoint', function () {
+    it('returns token', function () {
+      expect(this.api.getEndpoint()).to.equal('https://habitica.com/')
     })
   })
 
-  describe('#setCredentials', () => {
-    it('sets new credentials', () => {
-      api.setCredentials({uuid: 'newUuid', token: 'newToken'})
+  describe('#setCredentials', function () {
+    it('sets new credentials', function () {
+      this.api.setCredentials({uuid: 'newUuid', token: 'newToken'})
 
-      expect(api.getUuid()).to.eql('newUuid')
-      expect(api.getToken()).to.eql('newToken')
+      expect(this.api.getUuid()).to.equal('newUuid')
+      expect(this.api.getToken()).to.equal('newToken')
     })
   })
 })

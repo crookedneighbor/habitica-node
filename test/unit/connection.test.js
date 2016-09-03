@@ -16,7 +16,7 @@ describe('Connection', function () {
   describe('initialization', function () {
     it('defaults to habitica endpoint', function () {
       let connection = new Connection(this.defaultOptions)
-      expect(connection._endpoint).to.eql('https://habitica.com/')
+      expect(connection._endpoint).to.equal('https://habitica.com/')
     })
 
     it('accepts an override for endpoint', function () {
@@ -26,7 +26,7 @@ describe('Connection', function () {
         endpoint: 'https://someotherendpoint/'
       })
 
-      expect(connection._endpoint).to.eql('https://someotherendpoint/')
+      expect(connection._endpoint).to.equal('https://someotherendpoint/')
     })
 
     it('adds the trailing slash to the endpoint if it is missing', function () {
@@ -36,7 +36,7 @@ describe('Connection', function () {
         endpoint: 'https://someotherendpoint'
       })
 
-      expect(connection._endpoint).to.eql('https://someotherendpoint/')
+      expect(connection._endpoint).to.equal('https://someotherendpoint/')
     })
   })
 
@@ -61,21 +61,21 @@ describe('Connection', function () {
   describe('#getUuid', function () {
     it('returns uuid', function () {
       let connection = new Connection(this.defaultOptions)
-      expect(connection.getUuid()).to.eql('myUuid')
+      expect(connection.getUuid()).to.equal('myUuid')
     })
   })
 
   describe('#getToken', function () {
     it('returns token', function () {
       let connection = new Connection(this.defaultOptions)
-      expect(connection.getToken()).to.eql('myToken')
+      expect(connection.getToken()).to.equal('myToken')
     })
   })
 
   describe('#getEndpoint', function () {
     it('returns endpoint', function () {
       let connection = new Connection(this.defaultOptions)
-      expect(connection.getEndpoint()).to.eql('https://habitica.com/')
+      expect(connection.getEndpoint()).to.equal('https://habitica.com/')
     })
   })
 
@@ -85,45 +85,45 @@ describe('Connection', function () {
     })
 
     it('sets uuid after iniitalization', function () {
-      expect(this.connection._uuid).to.eql('myUuid')
+      expect(this.connection._uuid).to.equal('myUuid')
 
       this.connection.setCredentials({uuid: 'newUuid'})
-      expect(this.connection._uuid).to.eql('newUuid')
+      expect(this.connection._uuid).to.equal('newUuid')
     })
 
     it('leaves old uuid if not passed in after initalization', function () {
-      expect(this.connection._uuid).to.eql('myUuid')
+      expect(this.connection._uuid).to.equal('myUuid')
 
       this.connection.setCredentials({token: 'foo'})
-      expect(this.connection._uuid).to.eql('myUuid')
+      expect(this.connection._uuid).to.equal('myUuid')
     })
 
     it('leaves old token if not passed in after initalization', function () {
-      expect(this.connection._token).to.eql('myToken')
+      expect(this.connection._token).to.equal('myToken')
 
       this.connection.setCredentials({uuid: 'foo'})
-      expect(this.connection._token).to.eql('myToken')
+      expect(this.connection._token).to.equal('myToken')
     })
 
     it('sets token after iniitalization', function () {
-      expect(this.connection._token).to.eql('myToken')
+      expect(this.connection._token).to.equal('myToken')
 
       this.connection.setCredentials({token: 'newToken'})
-      expect(this.connection._token).to.eql('newToken')
+      expect(this.connection._token).to.equal('newToken')
     })
 
     it('leaves old endpoint if not passed in after initalization', function () {
-      expect(this.connection._endpoint).to.eql('https://habitica.com/')
+      expect(this.connection._endpoint).to.equal('https://habitica.com/')
 
       this.connection.setCredentials({uuid: 'foo'})
-      expect(this.connection._endpoint).to.eql('https://habitica.com/')
+      expect(this.connection._endpoint).to.equal('https://habitica.com/')
     })
 
     it('sets endpoint after iniitalization', function () {
-      expect(this.connection._endpoint).to.eql('https://habitica.com/')
+      expect(this.connection._endpoint).to.equal('https://habitica.com/')
 
       this.connection.setCredentials({endpoint: 'http://localhost:3321/'})
-      expect(this.connection._endpoint).to.eql('http://localhost:3321/')
+      expect(this.connection._endpoint).to.equal('http://localhost:3321/')
     })
   })
 
@@ -169,7 +169,7 @@ describe('Connection', function () {
         let connection = new Connection(this.defaultOptions)
         let response = await connection.get('/user')
 
-        expect(response).to.eql({ some: 'data' })
+        expect(response).to.deep.equal({ some: 'data' })
         expectedRequest.done()
       })
     })
@@ -257,7 +257,7 @@ describe('Connection', function () {
         let connection = new Connection(this.defaultOptions)
         let response = await connection.post('/user/tasks')
 
-        expect(response).to.eql({ some: 'data' })
+        expect(response).to.deep.equal({ some: 'data' })
         expectedRequest.done()
       })
     })
@@ -334,7 +334,7 @@ describe('Connection', function () {
         let connection = new Connection(this.defaultOptions)
         let response = await connection.put('/user/tasks')
 
-        expect(response).to.eql({ some: 'data' })
+        expect(response).to.deep.equal({ some: 'data' })
         expectedRequest.done()
       })
     })
@@ -411,7 +411,7 @@ describe('Connection', function () {
         let connection = new Connection(this.defaultOptions)
         let response = await connection.del('/user/tasks')
 
-        expect(response).to.eql({ some: 'data' })
+        expect(response).to.deep.equal({ some: 'data' })
         expectedRequest.done()
       })
     })
