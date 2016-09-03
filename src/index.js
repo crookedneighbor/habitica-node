@@ -107,6 +107,69 @@ module.exports = class {
     this._connection.setCredentials(creds)
   }
 
+  // # register()
+  //
+  // Registers a new account.
+  //
+  // The uuid and api token will be set automatically after a sucessful registration call.
+  // ```js
+  // api.register('username', 'email', 'password').then((res) => {
+  //   let user = res.data
+  // }).catch((err) => {
+  //   // handle registration errors
+  // })
+  // ```
+  async register (username, email, password) {
+    let creds = {
+      username,
+      email,
+      password,
+      confirmPassword: password
+    }
+
+    let res = await this.post('/user/auth/local/register', creds)
+
+    this.setCredentials({
+      uuid: res.data._id,
+      token: res.data.apiToken
+    })
+
+    return res
+  }
+
+  // # localLogin()
+  //
+  // Logs into an existing account.
+  //
+  // You can log in with your username and password or your email and password.
+  //
+  // The uuid and api token will be set automatically after a sucessful login call.
+  //
+  // ```js
+  // api.login('username or email','password').then((res) => {
+  //   let creds = res.data
+  //
+  //   creds.id // the user's id
+  //   creds.apiToken // the user's api token
+  // }).catch((err) => {
+  //   // handle login errors
+  // })
+  // ```
+  async localLogin (usernameEmail, password) {
+    let loginCreds = {
+      username: usernameEmail,
+      password
+    }
+    let res = await this.post('/user/auth/local/login', loginCreds)
+
+    this._connection.setCredentials({
+      uuid: res.data.id,
+      token: res.data.apiToken
+    })
+
+    return res
+  }
+
   // # get
   //
   // Perform a GET request to Habitica's API.
