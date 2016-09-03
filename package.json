@@ -80,7 +80,6 @@
       "xcontext",
       "xdescribe",
       "xit"
-    ],
-    "parser": "babel-eslint"
+    ]
   }
 }
