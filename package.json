@@ -5,7 +5,7 @@
   "main": "./index.js",
   "scripts": {
     "docs": "docco -t docs/assets/template.jst -c docs/assets/css/style.css index.js",
-    "docs:deploy": "node tasks/deploy-docs.js",
+    "docs:deploy": "npm run docs && node tasks/deploy-docs.js",
     "lint": "standard --verbose | snazzy",
     "test:support:drop-db": "node tasks/drop-db.js",
     "test:support:server": "node tasks/start-server",
