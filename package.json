@@ -2,7 +2,7 @@
   "name": "habitica",
   "version": "3.1.0",
   "description": "A node wrapper for the habitica api",
-  "main": "dist/index.js",
+  "main": "./index.js",
   "scripts": {
     "build": "npm run clean:dist && babel src -d dist",
     "clean:dist": "rm -rf dist",

@@ -1,6 +1,6 @@
 'use strict'
 
-var Habitica = require('../../src/')
+var Habitica = require('../../')
 var helper = require('../support/integration_helper')
 var updateDocument = helper.updateDocument
 var generateUser = helper.generateUser

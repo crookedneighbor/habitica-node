@@ -1,6 +1,6 @@
 'use strict'
 
-var Habitica = require('../../src/index')
+var Habitica = require('../../index')
 
 describe('Habitica Api', function () {
   beforeEach(function () {

@@ -1,6 +1,6 @@
 'use strict'
 
-var errors = require('../../src/lib/errors')
+var errors = require('../../lib/errors')
 var HabiticaApiError = errors.HabiticaApiError
 var UnknownConnectionError = errors.UnknownConnectionError
 var IntegrationError = errors.IntegrationError

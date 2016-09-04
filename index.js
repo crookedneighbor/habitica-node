@@ -1,10 +1,10 @@
 // Habitica API Wrapper
 // tasks
 // A thin wrapper around the Habitica API
-var Connection = require('./lib/connection')
 
 // # Habitica()
-//
+var Connection = require('./lib/connection')
+
 // Set up your instance of Habitica.
 //
 // The endpoint will default to https://habitica.com/ if not provided.

@@ -1,8 +1,8 @@
 'use strict'
 
 var nock = require('nock')
-var Connection = require('../../src/lib/connection')
-var errors = require('../../src/lib/errors')
+var Connection = require('../../lib/connection')
+var errors = require('../../lib/errors')
 var HabiticaApiError = errors.HabiticaApiError
 var UnknownConnectionError = errors.UnknownConnectionError
 
