@@ -4,14 +4,12 @@
   "description": "A node wrapper for the habitica api",
   "main": "./index.js",
   "scripts": {
-    "build": "npm run clean:dist && babel src -d dist",
-    "clean:dist": "rm -rf dist",
     "docs": "docco -t docs/assets/template.jst -c docs/assets/css/style.css index.js",
     "docs:deploy": "node tasks/deploy-docs.js",
     "lint": "standard --verbose | snazzy",
     "test:support:drop-db": "node tasks/drop-db.js",
     "test:support:server": "node tasks/start-server",
-    "test": "npm run build && npm run lint && npm run test:unit && npm run test:integration-with-server",
+    "test": "npm run lint && npm run test:unit && npm run test:integration-with-server",
     "test:integration": "mocha test/integration",
     "test:integration-with-server": "npm run test:support:drop-db && node tasks/start-server npm run test:integration",
     "test:unit": "mocha test/unit"
@@ -41,12 +39,6 @@
   },
   "homepage": "https://github.com/crookedneighbor/habitica-node#readme",
   "devDependencies": {
-    "babel-cli": "^6.4.5",
-    "babel-eslint": "^6.0.3",
-    "babel-plugin-syntax-async-functions": "^6.5.0",
-    "babel-plugin-transform-regenerator": "^6.5.0",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-register": "^6.4.3",
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "docco": "^0.7.0",
@@ -60,8 +52,6 @@
     "uuid": "^2.0.1"
   },
   "dependencies": {
-    "babel-polyfill": "^6.5.0",
-    "over-extend": "^1.1.1",
     "superagent": "^2.0.0"
   },
   "standard": {
