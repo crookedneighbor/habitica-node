@@ -52,6 +52,7 @@
     "uuid": "^2.0.1"
   },
   "dependencies": {
+    "es6-promise": "^3.2.1",
     "superagent": "^2.0.0"
   },
   "standard": {

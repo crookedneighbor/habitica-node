@@ -1,10 +1,10 @@
 // Habitica API Wrapper
 // tasks
 // A thin wrapper around the Habitica API
-
-// # Habitica()
+require('es6-promise').polyfill()
 var Connection = require('./lib/connection')
 
+// # Habitica()
 // Set up your instance of Habitica.
 //
 // The endpoint will default to https://habitica.com/ if not provided.
