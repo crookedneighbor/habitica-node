@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run clean:dist && babel src -d dist",
     "clean:dist": "rm -rf dist",
-    "docs": "gulp docs",
+    "docs": "docco -t docs/assets/template.jst -c docs/assets/css/style.css index.js",
     "docs:deploy": "gulp docs:deploy",
     "lint": "standard --verbose | snazzy",
     "test:support:drop-db": "node tasks/drop-db.js",
