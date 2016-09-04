@@ -3,7 +3,6 @@
 var errors = require('../../lib/errors')
 var HabiticaApiError = errors.HabiticaApiError
 var UnknownConnectionError = errors.UnknownConnectionError
-var IntegrationError = errors.IntegrationError
 
 describe('Errors', function () {
   describe('UnknownConnectionError', function () {
@@ -43,22 +42,6 @@ describe('Errors', function () {
       expect(error.type).to.equal('NotFound')
       expect(error.status).to.equal(404)
       expect(error.message).to.equal('User not found.')
-    })
-  })
-
-  describe('IntegrationError', function () {
-    it('instantiates an IntegrationError', function () {
-      var intError = new IntegrationError('MISSING_ARGUMENT', 'Missing argument')
-
-      expect(intError.name).to.equal('IntegrationError')
-      expect(intError.type).to.equal('MISSING_ARGUMENT')
-      expect(intError.message).to.equal('Missing argument')
-    })
-
-    it('requires type to be of enumerated types', function () {
-      expect(function () {
-        new IntegrationError('FOO', 'foo') // eslint-disable-line no-new
-      }).to.throw(/^type must be one of/)
     })
   })
 })
