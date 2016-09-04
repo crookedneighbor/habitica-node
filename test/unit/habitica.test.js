@@ -25,9 +25,9 @@ describe('Habitica Api', function () {
     })
   })
 
-  describe('#setCredentials', function () {
-    it('sets new credentials', function () {
-      this.api.setCredentials({uuid: 'newUuid', token: 'newToken'})
+  describe('#setOptions', function () {
+    it('sets new options', function () {
+      this.api.setOptions({uuid: 'newUuid', token: 'newToken'})
 
       expect(this.api.getUuid()).to.equal('newUuid')
       expect(this.api.getToken()).to.equal('newToken')

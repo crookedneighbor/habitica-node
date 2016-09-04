@@ -16,7 +16,7 @@ describe('Habitica', function () {
 
   describe('#register', function () {
     beforeEach(function () {
-      this.api.setCredentials({
+      this.api.setOptions({
         uuid: null,
         token: null
       })
@@ -84,7 +84,7 @@ describe('Habitica', function () {
       var registerApi = new Habitica({
         endpoint: `localhost:${process.env.PORT}`
       })
-      this.api.setCredentials({
+      this.api.setOptions({
         uuid: null,
         token: null
       })

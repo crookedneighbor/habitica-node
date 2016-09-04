@@ -18,7 +18,7 @@ var Connection = require('./lib/connection')
 // })
 // ```
 //
-// The uuid and token parameters are not required and can be [set later](#setCredentials) or be set at time of [registration](#register) or [login](#login).
+// The uuid and token parameters are not required and can be [set later](#setOptions) or be set at time of [registration](#register) or [login](#login).
 //
 // ```js
 // var Habitica = require('habitica')
@@ -27,11 +27,7 @@ var Connection = require('./lib/connection')
 function Habitica (options) {
   options = options || {}
 
-  this._connection = new Connection({
-    uuid: options.uuid,
-    token: options.token,
-    endpoint: options.endpoint
-  })
+  this._connection = new Connection(options)
 }
 
 // # getUuid()
@@ -67,21 +63,21 @@ Habitica.prototype.getEndpoint = function () {
   return this._connection.getEndpoint()
 }
 
-// # setCredentials()
+// # setOptions()
 //
 // Set credentials after initialization.
 //
 // If you do not provide a value, it will default to the previous value stored on initialization.
 //
 // ```js
-// api.setCredentials({
+// api.setOptions({
 //   uuid: 'new-user-id',
 //   token: 'new-api-token',
 //   endpoint: 'http://localhost:3000/'
 // })
 // ```
-Habitica.prototype.setCredentials = function (creds) {
-  this._connection.setCredentials(creds)
+Habitica.prototype.setOptions = function (creds) {
+  this._connection.setOptions(creds)
 }
 
 // # register()
@@ -103,7 +99,7 @@ Habitica.prototype.register = function (username, email, password) {
     password: password,
     confirmPassword: password
   }).then(function (res) {
-    this.setCredentials({
+    this.setOptions({
       uuid: res.data._id,
       token: res.data.apiToken
     })
@@ -135,7 +131,7 @@ Habitica.prototype.localLogin = function (usernameEmail, password) {
     username: usernameEmail,
     password
   }).then(function (res) {
-    this._connection.setCredentials({
+    this._connection.setOptions({
       uuid: res.data.id,
       token: res.data.apiToken
     })

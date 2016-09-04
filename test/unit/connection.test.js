@@ -99,7 +99,7 @@ describe('Connection', function () {
     })
   })
 
-  describe('#setCredentials', function () {
+  describe('#setOptions', function () {
     beforeEach(function () {
       this.connection = new Connection(this.defaultOptions)
     })
@@ -107,56 +107,56 @@ describe('Connection', function () {
     it('sets uuid after initalization', function () {
       expect(this.connection._uuid).to.equal('myUuid')
 
-      this.connection.setCredentials({uuid: 'newUuid'})
+      this.connection.setOptions({uuid: 'newUuid'})
       expect(this.connection._uuid).to.equal('newUuid')
     })
 
     it('leaves old uuid if not passed in after initalization', function () {
       expect(this.connection._uuid).to.equal('myUuid')
 
-      this.connection.setCredentials({token: 'foo'})
+      this.connection.setOptions({token: 'foo'})
       expect(this.connection._uuid).to.equal('myUuid')
     })
 
     it('leaves old token if not passed in after initalization', function () {
       expect(this.connection._token).to.equal('myToken')
 
-      this.connection.setCredentials({uuid: 'foo'})
+      this.connection.setOptions({uuid: 'foo'})
       expect(this.connection._token).to.equal('myToken')
     })
 
     it('sets token after initalization', function () {
       expect(this.connection._token).to.equal('myToken')
 
-      this.connection.setCredentials({token: 'newToken'})
+      this.connection.setOptions({token: 'newToken'})
       expect(this.connection._token).to.equal('newToken')
     })
 
     it('leaves old endpoint if not passed in after initalization', function () {
       expect(this.connection._endpoint).to.equal('https://habitica.com/')
 
-      this.connection.setCredentials({uuid: 'foo'})
+      this.connection.setOptions({uuid: 'foo'})
       expect(this.connection._endpoint).to.equal('https://habitica.com/')
     })
 
     it('sets endpoint after initalization', function () {
       expect(this.connection._endpoint).to.equal('https://habitica.com/')
 
-      this.connection.setCredentials({endpoint: 'http://localhost:3321/'})
+      this.connection.setOptions({endpoint: 'http://localhost:3321/'})
       expect(this.connection._endpoint).to.equal('http://localhost:3321/')
     })
 
     it('leaves old platform if not passed in after initalization', function () {
       expect(this.connection._platform).to.equal('Habitica-Node')
 
-      this.connection.setCredentials({uuid: 'foo'})
+      this.connection.setOptions({uuid: 'foo'})
       expect(this.connection._platform).to.equal('Habitica-Node')
     })
 
     it('sets platform after initalization', function () {
       expect(this.connection._platform).to.equal('Habitica-Node')
 
-      this.connection.setCredentials({platform: 'My Custom Habitica App'})
+      this.connection.setOptions({platform: 'My Custom Habitica App'})
       expect(this.connection._platform).to.equal('My Custom Habitica App')
     })
   })

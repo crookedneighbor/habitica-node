@@ -24,7 +24,7 @@ function generateUser (update, connection) {
       }
 
       if (connection) {
-        connection.setCredentials(userCreds)
+        connection.setOptions(userCreds)
       }
 
       return updateDocument('users', user.id, update)
