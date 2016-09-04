@@ -39,6 +39,25 @@ describe('Connection', function () {
 
       expect(connection._endpoint).to.equal('https://someotherendpoint/')
     })
+
+    it('defaults platform to Habitica-Node', function () {
+      var connection = new Connection({
+        uuid: 'myUuid',
+        token: 'myToken'
+      })
+
+      expect(connection._platform).to.equal('Habitica-Node')
+    })
+
+    it('can set platform', function () {
+      var connection = new Connection({
+        uuid: 'myUuid',
+        token: 'myToken',
+        platform: 'my custom habitica app'
+      })
+
+      expect(connection._platform).to.equal('my custom habitica app')
+    })
   })
 
   context('connection error handling', function () {
@@ -85,7 +104,7 @@ describe('Connection', function () {
       this.connection = new Connection(this.defaultOptions)
     })
 
-    it('sets uuid after iniitalization', function () {
+    it('sets uuid after initalization', function () {
       expect(this.connection._uuid).to.equal('myUuid')
 
       this.connection.setCredentials({uuid: 'newUuid'})
@@ -106,7 +125,7 @@ describe('Connection', function () {
       expect(this.connection._token).to.equal('myToken')
     })
 
-    it('sets token after iniitalization', function () {
+    it('sets token after initalization', function () {
       expect(this.connection._token).to.equal('myToken')
 
       this.connection.setCredentials({token: 'newToken'})
@@ -120,11 +139,25 @@ describe('Connection', function () {
       expect(this.connection._endpoint).to.equal('https://habitica.com/')
     })
 
-    it('sets endpoint after iniitalization', function () {
+    it('sets endpoint after initalization', function () {
       expect(this.connection._endpoint).to.equal('https://habitica.com/')
 
       this.connection.setCredentials({endpoint: 'http://localhost:3321/'})
       expect(this.connection._endpoint).to.equal('http://localhost:3321/')
+    })
+
+    it('leaves old platform if not passed in after initalization', function () {
+      expect(this.connection._platform).to.equal('Habitica-Node')
+
+      this.connection.setCredentials({uuid: 'foo'})
+      expect(this.connection._platform).to.equal('Habitica-Node')
+    })
+
+    it('sets platform after initalization', function () {
+      expect(this.connection._platform).to.equal('Habitica-Node')
+
+      this.connection.setCredentials({platform: 'My Custom Habitica App'})
+      expect(this.connection._platform).to.equal('My Custom Habitica App')
     })
   })
 
