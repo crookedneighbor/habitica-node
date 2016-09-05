@@ -1,6 +1,4 @@
 *.log
 node_modules
-dist
-docs/style.css
-docs/*.html
+docs/
 .publish

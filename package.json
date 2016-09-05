@@ -4,8 +4,10 @@
   "description": "A node wrapper for the habitica api",
   "main": "./index.js",
   "scripts": {
-    "docs": "docco -t docs/assets/template.jst -c docs/assets/css/style.css index.js",
+    "docs": "npm run docs:clean && jsdoc --configure docs/conf.json",
+    "watch": "npm-watch",
     "docs:deploy": "npm run docs && node tasks/deploy-docs.js",
+    "docs:clean": "rm -rf docs/*.html",
     "lint": "standard --verbose | snazzy",
     "test:support:drop-db": "node tasks/drop-db.js",
     "test:support:server": "node tasks/start-server",
@@ -13,6 +15,9 @@
     "test:integration": "mocha test/integration",
     "test:integration-with-server": "npm run test:support:drop-db && node tasks/start-server npm run test:integration",
     "test:unit": "mocha test/unit"
+  },
+  "watch": {
+    "docs": "{.,lib}/*.js"
   },
   "repository": {
     "type": "git",
@@ -41,12 +46,14 @@
   "devDependencies": {
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
-    "docco": "^0.7.0",
     "gh-pages": "^0.11.0",
+    "jsdoc": "^3.4.0",
     "kerberos": "0.0.21",
+    "minami": "^1.1.1",
     "mocha": "^3.0.2",
     "mongodb": "^2.1.3",
     "nock": "^8.0.0",
+    "npm-watch": "^0.1.6",
     "snazzy": "^4.0.0",
     "standard": "^8.0.0",
     "uuid": "^2.0.1"
