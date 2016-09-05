@@ -10,7 +10,7 @@ describe('Errors', function () {
       var error = new UnknownConnectionError()
 
       expect(error).to.be.an.instanceof(HabiticaApiError)
-      expect(error.name).to.equal('HabiticaApiUnknownError')
+      expect(error.name).to.equal('UnknownConnectionError')
       expect(error.message).to.equal('An unknown error occurred')
     })
 
