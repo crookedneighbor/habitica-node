@@ -3,6 +3,7 @@
 // A thin wrapper around the Habitica API
 require('es6-promise').polyfill()
 var Connection = require('./lib/connection')
+var errors = require('./lib/errors')
 
 // # Habitica()
 // Set up your instance of Habitica.
@@ -269,4 +270,6 @@ Habitica.prototype.del = function (path, body, query) {
 }
 
 // And you're ready!
+Habitica.ApiError = errors.HabiticaApiError
+Habitica.UnknownConnectionError = errors.UnknownConnectionError
 module.exports = Habitica

@@ -1,10 +1,23 @@
 'use strict'
 
 var Habitica = require('../../index')
+var errors = require('../../lib/errors')
 
 describe('Habitica Api', function () {
   beforeEach(function () {
     this.api = new Habitica({uuid: 'myUuid', token: 'myToken'})
+  })
+
+  describe('ApiError', function () {
+    it('is the HabiticaApiError object', function () {
+      expect(Habitica.ApiError).to.equal(errors.HabiticaApiError)
+    })
+  })
+
+  describe('UnknownConnectionError', function () {
+    it('is the HabiticaApiError object', function () {
+      expect(Habitica.UnknownConnectionError).to.equal(errors.UnknownConnectionError)
+    })
   })
 
   describe('#getUuid', function () {
