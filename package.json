@@ -17,7 +17,7 @@
     "test:unit": "mocha test/unit"
   },
   "watch": {
-    "docs": "{.,lib}/*.js"
+    "docs": ["index.js", "lib/*.js"]
   },
   "repository": {
     "type": "git",
