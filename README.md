@@ -22,8 +22,8 @@ The first thing you need to do is instantiate your client. All the configuration
 ```js
 var Habitica = require('habitica');
 var api = new Habitica({
-  uuid: 'your-habitica.com-user-id',
-  token: 'your-habitica.com-api-token',
+  id: 'your-habitica.com-user-id',
+  apiToken: 'your-habitica.com-api-token',
   endpoint: 'http://custom-url.com/', // defaults to https://habitica.com/
   platform: 'Your-Integration-Name', // defaults to Habitica-Node
 });
@@ -68,8 +68,8 @@ If your integration prompts the user to enter their credentials, you can use the
 
 ```js
 api.setOptions({
-  uuid: 'the-uuid',
-  token: 'the-api-token'
+  id: 'the-uuid',
+  apiToken: 'the-api-token'
 })
 ```
 

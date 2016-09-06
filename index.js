@@ -7,20 +7,20 @@ var errors = require('./lib/errors')
  * @description Your client to interact with the [Habitica API](https://habitica.com/apidoc/).
  *
  * @param {Object} options - The properties to configure the Habitica client
- * @param {String} [options.uuid] - The id of the user
- * @param {String} [options.token] - The API token of the user
+ * @param {String} [options.id] - The id of the user
+ * @param {String} [options.apiToken] - The API token of the user
  * @param {String} [options.endpoint=https://habitica.com/] - The endpoint to use
  * @param {String} [options.platform=Habitica-Node] - The name of your integration
  *
  * @example
  * var Habitica = require('habitica')
  * var api = new Habitica({
- *   uuid: 'your-habitica.com-user-id',
- *   token: 'your-habitica.com-api-token',
+ *   id: 'your-habitica.com-user-id',
+ *   apiToken: 'your-habitica.com-api-token',
  *   endpoint: 'http://custom-url.com',
  *   platform: 'The Name of Your Integration'
  * })
- * @example <caption>The uuid and token parameters are not required and can be set later. The credentials will be automatically set when using the register and localLogin methods.</caption>
+ * @example <caption>The id and apiToken parameters are not required and can be set later. The credentials will be automatically set when using the register and localLogin methods.</caption>
  * var Habitica = require('habitica')
  * var api = new Habitica()
  */
@@ -41,15 +41,15 @@ Habitica.prototype.getOptions = function () {
 /** @public
  *
  * @param {Object} options - The properties to configure the Habitica client. If a property is not passed in, it will default to the value passed in on instantiation
- * @param {String} [options.uuid] - The id of the user
- * @param {String} [options.token] - The API token of the user
+ * @param {String} [options.id] - The id of the user
+ * @param {String} [options.apiToken] - The API apiToken of the user
  * @param {String} [options.endpoint] - The endpoint to use
  * @param {String} [options.platform] - The name of your integration
  *
  * @example
  * api.setOptions({
- *   uuid: 'new-user-id',
- *   token: 'new-api-token',
+ *   id: 'new-user-id',
+ *   apiToken: 'new-api-token',
  *   endpoint: 'http://localhost:3000/',
  *   platform: 'Great-Habitica-Integration'
  * })
@@ -66,7 +66,7 @@ Habitica.prototype.setOptions = function (creds) {
  *
  * @returns {Promise} A Promise that resolves the response from the register request
  *
- * @example <caption>The uuid and api token will be set automatically after a sucessful registration request</caption>
+ * @example <caption>The id and api token will be set automatically after a sucessful registration request</caption>
  * api.register('username', 'email', 'password').then((res) => {
  *   var user = res.data
  * }).catch((err) => {
@@ -81,8 +81,8 @@ Habitica.prototype.register = function (username, email, password) {
     confirmPassword: password
   }).then(function (res) {
     this.setOptions({
-      uuid: res.data._id,
-      token: res.data.apiToken
+      id: res.data._id,
+      apiToken: res.data.apiToken
     })
 
     return res
@@ -95,7 +95,7 @@ Habitica.prototype.register = function (username, email, password) {
  * @param {String} password - The password to login with
  *
  * @returns {Promise} A Promise that resolves the response from the login request
- * @example <caption>The uuid and api token will be set automatically after a sucessful login request</caption>
+ * @example <caption>The id and api token will be set automatically after a sucessful login request</caption>
  * api.login('username or email','password').then((res) => {
  *   var creds = res.data
  *
@@ -111,8 +111,8 @@ Habitica.prototype.localLogin = function (usernameEmail, password) {
     password
   }).then(function (res) {
     this._connection.setOptions({
-      uuid: res.data.id,
-      token: res.data.apiToken
+      id: res.data.id,
+      apiToken: res.data.apiToken
     })
 
     return res

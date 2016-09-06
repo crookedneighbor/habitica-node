@@ -9,8 +9,8 @@ var UnknownConnectionError = errors.UnknownConnectionError
 describe('Connection', function () {
   beforeEach(function () {
     this.defaultOptions = {
-      uuid: 'myUuid',
-      token: 'myToken'
+      id: 'myUuid',
+      apiToken: 'myToken'
     }
   })
 
@@ -22,8 +22,8 @@ describe('Connection', function () {
 
     it('accepts an override for endpoint', function () {
       var connection = new Connection({
-        uuid: 'myUuid',
-        token: 'myToken',
+        id: 'myUuid',
+        apiToken: 'myToken',
         endpoint: 'https://someotherendpoint/'
       })
 
@@ -32,8 +32,8 @@ describe('Connection', function () {
 
     it('adds the trailing slash to the endpoint if it is missing', function () {
       var connection = new Connection({
-        uuid: 'myUuid',
-        token: 'myToken',
+        id: 'myUuid',
+        apiToken: 'myToken',
         endpoint: 'https://someotherendpoint'
       })
 
@@ -42,8 +42,8 @@ describe('Connection', function () {
 
     it('defaults platform to Habitica-Node', function () {
       var connection = new Connection({
-        uuid: 'myUuid',
-        token: 'myToken'
+        id: 'myUuid',
+        apiToken: 'myToken'
       })
 
       expect(connection._platform).to.equal('Habitica-Node')
@@ -51,8 +51,8 @@ describe('Connection', function () {
 
     it('can set platform', function () {
       var connection = new Connection({
-        uuid: 'myUuid',
-        token: 'myToken',
+        id: 'myUuid',
+        apiToken: 'myToken',
         platform: 'my custom habitica app'
       })
 
@@ -95,38 +95,38 @@ describe('Connection', function () {
       this.connection = new Connection(this.defaultOptions)
     })
 
-    it('sets uuid after initalization', function () {
-      expect(this.connection._uuid).to.equal('myUuid')
+    it('sets id after initalization', function () {
+      expect(this.connection._id).to.equal('myUuid')
 
-      this.connection.setOptions({uuid: 'newUuid'})
-      expect(this.connection._uuid).to.equal('newUuid')
+      this.connection.setOptions({id: 'newUuid'})
+      expect(this.connection._id).to.equal('newUuid')
     })
 
-    it('leaves old uuid if not passed in after initalization', function () {
-      expect(this.connection._uuid).to.equal('myUuid')
+    it('leaves old id if not passed in after initalization', function () {
+      expect(this.connection._id).to.equal('myUuid')
 
-      this.connection.setOptions({token: 'foo'})
-      expect(this.connection._uuid).to.equal('myUuid')
+      this.connection.setOptions({apiToken: 'foo'})
+      expect(this.connection._id).to.equal('myUuid')
     })
 
     it('leaves old token if not passed in after initalization', function () {
-      expect(this.connection._token).to.equal('myToken')
+      expect(this.connection._apiToken).to.equal('myToken')
 
-      this.connection.setOptions({uuid: 'foo'})
-      expect(this.connection._token).to.equal('myToken')
+      this.connection.setOptions({id: 'foo'})
+      expect(this.connection._apiToken).to.equal('myToken')
     })
 
-    it('sets token after initalization', function () {
-      expect(this.connection._token).to.equal('myToken')
+    it('sets apiToken after initalization', function () {
+      expect(this.connection._apiToken).to.equal('myToken')
 
-      this.connection.setOptions({token: 'newToken'})
-      expect(this.connection._token).to.equal('newToken')
+      this.connection.setOptions({apiToken: 'newToken'})
+      expect(this.connection._apiToken).to.equal('newToken')
     })
 
     it('leaves old endpoint if not passed in after initalization', function () {
       expect(this.connection._endpoint).to.equal('https://habitica.com/')
 
-      this.connection.setOptions({uuid: 'foo'})
+      this.connection.setOptions({id: 'foo'})
       expect(this.connection._endpoint).to.equal('https://habitica.com/')
     })
 
@@ -140,7 +140,7 @@ describe('Connection', function () {
     it('leaves old platform if not passed in after initalization', function () {
       expect(this.connection._platform).to.equal('Habitica-Node')
 
-      this.connection.setOptions({uuid: 'foo'})
+      this.connection.setOptions({id: 'foo'})
       expect(this.connection._platform).to.equal('Habitica-Node')
     })
 

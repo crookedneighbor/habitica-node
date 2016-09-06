@@ -17,8 +17,8 @@ describe('Habitica', function () {
   describe('#register', function () {
     beforeEach(function () {
       this.api.setOptions({
-        uuid: null,
-        token: null
+        id: null,
+        apiToken: null
       })
       this.username = generateRandomUserName()
       this.password = 'password'
@@ -42,23 +42,23 @@ describe('Habitica', function () {
           var user = body.data
           var options = this.api.getOptions()
 
-          expect(user._id).to.equal(options.uuid)
-          expect(user.apiToken).to.equal(options.token)
+          expect(user._id).to.equal(options.id)
+          expect(user.apiToken).to.equal(options.apiToken)
           expect(user.auth.local.username).to.equal(this.username)
           expect(user.auth.local.email).to.equal(this.email)
         })
       })
 
-      it('sets uuid and api token to new user', function () {
-        expect(this.api._uuid).to.not.exist
-        expect(this.api._token).to.not.exist
+      it('sets id and api token to new user', function () {
+        expect(this.api._id).to.not.exist
+        expect(this.api._apiToken).to.not.exist
 
         return this.api.register(this.username, this.email, this.password).then((body) => {
           var user = body.data
           var options = this.api.getOptions()
 
-          expect(options.uuid).to.be.equal(user._id)
-          expect(options.token).to.be.equal(user.apiToken)
+          expect(options.id).to.be.equal(user._id)
+          expect(options.apiToken).to.be.equal(user.apiToken)
         })
       })
     })
@@ -88,8 +88,8 @@ describe('Habitica', function () {
         endpoint: `localhost:${process.env.PORT}`
       })
       this.api.setOptions({
-        uuid: null,
-        token: null
+        id: null,
+        apiToken: null
       })
 
       this.username = generateRandomUserName()
@@ -109,13 +109,13 @@ describe('Habitica', function () {
         })
       })
 
-      it('sets uuid and token after logging in with username', function () {
+      it('sets id and apiToken after logging in with username', function () {
         return this.api.localLogin(this.username, this.password).then((body) => {
           var creds = body.data
           var options = this.api.getOptions()
 
-          expect(options.uuid).to.be.equal(creds.id)
-          expect(options.token).to.be.equal(creds.apiToken)
+          expect(options.id).to.be.equal(creds.id)
+          expect(options.apiToken).to.be.equal(creds.apiToken)
         })
       })
 
@@ -128,13 +128,13 @@ describe('Habitica', function () {
         })
       })
 
-      it('sets uuid and token after logging in with email', function () {
+      it('sets id and apiToken after logging in with email', function () {
         return this.api.localLogin(this.email, this.password).then((body) => {
           var creds = body.data
           var options = this.api.getOptions()
 
-          expect(options.uuid).to.be.equal(creds.id)
-          expect(options.token).to.be.equal(creds.apiToken)
+          expect(options.id).to.be.equal(creds.id)
+          expect(options.apiToken).to.be.equal(creds.apiToken)
         })
       })
     })
@@ -163,7 +163,7 @@ describe('Habitica', function () {
       return this.api.get('/user').then((res) => {
         var user = res.data
 
-        expect(user._id).to.equal(this.api.getOptions().uuid)
+        expect(user._id).to.equal(this.api.getOptions().id)
       })
     })
 
@@ -187,7 +187,7 @@ describe('Habitica', function () {
 
   describe('#post', function () {
     it('sends a POST request to Habitica', function () {
-      return updateDocument('users', this.api.getOptions().uuid, {
+      return updateDocument('users', this.api.getOptions().id, {
         'stats.hp': 20,
         'stats.gp': 100
       }).then(() => {
@@ -213,7 +213,7 @@ describe('Habitica', function () {
     })
 
     it('can send query parameters', function () {
-      return updateDocument('users', this.api.getOptions().uuid, {
+      return updateDocument('users', this.api.getOptions().id, {
         'stats.lvl': 20,
         'stats.points': 20
       }).then(() => {

@@ -5,7 +5,7 @@ var errors = require('../../lib/errors')
 
 describe('Habitica Api', function () {
   beforeEach(function () {
-    this.api = new Habitica({uuid: 'myUuid', token: 'myToken'})
+    this.api = new Habitica({id: 'myUuid', apiToken: 'myToken'})
   })
 
   describe('ApiError', function () {
@@ -25,8 +25,8 @@ describe('Habitica Api', function () {
       var options = this.api.getOptions()
 
       expect(options).to.deep.equal({
-        uuid: 'myUuid',
-        token: 'myToken',
+        id: 'myUuid',
+        apiToken: 'myToken',
         endpoint: 'https://habitica.com/',
         platform: 'Habitica-Node'
       })
@@ -35,12 +35,12 @@ describe('Habitica Api', function () {
 
   describe('#setOptions', function () {
     it('sets new options', function () {
-      this.api.setOptions({uuid: 'newUuid', token: 'newToken'})
+      this.api.setOptions({id: 'newUuid', apiToken: 'newToken'})
 
       var options = this.api.getOptions()
 
-      expect(options.uuid).to.equal('newUuid')
-      expect(options.token).to.equal('newToken')
+      expect(options.id).to.equal('newUuid')
+      expect(options.apiToken).to.equal('newToken')
     })
   })
 })

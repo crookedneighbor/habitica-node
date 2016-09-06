@@ -19,8 +19,8 @@ function generateUser (update, connection) {
     }).then((res) => {
       var user = res.body.data
       var userCreds = {
-        uuid: user.id,
-        token: user.apiToken
+        id: user.id,
+        apiToken: user.apiToken
       }
 
       if (connection) {
