@@ -40,9 +40,10 @@ describe('Habitica', function () {
       it('returns a response with the new user', function () {
         return this.api.register(this.username, this.email, this.password).then((body) => {
           var user = body.data
+          var options = this.api.getOptions()
 
-          expect(user._id).to.equal(this.api.getUuid())
-          expect(user.apiToken).to.equal(this.api.getToken())
+          expect(user._id).to.equal(options.uuid)
+          expect(user.apiToken).to.equal(options.token)
           expect(user.auth.local.username).to.equal(this.username)
           expect(user.auth.local.email).to.equal(this.email)
         })
@@ -54,8 +55,10 @@ describe('Habitica', function () {
 
         return this.api.register(this.username, this.email, this.password).then((body) => {
           var user = body.data
-          expect(this.api.getUuid()).to.be.equal(user._id)
-          expect(this.api.getToken()).to.be.equal(user.apiToken)
+          var options = this.api.getOptions()
+
+          expect(options.uuid).to.be.equal(user._id)
+          expect(options.token).to.be.equal(user.apiToken)
         })
       })
     })
@@ -109,9 +112,10 @@ describe('Habitica', function () {
       it('sets uuid and token after logging in with username', function () {
         return this.api.localLogin(this.username, this.password).then((body) => {
           var creds = body.data
+          var options = this.api.getOptions()
 
-          expect(this.api.getUuid()).to.be.equal(creds.id)
-          expect(this.api.getToken()).to.be.equal(creds.apiToken)
+          expect(options.uuid).to.be.equal(creds.id)
+          expect(options.token).to.be.equal(creds.apiToken)
         })
       })
 
@@ -127,9 +131,10 @@ describe('Habitica', function () {
       it('sets uuid and token after logging in with email', function () {
         return this.api.localLogin(this.email, this.password).then((body) => {
           var creds = body.data
+          var options = this.api.getOptions()
 
-          expect(this.api.getUuid()).to.be.equal(creds.id)
-          expect(this.api.getToken()).to.be.equal(creds.apiToken)
+          expect(options.uuid).to.be.equal(creds.id)
+          expect(options.token).to.be.equal(creds.apiToken)
         })
       })
     })
@@ -158,7 +163,7 @@ describe('Habitica', function () {
       return this.api.get('/user').then((res) => {
         var user = res.data
 
-        expect(user._id).to.equal(this.api.getUuid())
+        expect(user._id).to.equal(this.api.getOptions().uuid)
       })
     })
 
@@ -182,7 +187,7 @@ describe('Habitica', function () {
 
   describe('#post', function () {
     it('sends a POST request to Habitica', function () {
-      return updateDocument('users', this.api.getUuid(), {
+      return updateDocument('users', this.api.getOptions().uuid, {
         'stats.hp': 20,
         'stats.gp': 100
       }).then(() => {
@@ -208,7 +213,7 @@ describe('Habitica', function () {
     })
 
     it('can send query parameters', function () {
-      return updateDocument('users', this.api.getUuid(), {
+      return updateDocument('users', this.api.getOptions().uuid, {
         'stats.lvl': 20,
         'stats.points': 20
       }).then(() => {

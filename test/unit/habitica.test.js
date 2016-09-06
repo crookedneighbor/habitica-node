@@ -20,21 +20,16 @@ describe('Habitica Api', function () {
     })
   })
 
-  describe('#getUuid', function () {
-    it('returns uuid', function () {
-      expect(this.api.getUuid()).to.equal('myUuid')
-    })
-  })
+  describe('#getOptions', function () {
+    it('returns an object with the configured options', function () {
+      var options = this.api.getOptions()
 
-  describe('#getToken', function () {
-    it('returns token', function () {
-      expect(this.api.getToken()).to.equal('myToken')
-    })
-  })
-
-  describe('#getEndpoint', function () {
-    it('returns token', function () {
-      expect(this.api.getEndpoint()).to.equal('https://habitica.com/')
+      expect(options).to.deep.equal({
+        uuid: 'myUuid',
+        token: 'myToken',
+        endpoint: 'https://habitica.com/',
+        platform: 'Habitica-Node'
+      })
     })
   })
 
@@ -42,8 +37,10 @@ describe('Habitica Api', function () {
     it('sets new options', function () {
       this.api.setOptions({uuid: 'newUuid', token: 'newToken'})
 
-      expect(this.api.getUuid()).to.equal('newUuid')
-      expect(this.api.getToken()).to.equal('newToken')
+      var options = this.api.getOptions()
+
+      expect(options.uuid).to.equal('newUuid')
+      expect(options.token).to.equal('newToken')
     })
   })
 })

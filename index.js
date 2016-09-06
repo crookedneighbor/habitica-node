@@ -31,24 +31,11 @@ function Habitica (options) {
 }
 
 /** @public
- * @returns {String} The user id used to make requests to the Habitica API
+ *
+ * @returns {Object} The options used to make the requests. The same as the values used {@link Habitica#setOptions|to set the options}
  */
-Habitica.prototype.getUuid = function () {
-  return this._connection.getUuid()
-}
-
-/** @public
- * @returns {String} The API token used to make requests to the Habitica API
- */
-Habitica.prototype.getToken = function () {
-  return this._connection.getToken()
-}
-
-/** @public
- * @returns {String} The endpoint to make requests to
- */
-Habitica.prototype.getEndpoint = function () {
-  return this._connection.getEndpoint()
+Habitica.prototype.getOptions = function () {
+  return this._connection.getOptions()
 }
 
 /** @public

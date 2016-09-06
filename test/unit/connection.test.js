@@ -78,24 +78,15 @@ describe('Connection', function () {
     })
   })
 
-  describe('#getUuid', function () {
-    it('returns uuid', function () {
-      var connection = new Connection(this.defaultOptions)
-      expect(connection.getUuid()).to.equal('myUuid')
+  describe('#getOptions', function () {
+    beforeEach(function () {
+      this.connection = new Connection(this.defaultOptions)
     })
-  })
 
-  describe('#getToken', function () {
-    it('returns token', function () {
-      var connection = new Connection(this.defaultOptions)
-      expect(connection.getToken()).to.equal('myToken')
-    })
-  })
+    it('returns an object with the configured options', function () {
+      var options = this.connection.getOptions()
 
-  describe('#getEndpoint', function () {
-    it('returns endpoint', function () {
-      var connection = new Connection(this.defaultOptions)
-      expect(connection.getEndpoint()).to.equal('https://habitica.com/')
+      expect(options).to.deep.equal(this.defaultOptions)
     })
   })
 
