@@ -11,6 +11,7 @@ var errors = require('./lib/errors')
  * @param {String} [options.apiToken] - The API token of the user
  * @param {String} [options.endpoint=https://habitica.com/] - The endpoint to use
  * @param {String} [options.platform=Habitica-Node] - The name of your integration
+ * @param {Function} [options.errorHandler] - A function to run when a request errors. The result of this function will be the argument passed to the `catch` in the request `Promise`
  *
  * @example
  * var Habitica = require('habitica')
@@ -19,10 +20,52 @@ var errors = require('./lib/errors')
  *   apiToken: 'your-habitica.com-api-token',
  *   endpoint: 'http://custom-url.com',
  *   platform: 'The Name of Your Integration'
+ *   errorHandler: function (err) {
+ *     // handle all errors from failed requests
+ *   }
  * })
  * @example <caption>The id and apiToken parameters are not required and can be set later. The credentials will be automatically set when using the register and localLogin methods.</caption>
  * var Habitica = require('habitica')
  * var api = new Habitica()
+ * @example <caption>A sample error handler</caption>
+ * var Habitica = require('habitica')
+ *
+ * function sendNotification (style, message) {
+ *   // logic for sending a notification to user
+ * }
+ *
+ * var api = new Habitica({
+ *   id: 'your-habitica.com-user-id',
+ *   apiToken: 'your-habitica.com-api-token',
+ *   errorHandler: function (err) {
+ *     if (err instanceof Habitica.ApiError) {
+ *       // likely a validation error from
+ *       // the API request
+ *       sendNotification('warning', err.messsage)
+ *     } else if (err instanceof Habitica.UnknownConnectionError) {
+ *       // either the Habitica API is down
+ *       // or there is no internet connection
+ *       sendNotification('danger', err.originalError.message)
+ *     } else {
+ *       // there is something wrong with your integration
+ *       // such as a syntax error or other problem
+ *       console.error(err)
+ *     }
+ *   }
+ * })
+ *
+ * api.get('/tasks/id-that-does-not-exist').then(() => {
+ *   // will never get here
+ *   return api.get('/something-else')
+ * }).then(() => {
+ *   // will never get here
+ * }).catch((err) => {
+ *   // before this happens, the errorHandler gets run
+ *   err // undefined because the errorHandler did not return anything
+ *   // you could leave the catch off entirely since the
+ *   // configured errorHandler does all the necessary work
+ *   // to message back to the user
+ * })
  */
 function Habitica (options) {
   options = options || {}
@@ -45,13 +88,15 @@ Habitica.prototype.getOptions = function () {
  * @param {String} [options.apiToken] - The API apiToken of the user
  * @param {String} [options.endpoint] - The endpoint to use
  * @param {String} [options.platform] - The name of your integration
+ * @param {Function} [options.errorHandler] - A function to run when a request errors
  *
  * @example
  * api.setOptions({
  *   id: 'new-user-id',
  *   apiToken: 'new-api-token',
  *   endpoint: 'http://localhost:3000/',
- *   platform: 'Great-Habitica-Integration'
+ *   platform: 'Great-Habitica-Integration',
+ *   errorHandler: yourErrorHandlerFunction
  * })
  */
 Habitica.prototype.setOptions = function (creds) {

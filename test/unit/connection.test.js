@@ -58,6 +58,16 @@ describe('Connection', function () {
 
       expect(connection._platform).to.equal('my custom habitica app')
     })
+
+    it('can set an errorHandler', function () {
+      var connection = new Connection({
+        id: 'myUuid',
+        apiToken: 'myToken',
+        errorHandler: () => {}
+      })
+
+      expect(connection._errorHandler).to.be.a('function')
+    })
   })
 
   context('connection error handling', function () {
@@ -75,6 +85,18 @@ describe('Connection', function () {
       var unknownError = new UnknownConnectionError()
 
       return expect(request).to.eventually.be.rejected.and.have.property('message', unknownError.message)
+    })
+
+    it('uses a custom error handler if provided', function () {
+      this.connection.setOptions({
+        errorHandler: function (err) {
+          return 'custom error handler for ' + err.name
+        }
+      })
+
+      return this.connection.get('/user').catch((response) => {
+        expect(response).to.equal('custom error handler for UnknownConnectionError')
+      })
     })
   })
 
