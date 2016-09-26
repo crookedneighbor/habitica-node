@@ -12,7 +12,7 @@ if (!Promise) {
  * @param {Object} options - The properties to configure the Habitica client
  * @param {String} [options.id] - The id of the user
  * @param {String} [options.apiToken] - The API token of the user
- * @param {String} [options.endpoint=https://habitica.com/] - The endpoint to use
+ * @param {String} [options.endpoint=https://habitica.com] - The endpoint to use
  * @param {String} [options.platform=Habitica-Node] - The name of your integration
  * @param {Function} [options.errorHandler] - A function to run when a request errors. The result of this function will be the argument passed to the `catch` in the request `Promise`
  *
