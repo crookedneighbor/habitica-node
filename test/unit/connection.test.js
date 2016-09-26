@@ -482,4 +482,10 @@ describe('Connection', function () {
       })
     })
   })
+
+  describe('delete', function () {
+    it('is an alias for del', function () {
+      expect(Connection.prototype.delete).to.equal(Connection.prototype.del)
+    })
+  })
 })
