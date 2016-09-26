@@ -27,7 +27,7 @@ describe('Habitica Api', function () {
       expect(options).to.deep.equal({
         id: 'myUuid',
         apiToken: 'myToken',
-        endpoint: 'https://habitica.com/',
+        endpoint: 'https://habitica.com',
         platform: 'Habitica-Node'
       })
     })

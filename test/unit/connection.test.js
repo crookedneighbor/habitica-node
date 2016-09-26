@@ -17,27 +17,27 @@ describe('Connection', function () {
   describe('initialization', function () {
     it('defaults to habitica endpoint', function () {
       var connection = new Connection(this.defaultOptions)
-      expect(connection._endpoint).to.equal('https://habitica.com/')
+      expect(connection._endpoint).to.equal('https://habitica.com')
     })
 
     it('accepts an override for endpoint', function () {
       var connection = new Connection({
         id: 'myUuid',
         apiToken: 'myToken',
-        endpoint: 'https://someotherendpoint/'
-      })
-
-      expect(connection._endpoint).to.equal('https://someotherendpoint/')
-    })
-
-    it('adds the trailing slash to the endpoint if it is missing', function () {
-      var connection = new Connection({
-        id: 'myUuid',
-        apiToken: 'myToken',
         endpoint: 'https://someotherendpoint'
       })
 
-      expect(connection._endpoint).to.equal('https://someotherendpoint/')
+      expect(connection._endpoint).to.equal('https://someotherendpoint')
+    })
+
+    it('removes the trailing slash to the endpoint if it is present', function () {
+      var connection = new Connection({
+        id: 'myUuid',
+        apiToken: 'myToken',
+        endpoint: 'https://someotherendpoint/'
+      })
+
+      expect(connection._endpoint).to.equal('https://someotherendpoint')
     })
 
     it('defaults platform to Habitica-Node', function () {
@@ -108,7 +108,8 @@ describe('Connection', function () {
     it('returns an object with the configured options', function () {
       var options = this.connection.getOptions()
 
-      expect(options).to.deep.equal(this.defaultOptions)
+      expect(options.id).to.deep.equal(this.defaultOptions.id)
+      expect(options.apiToken).to.deep.equal(this.defaultOptions.apiToken)
     })
   })
 
@@ -146,17 +147,17 @@ describe('Connection', function () {
     })
 
     it('leaves old endpoint if not passed in after initalization', function () {
-      expect(this.connection._endpoint).to.equal('https://habitica.com/')
+      expect(this.connection._endpoint).to.equal('https://habitica.com')
 
       this.connection.setOptions({id: 'foo'})
-      expect(this.connection._endpoint).to.equal('https://habitica.com/')
+      expect(this.connection._endpoint).to.equal('https://habitica.com')
     })
 
     it('sets endpoint after initalization', function () {
-      expect(this.connection._endpoint).to.equal('https://habitica.com/')
+      expect(this.connection._endpoint).to.equal('https://habitica.com')
 
       this.connection.setOptions({endpoint: 'http://localhost:3321/'})
-      expect(this.connection._endpoint).to.equal('http://localhost:3321/')
+      expect(this.connection._endpoint).to.equal('http://localhost:3321')
     })
 
     it('leaves old platform if not passed in after initalization', function () {
