@@ -163,3 +163,9 @@ $ npm t
   ```
   $ export HABITICA_DB_URI='mongodb://localhost/some-other-db';
   ```
+
+## Support
+
+This module requires the `Promise` object to function. If you are using this module in a context without `Promise`s (such as Browserifying for IE9), you will need to polyfill them.
+
+Supports Node >= 4

@@ -1,6 +1,9 @@
-require('es6-promise').polyfill()
 var Connection = require('./lib/connection')
 var errors = require('./lib/errors')
+
+if (!Promise) {
+  throw new Error('Promise could not be found in this context. You must polyfill it to use this module.')
+}
 
 /**
  * @constructor

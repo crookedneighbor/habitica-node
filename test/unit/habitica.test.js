@@ -2,10 +2,23 @@
 
 var Habitica = require('../../index')
 var errors = require('../../lib/errors')
+var requireAgain = require('require-again')
 
 describe('Habitica Api', function () {
   beforeEach(function () {
     this.api = new Habitica({id: 'myUuid', apiToken: 'myToken'})
+  })
+
+  it('requires Promises', function () {
+    var PromiseObject = Promise
+
+    Promise = undefined
+
+    expect(function () {
+      requireAgain('../../index')
+    }).to.throw('Promise could not be found in this context. You must polyfill it to use this module.')
+
+    Promise = PromiseObject
   })
 
   describe('ApiError', function () {
