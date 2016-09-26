@@ -488,4 +488,40 @@ describe('Connection', function () {
       expect(Connection.prototype.delete).to.equal(Connection.prototype.del)
     })
   })
+
+  describe('_router', function () {
+    beforeEach(function () {
+      this.connection = new Connection(this.defaultOptions)
+      this.habiticaUrl = nock('https://habitica.com')
+    })
+
+    var METHODS = ['get', 'post', 'put', 'delete']
+    var TOP_LEVEL_ROUTES = ['/logout', '/export', '/email', '/qr-code', '/amazon', '/iap', '/paypal', '/stripe']
+
+    TOP_LEVEL_ROUTES.forEach((route) => {
+      METHODS.forEach((method) => {
+        it('handles top level routes without api/v3 prefix for ' + method + ' request on ' + route, function () {
+          var expectedRequest = this.habiticaUrl[method](route).reply(function () {
+            return [200, { some: 'data' }]
+          })
+
+          return this.connection[method](route).then((response) => {
+            expect(response).to.deep.equal({ some: 'data' })
+            expectedRequest.done()
+          })
+        })
+
+        it('handles subpages of top level routes without api/v3 prefix for ' + method + ' request on ' + route, function () {
+          var expectedRequest = this.habiticaUrl[method](route + '/foo').reply(function () {
+            return [200, { some: 'data' }]
+          })
+
+          return this.connection[method](route + '/foo').then((response) => {
+            expect(response).to.deep.equal({ some: 'data' })
+            expectedRequest.done()
+          })
+        })
+      })
+    })
+  })
 })
