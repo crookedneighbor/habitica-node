@@ -113,26 +113,9 @@ api.get('/user').then((res) => {
 
 For full documentation with examples visit [the docs site](http://crookedneighbor.github.io/habitica-node/).
 
-## Development
+## Documentation
 
-The documentation is generated automatically using [Docco](https://jashkenas.github.io/docco/).
-
-Before each method there should be something like:
-
-```js
-// # method()
-//
-// A short description about the method.
-//
-// Any important information about the module followed by a code example for how this method would be used.
-//
-// ```js
-// api.method()
-//   .then((result) => {
-//      result; // some assertion about result
-//   });
-// ```
-```
+The documentation is generated automatically using [JSDoc](http://usejsdoc.org/).
 
 ## Testing
 

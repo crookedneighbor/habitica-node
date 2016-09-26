@@ -4,7 +4,7 @@
   "description": "A node wrapper for the habitica api",
   "main": "./index.js",
   "scripts": {
-    "docs": "npm run docs:clean && jsdoc --configure docs/conf.json",
+    "docs": "npm run docs:clean && jsdoc --configure .jsdoc.conf.json",
     "watch": "npm-watch",
     "docs:deploy": "npm run docs && node tasks/deploy-docs.js",
     "docs:clean": "rm -rf docs/*.html",

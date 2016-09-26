@@ -1,0 +1,18 @@
+{
+  "source": {
+    "include": [
+      "lib",
+      "package.json",
+      "README.md",
+      "index.js"
+    ],
+    "includePattern": ".js$"
+  },
+  "opts": {
+    "destination": "./docs/",
+    "template": "node_modules/minami"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ]
+}
