@@ -95,7 +95,7 @@ $ npm t
 
 * A mongodb instance must be running already in order to run the tests locally.
 
-* By default, the test infrastructure assumes that the repo for Habitica is '../../habitrpg', relative to the test directory. You may pass in your own path by exporting the environmental variable `PATH_TO_HABITICA`.
+* By default, the test infrastructure assumes that the repo for Habitica is '../../habitica', relative to the test directory. You may pass in your own path by exporting the environmental variable `PATH_TO_HABITICA`.
 
   ```
   $ export PATH_TO_HABITICA='../../some/other/path';
