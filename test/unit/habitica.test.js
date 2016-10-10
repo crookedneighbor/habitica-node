@@ -10,6 +10,7 @@ describe('Habitica Api', function () {
   })
 
   it('requires Promises', function () {
+    /* eslint-disable */
     var PromiseObject = Promise
 
     Promise = undefined
@@ -19,6 +20,7 @@ describe('Habitica Api', function () {
     }).to.throw('Promise could not be found in this context. You must polyfill it to use this module.')
 
     Promise = PromiseObject
+    /* eslint-enable */
   })
 
   describe('ApiError', function () {
