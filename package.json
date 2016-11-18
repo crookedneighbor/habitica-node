@@ -59,7 +59,7 @@
     "nock": "^8.0.0",
     "snazzy": "^4.0.0",
     "standard": "^8.0.0",
-    "uuid": "^2.0.1"
+    "uuid": "^3.0.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.5.0",
