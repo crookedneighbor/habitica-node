@@ -65,7 +65,7 @@
     "babel-polyfill": "^6.5.0",
     "lodash": "^4.0.0",
     "over-extend": "^1.1.1",
-    "superagent": "^2.0.0-alpha.1"
+    "superagent": "^3.0.0"
   },
   "standard": {
     "globals": [
