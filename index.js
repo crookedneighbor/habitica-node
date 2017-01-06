@@ -156,7 +156,7 @@ Habitica.prototype.register = function (username, email, password) {
 Habitica.prototype.localLogin = function (usernameEmail, password) {
   return this.post('/user/auth/local/login', {
     username: usernameEmail,
-    password
+    password: password
   }).then(function (res) {
     this._connection.setOptions({
       id: res.data.id,
