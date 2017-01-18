@@ -1,7 +1,9 @@
+'use strict'
+
 var Connection = require('./lib/connection')
 var errors = require('./lib/errors')
 
-if (!Promise) {
+if (!global.Promise) {
   throw new Error('Promise could not be found in this context. You must polyfill it to use this module.')
 }
 
