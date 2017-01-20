@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>HabiticaApiError - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Habitica.html">Habitica</a><ul class='methods'><li data-type='method'><a href="Habitica.html#del">del</a></li><li data-type='method'><a href="Habitica.html#get">get</a></li><li data-type='method'><a href="Habitica.html#getOptions">getOptions</a></li><li data-type='method'><a href="Habitica.html#localLogin">localLogin</a></li><li data-type='method'><a href="Habitica.html#post">post</a></li><li data-type='method'><a href="Habitica.html#put">put</a></li><li data-type='method'><a href="Habitica.html#register">register</a></li><li data-type='method'><a href="Habitica.html#setOptions">setOptions</a></li></ul></li><li><a href="HabiticaApiError.html">HabiticaApiError</a></li><li><a href="UnknownConnectionError.html">UnknownConnectionError</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">HabiticaApiError</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        HabiticaApiError
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="HabiticaApiError"><span class="type-signature"></span>new HabiticaApiError<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Returned when the API request returns a HTTP status between 400 and 500</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_errors.js.html">lib/errors.js</a>, <a href="lib_errors.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Use the error objects on the Habitica package to write an error handler</p>
+    
+    <pre class="prettyprint"><code>var Habitica = require('habitica')
+var api = new Habitica({
+  // setup client
+})
+
+api.get('/user').then(() => {
+  // will never get here
+}).catch((err) => {
+  if (err instanceof Habitica.ApiError) {
+    // likely a validation error from
+    // the API request
+    console.log(err.message)
+  } else if (err instanceof Habitica.UnknownConnectionError) {
+    // either the Habitica API is down
+    // or there is no internet connection
+    console.log(err.originalError)
+  } else {
+    // there is something wrong with your integration
+    // such as a syntax error or other problem
+    console.log(err)
+  }
+})</code></pre>
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".this.message"><span class="type-signature">(static) </span>this.message<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>A translated error message you can provide for your user</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_errors.js.html">lib/errors.js</a>, <a href="lib_errors.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".this.status"><span class="type-signature">(static) </span>this.status<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The status code of the HTTP request. Will be a number &gt;= <code>400</code> and &lt;= <code>500</code></p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_errors.js.html">lib/errors.js</a>, <a href="lib_errors.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".this.type"><span class="type-signature">(static) </span>this.type<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>A type coresponding to the status code. For instance, an error with a status of <code>404</code> will be type <code>NotFound</code></p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_errors.js.html">lib/errors.js</a>, <a href="lib_errors.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 20 2017 17:22:39 GMT-0600 (CST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

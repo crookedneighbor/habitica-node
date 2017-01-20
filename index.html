@@ -1,253 +1,157 @@
-
-
-
-
-
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-  <title>Initialize</title>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" media="all" href="assets/css/style.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/tomorrow-night.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.js"></script>
-  <script src="assets/js/javascript.js"></script>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
 <body>
-  <div class="ui left push vertical inverted sidebar menu">
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Habitica.html">Habitica</a><ul class='methods'><li data-type='method'><a href="Habitica.html#del">del</a></li><li data-type='method'><a href="Habitica.html#get">get</a></li><li data-type='method'><a href="Habitica.html#getOptions">getOptions</a></li><li data-type='method'><a href="Habitica.html#localLogin">localLogin</a></li><li data-type='method'><a href="Habitica.html#post">post</a></li><li data-type='method'><a href="Habitica.html#put">put</a></li><li data-type='method'><a href="Habitica.html#register">register</a></li><li data-type='method'><a href="Habitica.html#setOptions">setOptions</a></li></ul></li><li><a href="HabiticaApiError.html">HabiticaApiError</a></li><li><a href="UnknownConnectionError.html">UnknownConnectionError</a></li></ul>
+</nav>
+
+<div id="main">
     
-      
-      <a class="item menu-link" href="account.html">
-        
-        
-        Account
-      </a>
+
     
-      
-      <a class="item menu-link" href="chat.html">
-        
-        
-        Chat
-      </a>
+
+
+
     
-      
-      <a class="item menu-link" href="content.html">
-        
-        
-        Content
-      </a>
+
+
+
+
+
+
+
+
+
     
-      
-      <a class="item menu-link" href="index.html">
-        
-        
-        Index
-      </a>
-    
-      
-      <a class="item menu-link" href="tag.html">
-        
-        
-        Tag
-      </a>
-    
-      
-      <a class="item menu-link" href="task.html">
-        
-        
-        Task
-      </a>
-    
-      
-      <a class="item menu-link" href="user.html">
-        
-        
-        User
-      </a>
-    
-  </div>
 
-  <div class='pusher'>
-    <div id='menu-buttons' class='ui fixed top sticky'>
-      <div class='ui basic button icon' id='menu-button'>
-        <i class='icon sidebar'></i>
-      </div>
-      <a href='https://github.com/crookedneighbor/habitica-node/blob/master/src/index.js' class='ui basic button icon' data-content="View Source Code">
-        <i class='icon code'></i>
-      </a>
-    </div>
 
-    <div id="background" class="hljs"></div>
+    <section class="readme">
+        <article><h1>Habitica</h1><h2><a href="https://travis-ci.org/crookedneighbor/habitica-node"><img src="https://travis-ci.org/crookedneighbor/habitica-node.svg?branch=master" alt="Build Status"></a></h2><p>A very thin wrapper for the Habitica API</p>
+<h2>Installation</h2><pre class="prettyprint source lang-bash"><code>npm install habitica --save</code></pre><h2>Usage</h2><p>This package is intentionally light and unopinionated. It should be used in conjunction with <a href="https://habitica.com/apidoc/">Habitica's API documentation</a>.</p>
+<h2>Setup</h2><p>The first thing you need to do is instantiate your client. All the configuration properties are optional and can be set later.</p>
+<pre class="prettyprint source lang-js"><code>var Habitica = require('habitica');
+var api = new Habitica({
+  id: 'your-habitica.com-user-id',
+  apiToken: 'your-habitica.com-api-token',
+  endpoint: 'http://custom-url.com/', // defaults to https://habitica.com/
+  platform: 'Your-Integration-Name' // defaults to Habitica-Node
+});</code></pre><p>Using the <code>register</code> or <code>localLogin</code> methods will set the User Id and API token automatically.</p>
+<pre class="prettyprint source lang-js"><code>api.register(
+  'username',
+  'email',
+  'password'
+).then((res) => {
+  var user = res.data
 
-    <div id="container" class="ui container">
-      <div class="ui middle aligned two column grid">
-        <h2 class="ui icon header center aligned column">
-          <i class="heartbeat icon"></i>
-          Initialize
-          <div class="sub header">Set up your client!</div>
-        </h2>
-        <div class='column'></div>
-      </div>
+  // do something with user
+  // hit a route with the authenticated client
+  return api.get('/groups')
+}).then((res) => {
+  var groups = res.data
 
-      <div class="sections">
-          
-          
-          
-          
-            
-            
-            <div id="Habitica" class="section-1 ui middle aligned two column grid">
-              <div class="annotation column">
-                
-                <a class='section-link' href="#Habitica">
-                  <i class="linkify icon"></i>
-                </a>
-                <h1 id="habitica-">Habitica()</h1>
-<p>Set up your instance of Habitica.</p>
-<p>The endpoint will default to <a href="https://habitica.com/api/v3">https://habitica.com/api/v3</a> if not provided.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>)
-<span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica({
-  uuid: <span class="hljs-string">'your-habitica.com-user-id'</span>,
-  token: <span class="hljs-string">'your-habitica.com-api-token'</span>,
-  endpoint: <span class="hljs-string">'custom-url'</span>
-})
-</code></pre>
-<p>The uuid and token parameters are not required and can be <a href="#setCredentials">set later</a> or be set at time of <a href="account.html#account.register">registration</a> or <a href="account.html#account.login">login</a>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">let</span> Habitica = <span class="hljs-built_in">require</span>(<span class="hljs-string">'habitica'</span>)
-<span class="hljs-keyword">let</span> api = <span class="hljs-keyword">new</span> Habitica()
-</code></pre>
+  // do something
+});
 
-              </div>
-              
-                <div class="content column hljs javascript"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._connection = <span class="hljs-keyword">new</span> Connection({
-      uuid: options.uuid,
-      token: options.token,
-      endpoint: options.endpoint
-    })</pre></div></div>
-              
-            </div>
-          
-        
-          
-          
-          
-        
-          
-          
-          
-            
-            
-            <div id="getUuid" class="section-3 ui middle aligned two column grid">
-              <div class="annotation column">
-                
-                <a class='section-link' href="#getUuid">
-                  <i class="linkify icon"></i>
-                </a>
-                <h1 id="getuuid-">getUuid()</h1>
-<p>Gets the uuid of habitica instance.</p>
-<pre><code class="lang-js">api.getUuid()
-</code></pre>
+api.localLogin(
+  'username or email',
+  'password'
+).then((res) => {
+  var creds = res.data
 
-              </div>
-              
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getUuid () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getUuid()
-  }</pre></div></div>
-              
-            </div>
-          
-        
-          
-          
-          
-            
-            
-            <div id="getToken" class="section-4 ui middle aligned two column grid">
-              <div class="annotation column">
-                
-                <a class='section-link' href="#getToken">
-                  <i class="linkify icon"></i>
-                </a>
-                <h1 id="gettoken-">getToken()</h1>
-<p>Gets the token of habitica instance.</p>
-<pre><code class="lang-js">api.getToken()
-</code></pre>
+  // do something with the credentials
+  // hit a route with the authenticated client
+  return api.get('/groups')
+}).then((res) => {
+  var groups = res.data
 
-              </div>
-              
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getToken () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getToken()
-  }</pre></div></div>
-              
-            </div>
-          
-        
-          
-          
-          
-            
-            
-            <div id="getEndpoint" class="section-5 ui middle aligned two column grid">
-              <div class="annotation column">
-                
-                <a class='section-link' href="#getEndpoint">
-                  <i class="linkify icon"></i>
-                </a>
-                <h1 id="getendpoint-">getEndpoint()</h1>
-<p>Gets the configured endpoint of habitica instance.</p>
-<pre><code class="lang-js">api.getEndpoint()
-</code></pre>
+  // do something
+});</code></pre><p>If your integration prompts the user to enter their credentials, you can use the <code>setOptions</code> method.</p>
+<pre class="prettyprint source lang-js"><code>api.setOptions({
+  id: 'the-uuid',
+  apiToken: 'the-api-token'
+})</code></pre><h2>Request Methods</h2><p>There are four main methods to make requests to the API. <code>get</code>, <code>post</code>, <code>put</code> and <code>del</code>. Each corresponds to one of the main HTTP verbs.</p>
+<p><code>get</code> takes an optional second argument that is an object that gets converted to a query string. The rest have an optional second argument that is the post body and a third optional argument that will be converted to a query string.</p>
+<p>Each method returns a promise which resolves the raw data back from the API. The data will reside on the data property.</p>
+<pre class="prettyprint source lang-js"><code>api.get('/user').then((res) => {
+  var user = res.data
 
-              </div>
-              
-                <div class="content column hljs javascript"><div class='highlight'><pre>  getEndpoint () {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._connection.getEndpoint()
-  }</pre></div></div>
-              
-            </div>
-          
-        
-          
-          
-          
-            
-            
-            <div id="setCredentials" class="section-6 ui middle aligned two column grid">
-              <div class="annotation column">
-                
-                <a class='section-link' href="#setCredentials">
-                  <i class="linkify icon"></i>
-                </a>
-                <h1 id="setcredentials-">setCredentials()</h1>
-<p>Set credentials after initialization.</p>
-<p>If you do not provide a value, it will default to the previous value stored on initialization.</p>
-<pre><code class="lang-js">api.setCredentials({
-  uuid: <span class="hljs-string">'new-user-id'</span>,
-  token: <span class="hljs-string">'new-api-token'</span>,
-  endpoint: <span class="hljs-string">'http://localhost:3000/api/v3'</span>
-})
-</code></pre>
+  return api.put('/user', {
+    'profile.name': 'New Name'
+  })
+}).then((res) => {
+  var user = res.data
+  user.profile.name // 'New Name'
 
-              </div>
-              
-                <div class="content column hljs javascript"><div class='highlight'><pre>  setCredentials (creds) {
-    <span class="hljs-keyword">this</span>._connection.setCredentials(creds)
-  }</pre></div></div>
-              
-            </div>
-          
-        
-          
-          
-          
-        
-      </div>
-    </div>
-  </div>
+  return api.post('/tasks/user', {
+    type: 'todo',
+    text: 'A new todo'
+  })
+}).then((res) => {
+  var task = res.data
+
+  return api.post('/tasks/' + task.id + '/score/up')
+}).then((res) => {
+  // Your task was scored!
+}).catch((err) => {
+  if (err.message) {
+    // API Error, display the message
+  } else {
+    // something else in your integration went wrong
+  }
+})</code></pre><p>For full documentation with examples visit <a href="http://crookedneighbor.github.io/habitica-node/">the docs site</a>.</p>
+<h2>Documentation</h2><p>The documentation is generated automatically using <a href="http://usejsdoc.org/">JSDoc</a>.</p>
+<h2>Testing</h2><p>To run all the tests:</p>
+<pre class="prettyprint source"><code>$ npm t</code></pre><ul>
+<li><p>The bulk of the tests are integration tets that expect a Habitica dev instance to be running.</p>
+</li>
+<li><p>A mongodb instance must be running already in order to run the tests locally.</p>
+</li>
+<li><p>By default, the test infrastructure assumes that the repo for Habitica is '../../habitica', relative to the test directory. You may pass in your own path by exporting the environmental variable <code>PATH_TO_HABITICA</code>.</p>
+<pre class="prettyprint source"><code>$ export PATH_TO_HABITICA='../../some/other/path';</code></pre></li>
+<li><p>By default, the app will be served on port 3321. This can be configured with the environmental variable <code>HABITICA_PORT</code>:</p>
+<pre class="prettyprint source"><code>$ export HABITICA_PORT=3001;</code></pre></li>
+<li><p>By default, the mongodb uri is 'mongodb://localhost/habitica-node-test'. You can configure this variable with the environmental variable <code>HABITICA_DB_URI</code>:</p>
+<pre class="prettyprint source"><code>$ export HABITICA_DB_URI='mongodb://localhost/some-other-db';</code></pre></li>
+</ul>
+<h2>Support</h2><p>This module requires the <code>Promise</code> object to function. If you are using this module in a context without <code>Promise</code>s (such as Browserifying for IE9), you will need to polyfill them.</p>
+<p>Supports Node &gt;= 4</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 20 2017 17:22:38 GMT-0600 (CST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
 </body>
 </html>
