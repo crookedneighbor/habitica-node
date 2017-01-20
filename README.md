@@ -25,7 +25,7 @@ var api = new Habitica({
   id: 'your-habitica.com-user-id',
   apiToken: 'your-habitica.com-api-token',
   endpoint: 'http://custom-url.com/', // defaults to https://habitica.com/
-  platform: 'Your-Integration-Name', // defaults to Habitica-Node
+  platform: 'Your-Integration-Name' // defaults to Habitica-Node
 });
 ```
 
@@ -35,7 +35,7 @@ Using the `register` or `localLogin` methods will set the User Id and API token 
 api.register(
   'username',
   'email',
-  'password',
+  'password'
 ).then((res) => {
   var user = res.data
 
@@ -50,7 +50,7 @@ api.register(
 
 api.localLogin(
   'username or email',
-  'password',
+  'password'
 ).then((res) => {
   var creds = res.data
 
