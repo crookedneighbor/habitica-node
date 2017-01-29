@@ -12,6 +12,7 @@ if (args.length > 2) {
 
 process.env.PORT = process.env.HABITICA_PORT || 3321
 process.env.NODE_DB_URI = process.env.HABITICA_DB_URI || 'mongodb://localhost/habitica-node-test'
+process.env.WEB_CONCURRENCY = 0 // must be set to start server in dev mode
 
 console.log('If running standalone, use the following command to set your environmental variables')
 console.log('export PORT="' + process.env.PORT + '"; export NODE_DB_URI="' + process.env.NODE_DB_URI + '"')
