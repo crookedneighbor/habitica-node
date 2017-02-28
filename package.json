@@ -59,7 +59,7 @@
     "npm-watch": "^0.1.6",
     "require-again": "^2.0.0",
     "snazzy": "^4.0.0",
-    "standard": "^8.0.0",
+    "standard": "^9.0.0",
     "uuid": "^3.0.0"
   },
   "dependencies": {
