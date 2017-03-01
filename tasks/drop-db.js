@@ -8,4 +8,3 @@ mongo.connect(dbUri, function (err, db) {
     db.close()
   })
 })
-

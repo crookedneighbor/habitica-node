@@ -50,8 +50,8 @@ describe('Habitica', function () {
       })
 
       it('sets id and api token to new user', function () {
-        expect(this.api._id).to.not.exist
-        expect(this.api._apiToken).to.not.exist
+        expect(this.api._id).to.equal(undefined)
+        expect(this.api._apiToken).to.equal(undefined)
 
         return this.api.register(this.username, this.email, this.password).then((body) => {
           var user = body.data
@@ -104,8 +104,8 @@ describe('Habitica', function () {
         return this.api.localLogin(this.username, this.password).then((body) => {
           var creds = body.data
 
-          expect(creds.id).to.exist
-          expect(creds.apiToken).to.exist
+          expect(creds.id).to.not.equal(undefined)
+          expect(creds.apiToken).to.not.equal(undefined)
         })
       })
 
@@ -123,8 +123,8 @@ describe('Habitica', function () {
         return this.api.localLogin(this.email, this.password).then((body) => {
           var creds = body.data
 
-          expect(creds.id).to.exist
-          expect(creds.apiToken).to.exist
+          expect(creds.id).to.not.equal(undefined)
+          expect(creds.apiToken).to.not.equal(undefined)
         })
       })
 
@@ -179,7 +179,6 @@ describe('Habitica', function () {
         var groups = res.data
         var party = groups.find(group => group.type === 'party')
 
-        expect(party).to.exist
         expect(party.name).to.equal('Foo')
       })
     })
@@ -257,7 +256,7 @@ describe('Habitica', function () {
       return this.api.post('/tasks/user', { type: 'habit', text: 'text' }).then((res) => {
         return this.api.del(`/tasks/${res.data.id}`)
       }).then((res) => {
-        expect(res.success).to.be.true
+        expect(res.success).to.equal(true)
       })
     })
 
@@ -265,7 +264,7 @@ describe('Habitica', function () {
       return this.api.del('/user', {
         password: 'password'
       }).then((res) => {
-        expect(res.success).to.be.true
+        expect(res.success).to.equal(true)
       })
     })
 
