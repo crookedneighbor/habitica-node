@@ -12,8 +12,8 @@ npm install habitica --save
 
 ## Usage
 
-This package is intentionally light and unopinionated. It should be used in conjunction with [Habitica's API documentation](https://habitica.com/apidoc/).
-
+This package is intentionally light and unopinionated. It should be used in conjunction with [Habitica's API documentation](https://habitica.com/apidoc/).  
+You get find your user id and api token [here](https://habitica.com/#/options/settings/apis)
 
 ## Setup
 
