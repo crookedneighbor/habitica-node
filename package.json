@@ -63,7 +63,7 @@
     "uuid": "^3.0.0"
   },
   "dependencies": {
-    "superagent": "^2.0.0"
+    "superagent": "^3.4.4"
   },
   "standard": {
     "globals": [
